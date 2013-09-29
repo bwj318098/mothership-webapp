@@ -1,13 +1,11 @@
 package com.acss.core.dataentry;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 import org.springframework.validation.FieldError;
 
-import com.acss.core.model.ACSSDateUtil;
+
 import com.acss.core.model.application.ProductPromoCategory;
 import com.acss.core.model.application.PromotionRules;
 import com.acss.core.model.application.TermsPromo;
@@ -56,7 +54,7 @@ public class ValidatePromotion {
 				}
 			}
 			
-			if(!promotionRules.getPromotion().getPcIsRetricted().equals(new BigDecimal(2))){
+			if(promotionRules.getPromotion().getPcIsRetricted().equals(new BigDecimal(2))){
 				
 				if(!dataEntry.getInstallment().getFirstProduct().getCategory().equals("")){
 					
@@ -108,7 +106,7 @@ public class ValidatePromotion {
 					}
 				}
 				
-				if(!dataEntry.getInstallment().getSecondProduct().getCategory().equals("")){
+				if(!dataEntry.getInstallment().getThirdProduct().getCategory().equals("")){
 					for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
 						
 						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategoryCd()))){
@@ -172,18 +170,18 @@ public class ValidatePromotion {
 			// Check the promotion date range
 			if(promotionRules.getPeriodFrom()!=null||promotionRules.getPeriodTo()!=null){
 				
-				if(!(promotionRules.getPeriodFrom().isBefore(dataEntry.getStore().getReceivedDate()))){
-					
-					FieldError fieldError_9 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "store.receivedDate", 
-							"Promotion is only valid from " + promotionRules.getPeriodFrom() + " to " + promotionRules.getPeriodTo());
+				//if(!(promotionRules.getPeriodFrom().isBefore(dataEntry.getStore().getReceivedDate()))){
+				if(!(promotionRules.getPeriodFrom().isBeforeNow())){	
+					FieldError fieldError_9 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "", 
+							"Promotion " + promotionRules.getPromotion().getPromotionName() +" is already expired");
 					
 					fieldErrorList.add(fieldError_9);
 				}
-
-				if(!(promotionRules.getPeriodTo().isAfter(dataEntry.getStore().getReceivedDate()))){
+				//if(!(promotionRules.getPeriodTo().isAfter(dataEntry.getStore().getReceivedDate())))
+				if(!(promotionRules.getPeriodTo().isAfterNow())){
 					
-					FieldError fieldError_10 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "store.receivedDate", 
-							"Promotion is only valid from " + ACSSDateUtil.getDateAsYYYYMMDDFromDateTime(promotionRules.getPeriodFrom()) + " to " + ACSSDateUtil.getDateAsYYYYMMDDFromDateTime(promotionRules.getPeriodTo()));
+					FieldError fieldError_10 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "", 
+							"Promotion " + promotionRules.getPromotion().getPromotionName() +" is already expired");
 					
 					fieldErrorList.add(fieldError_10);
 				}
