@@ -9,6 +9,8 @@ function resetForm(id){
 	
 }
 
+
+
 $(document).ready(function(){
 	$('button[name="upload_images"]').on('click', function(e){
 	    var $form=$(this).closest('form');
@@ -18,7 +20,36 @@ $(document).ready(function(){
 	            $form.trigger('submit');
 	        });
 	});
+	
+    $("#addLink").click(function () {
+        var id = ($('.additionalImage .row').length + 1).toString();
+        $('#additionalImage').append('<h4></h4><div class="row" id="row-image_'+id+'">'
+        		+'<div class="col-md-4"><div class="input-group svX3">'
+        		+'<label for="inputImageType" style="width: 135px;" class="input-group-addon" id="imageType-addon">Image Type :&nbsp;</label>'
+        		+'<select class="form-control" aria-describedby="imageType-addon" id="inputImageType" name="imageType">'
+        		+ '<option value="0"></option><option value="1">Application Form</option><option value="2">ID Proof</option><option value="3">Proof of Billing</option><option value="4">Proof of Income</option>'
+        		+'</select>'
+        		+'</div>'
+        		+'</div>'
+        		+'<div class="col-md-8"><div class="input-group">'
+        		+'<input type="file" class="form-control" id="image_'+id+'" name="image_'+id+'" aria-describedby="image_'+id+'-addon" />'
+        		+'<span class="input-group-btn"><button type="button" class="btn btn-primary" onclick="resetForm(\'image_'+id+'\')">Clear</button></span></div></div></div>');
+
+    });
+    
+    $("#removeLink").click(function () {
+    	var id = ($('.additionalImage .row').length).toString();
+        $("#additionalImage #row-image_"+ id).remove();
+    });
+    
+    $("#appDetailForm").validate({
+    	rules: {
+    	    // simple rule, converted to {required:true}
+    	    imageType: "required",
+    	  }	
+    });
 });
+
 
 
 
@@ -32,8 +63,8 @@ $(document).ready(function(){
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
     <h4>&nbsp;</h4>
-    <form class="form-horizontal" method="post" th:action="@{/upload}" th:object="${appDetailsForm}">
-        
+    <form id="appDetailForm" class="form-horizontal" method="post" th:action="@{/upload}" th:object="${appDetailsForm}">
+    
     <div class="row">
 		<div class="col-md-6">
 			<div class="input-group">
@@ -54,7 +85,7 @@ $(document).ready(function(){
     
 	<!-- Existing Application Images -->
 	<div th:each="mItem : ${appDetailsForm.images}">
-	   	<div class="row">
+	   	<div class="row">	   		
 			<div class="col-md-12">
 		    	<div class="input-group svX3">
 					<label for="appImage" style="width: 135px;" class="input-group-addon" id="appImage-addon" th:text="${mItem.imageType}">ImageName:</label>
@@ -89,34 +120,47 @@ $(document).ready(function(){
 <!-- 		</div> -->
 <!--     </div> -->
     <h4></h4>
-    <div class="row">
-	    <div class="col-md-12">
-			<div class="text-right input-group">
-				<label for="inputAddressProof" class="input-group-addon" id="addressProof-addon">Proof of Billing:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-				<input type="file" class="form-control" id="inputAddressProof"  name="addressProof" aria-describedby="addressProof-addon" />
-				<span class="input-group-btn">
-					<button type="button" class="btn btn-primary" onclick="resetForm('inputAddressProof')">Clear</button>
-				</span>
-			</div>
-		</div>
+<!--     <div class="row"> -->
+<!-- 	    <div class="col-md-12"> -->
+<!-- 			<div class="text-right input-group"> -->
+<!-- 				<label for="inputAddressProof" class="input-group-addon" id="addressProof-addon">Proof of Billing:&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
+<!-- 				<input type="file" class="form-control" id="inputAddressProof"  name="addressProof" aria-describedby="addressProof-addon" /> -->
+<!-- 				<span class="input-group-btn"> -->
+<!-- 					<button type="button" class="btn btn-primary" onclick="resetForm('inputAddressProof')">Clear</button> -->
+<!-- 				</span> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!--     </div> -->
+<!--     <h4></h4> -->
+<!--     <div class="row"> -->
+<!-- 	    <div class="col-md-12"> -->
+<!-- 			<div class="input-group"> -->
+<!-- 				<label for="inputIncomeProof" class="input-group-addon" id="incomeProof-addon">Proof of Income :&nbsp;</label> -->
+<!-- 				<input type="file" class="form-control" id="inputIncomeProof"  name="incomeProof" aria-describedby="incomeProof-addon" /> -->
+<!-- 				<span class="input-group-btn"> -->
+<!-- 					<button type="button" class="btn btn-primary" onclick="resetForm('inputIncomeProof')">Clear</button> -->
+<!-- 				</span> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!--     </div> -->
+<!--     <h4></h4> -->
+    <div id="additionalImage" class="additionalImage">
+
     </div>
+    
     <h4></h4>
     <div class="row">
-	    <div class="col-md-12">
+    	<div class="col-md-2">
 			<div class="input-group">
-				<label for="inputIncomeProof" class="input-group-addon" id="incomeProof-addon">Proof of Income :&nbsp;</label>
-				<input type="file" class="form-control" id="inputIncomeProof"  name="incomeProof" aria-describedby="incomeProof-addon" />
-				<span class="input-group-btn">
-					<button type="button" class="btn btn-primary" onclick="resetForm('inputIncomeProof')">Clear</button>
-				</span>
+				<div class="input-group-btn">
+					<p>	<a href="#" id='addLink'><span class="glyphicon glyphicon-plus"></span>Add &nbsp;&nbsp;</a>
+						<a href="#" id='removeLink'><span class="glyphicon glyphicon-minus"></span>Remove</a>
+					</p>
+				</div>
 			</div>
 		</div>
-    </div>
-    
-    
-    <h4></h4>
-    <div class="row">
-	    <div class="col-md-12">
+    	
+	    <div class="col-md-10">
 			<div class="input-group">
 				<span class="text-right input-group-btn" >
 					<button name="upload_images"  type="button" class="btn btn-primary">Submit</button>

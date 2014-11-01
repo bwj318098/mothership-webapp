@@ -41,22 +41,10 @@ button {
   font-size: initial;
 }
 
-
-.input-image-group-addon {
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1;
-  color: #555;
-  text-align: center;
-  background-color: #eee;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 200px;
-  vertical-align: middle;
-  
-}
-
 .svX3{
 	width: 100%;
+}
+
+.input-group-addon{
+	text-align: left;
 }

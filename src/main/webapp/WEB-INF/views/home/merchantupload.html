@@ -27,6 +27,22 @@ $(document).ready(function(){
 	            $form.trigger('submit');
 	        });
 	});
+	
+    $("#uploadForm").validate({
+		highlight: function (element) {
+		    $(element).closest('.input-group').removeClass('success').addClass('has-error');
+		},
+		success: function (element) {
+		    element.text('').addClass('valid')
+		        .closest('.input-group').removeClass('has-error').addClass('has-success');
+		},
+		
+    	rules: {
+    	    // simple rule, converted to {required:true}
+    	    idProof: "required",
+    	}
+
+    });
 });
 
 </script>
@@ -39,7 +55,7 @@ $(document).ready(function(){
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
     <h4>&nbsp;</h4>
-    <form class="form-horizontal" method="post" th:action="@{/upload}">
+    <form id="uploadForm" class="form-horizontal" method="post" th:action="@{/upload}" >
     <div class="row">
 		<div class="col-md-12">
 			<div class="input-group">
