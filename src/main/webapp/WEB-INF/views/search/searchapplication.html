@@ -29,6 +29,7 @@ $(function () {
 				<input type="text" class="form-control" id="inputAppNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" />
 			</div>
 		</div>
+
 		<div class="col-md-5">			
 			<div class='input-group date' id='datetimepicker_from'>
 				<label for="inputAppDate-from" class="input-group-addon" id="appDate-from-addon">Application Date :&nbsp;&nbsp;&nbsp;</label>
@@ -49,48 +50,53 @@ $(function () {
     </div>
     <h3></h3>
     <div class="row">
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<div class="input-group">
 				<label for="inputCustomerName" class="input-group-addon" id="customerName-addon">Customer Name :&nbsp;&nbsp;&nbsp;</label>
 				<input type="text" class="form-control" id="inputCustomerName" name="customerName" aria-describedby="customerName-addon" maxlength="30"/>
 			</div>
 		</div>
-<!-- 		<div class="col-md-1"></div> -->
+		<div class="col-md-3">
+			<div class="input-group">
+				<label for="inputSeqNo" class="input-group-addon" id="seqNo-addon">Seq No. :</label>
+				<input type="text" class="form-control" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
+			</div>
+		</div>
 		<div class="col-md-4">
 			<div class="input-group">
 				<label for="inputAppStatus" class="input-group-addon" id="appStatus-addon">Application Status :&nbsp;</label>
 					<select class="form-control" aria-describedby="appStatus-addon" id="inputAppStatus" name="appStatus">
 					    <option value="0"></option>
-					    <option value="1">Application Approved</option>
-					    <option value="2">Pending for Verification</option>
-					    <option value="3">Application Cancelled</option>
-					    <option value="4">Application Reject</option>
-					    <option value="5">Pending for Assessment</option>
+					    <option value="1">BAP Check</option>
+					    <option value="2">Accepted</option>
+					    <option value="3">First Assessment</option>
+					    <option value="4">Final Assessment</option>
 					</select>
 			</div>
 		</div>
-		<div class="col-md-2">
+    </div>
+    <h3></h3>
+    <div class="row">
+    	<div class="col-md-12">
 			<div class="input-group">
 				<span class="text-right input-group-btn" >
 					<button name="search_app"  type="button" class="btn btn-primary">Search</button>
 					<button name="reset_fields" type="reset" class="btn btn-primary" >Reset</button>
 				</span>
 			</div>
-		
 		</div>
     </div>
     </form>
     
     <div>
-    <table id="table-pagination" class="table table-striped" data-toggle="table" data-url="http://localhost:8080/HP/resources/json/data1.json" data-cache="false" data-height="425" data-search="true" data-pagination="true">
+    <table id="table-pagination" class="table table-striped" data-toggle="table" data-url="http://192.168.51.67:8080/HP/resources/json/data1.json" data-cache="false" data-height="425" data-search="true" data-pagination="true">
     <thead class="row">
         <tr>
             <th class="col-md-1" data-sortable="true" data-field="appNo">Application No</th>
-            <th class="col-md-2" data-sortable="true" data-field="customerName">Customer Name</th>
+            <th class="col-md-3" data-sortable="true" data-field="customerName">Customer Name</th>
             <th class="col-md-2" data-sortable="true" data-field="appDateTime">Application Date</th>
-            <th class="col-md-1" data-sortable="true" data-field="stage">Stage</th>
             <th class="col-md-2" data-sortable="true" data-field="status">Application Status</th>
-            <th class="col-md-1" data-sortable="true" data-field="settlementStatus">Settlement Status</th>
+            <th class="col-md-1" data-sortable="true" data-field="seqNo">SeqNo</th>
             <th class="col-md-3" data-sortable="true" data-field="remarks">Remarks</th>
         </tr>
     </thead>

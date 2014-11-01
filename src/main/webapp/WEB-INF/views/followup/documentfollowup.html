@@ -55,8 +55,15 @@ $(function () {
 				<input type="text" class="form-control" id="inputCustomerName" name="customerName" aria-describedby="customerName-addon" maxlength="30"/>
 			</div>
 		</div>
-		<div class="col-md-1"></div>
-		<div class="col-md-5">
+		
+		<div class="col-md-3">
+			<div class="input-group">
+				<label for="inputSeqNo" class="input-group-addon" id="seqNo-addon">Seq No. :</label>
+				<input type="text" class="form-control" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
+			</div>
+		</div>
+		
+		<div class="col-md-3">
 			<div class="input-group">
 				<span class="text-right input-group-btn" >
 					<button name="search_app"  type="button" class="btn btn-primary">Search</button>
@@ -66,16 +73,16 @@ $(function () {
 		</div>
     </div>
     </form>
-   	<div>
-    <table class="table table-striped" data-toggle="table" data-url="http://localhost:8080/HP/resources/json/data1.json" data-cache="false" data-height="425" data-search="true" data-pagination="true">
+	
+	<div>
+    <table id="table-pagination" class="table table-striped" data-toggle="table" data-url="http://192.168.51.67:8080/HP/resources/json/data1.json" data-cache="false" data-height="425" data-search="true" data-pagination="true">
     <thead class="row">
         <tr>
             <th class="col-md-1" data-sortable="true" data-field="appNo">Application No</th>
-            <th class="col-md-2" data-sortable="true" data-field="customerName">Customer Name</th>
+            <th class="col-md-3" data-sortable="true" data-field="customerName">Customer Name</th>
             <th class="col-md-2" data-sortable="true" data-field="appDateTime">Application Date</th>
-            <th class="col-md-1" data-sortable="true" data-field="stage">Stage</th>
             <th class="col-md-2" data-sortable="true" data-field="status">Application Status</th>
-            <th class="col-md-1" data-sortable="true" data-field="settlementStatus">Settlement Status</th>
+            <th class="col-md-1" data-sortable="true" data-field="seqNo">SeqNo</th>
             <th class="col-md-3" data-sortable="true" data-field="remarks">Remarks</th>
         </tr>
     </thead>

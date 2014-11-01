@@ -4,8 +4,9 @@
         "customerName": "John Dave Pajardo",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "BAP Check",
         "settlementStatus": "-",
+        "seqNo": "1000001",
         "remarks": "Sample Remarks"
     },
 	{
@@ -13,8 +14,9 @@
         "customerName": "Irish Jane Khan Harina",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "Accepted",
         "settlementStatus": "-",
+        "seqNo": "1000002",
         "remarks": "Sample Remarks"
     },
 	{
@@ -22,8 +24,9 @@
         "customerName": "Jonathan Perilla",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
-        "settlementStatus": "-",
+        "status": "First Assessment",
+        "settlementStatus": "-","seqNo": "1000001",
+        "seqNo": "1000003",
         "remarks": "Sample Remarks"
     },
 	
@@ -32,8 +35,9 @@
         "customerName": "Ronnel Lising",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "First Assessment",
         "settlementStatus": "-",
+        "seqNo": "1000004",
         "remarks": "Sample Remarks"
     },
     {
@@ -41,8 +45,9 @@
         "customerName": "Mark Kelvin Pineda",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "Final Assessment",
         "settlementStatus": "-",
+        "seqNo": "1000005",
         "remarks": "Sample Remarks"
     },
     {
@@ -50,8 +55,9 @@
         "customerName": "Maricel Sajol",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "BAP Check",
         "settlementStatus": "-",
+        "seqNo": "1000006",
         "remarks": "Sample Remarks"
     },
     {
@@ -59,8 +65,9 @@
         "customerName": "Aurora Pearl Santos",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "Final Assessment",
         "settlementStatus": "-",
+        "seqNo": "1000007",
         "remarks": "Sample Remarks"
     },
     
@@ -69,8 +76,9 @@
         "customerName": "Chona Jose",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "BAP Check",
         "settlementStatus": "-",
+        "seqNo": "1000008",
         "remarks": "Sample Remarks"
     },
     
@@ -79,8 +87,9 @@
         "customerName": "Joel Ruelos",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "Accepted",
         "settlementStatus": "-",
+        "seqNo": "1000009",
         "remarks": "Sample Remarks"
     },
     
@@ -89,8 +98,9 @@
         "customerName": "Ser Joseph Andaya",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "BAP Check",
         "settlementStatus": "-",
+        "seqNo": "1000010",
         "remarks": "Sample Remarks"
     },
     
@@ -99,8 +109,9 @@
         "customerName": "Jollibee E Rodriguez",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "First Assessment",
         "settlementStatus": "-",
+        "seqNo": "1000011",
         "remarks": "Sample Remarks"
     },
     {
@@ -108,8 +119,9 @@
         "customerName": "Ace Tamol",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "Accepted",
         "settlementStatus": "-",
+        "seqNo": "1000012",
         "remarks": "Sample Remarks"
     },
     
@@ -118,8 +130,9 @@
         "customerName": "John Doe",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "BAP Check",
         "settlementStatus": "-",
+        "seqNo": "1000013",
         "remarks": "Sample Remarks"
     },
     
@@ -128,8 +141,9 @@
         "customerName": "Jolly McDonalds",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "BAP Check",
         "settlementStatus": "-",
+        "seqNo": "1000014",
         "remarks": "Sample Remarks"
     },
     
@@ -138,8 +152,9 @@
         "customerName": "Berry Whisper",
         "appDateTime": "2015-07-10 17:00:00",
         "stage": "Application",
-        "status": "Verificaton In Progress",
+        "status": "Accepted",
         "settlementStatus": "-",
+        "seqNo": "1000015",
         "remarks": "Sample Remarks"
     }
     
