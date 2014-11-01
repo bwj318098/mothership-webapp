@@ -28,21 +28,8 @@ $(document).ready(function(){
 	        });
 	});
 	
-    $("#uploadForm").validate({
-		highlight: function (element) {
-		    $(element).closest('.input-group').removeClass('success').addClass('has-error');
-		},
-		success: function (element) {
-		    element.text('').addClass('valid')
-		        .closest('.input-group').removeClass('has-error').addClass('has-success');
-		},
-		
-    	rules: {
-    	    // simple rule, converted to {required:true}
-    	    idProof: "required",
-    	}
-
-    });
+	/*! Customed function for dynamic addition of image with image type */
+	addImageFunction();
 });
 
 </script>
@@ -54,6 +41,7 @@ $(document).ready(function(){
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
+
     <h4>&nbsp;</h4>
     <form id="uploadForm" class="form-horizontal" method="post" th:action="@{/upload}" >
     <div class="row">
@@ -118,10 +106,22 @@ $(document).ready(function(){
 		</div>
     </div>
     
+    <div id="additionalImage" class="additionalImage"></div>
+    <h4></h4>
     
     <h4></h4>
     <div class="row">
-	    <div class="col-md-12">
+    
+    	<div class="col-md-2">
+			<div class="input-group">
+				<div class="input-group-btn">
+					<p>	<a href="#" id='addLink'><span class="glyphicon glyphicon-plus"></span>Add &nbsp;&nbsp;</a>
+						<a href="#" id='removeLink'><span class="glyphicon glyphicon-minus"></span>Remove</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	    <div class="col-md-10">
 			<div class="input-group">
 				<span class="text-right input-group-btn" >
 					<button name="upload_images"  type="button" class="btn btn-primary">Submit</button>

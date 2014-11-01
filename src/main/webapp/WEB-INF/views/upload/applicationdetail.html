@@ -9,9 +9,8 @@ function resetForm(id){
 	
 }
 
-
-
 $(document).ready(function(){
+	/*!I Summon the modal screen! */
 	$('button[name="upload_images"]').on('click', function(e){
 	    var $form=$(this).closest('form');
 	    e.preventDefault();
@@ -20,38 +19,11 @@ $(document).ready(function(){
 	            $form.trigger('submit');
 	        });
 	});
+	/*!I Summon the modal screen! */
 	
-    $("#addLink").click(function () {
-        var id = ($('.additionalImage .row').length + 1).toString();
-        $('#additionalImage').append('<h4></h4><div class="row" id="row-image_'+id+'">'
-        		+'<div class="col-md-4"><div class="input-group svX3">'
-        		+'<label for="inputImageType" style="width: 135px;" class="input-group-addon" id="imageType-addon">Image Type :&nbsp;</label>'
-        		+'<select class="form-control" aria-describedby="imageType-addon" id="inputImageType" name="imageType">'
-        		+ '<option value="0"></option><option value="1">Application Form</option><option value="2">ID Proof</option><option value="3">Proof of Billing</option><option value="4">Proof of Income</option>'
-        		+'</select>'
-        		+'</div>'
-        		+'</div>'
-        		+'<div class="col-md-8"><div class="input-group">'
-        		+'<input type="file" class="form-control" id="image_'+id+'" name="image_'+id+'" aria-describedby="image_'+id+'-addon" />'
-        		+'<span class="input-group-btn"><button type="button" class="btn btn-primary" onclick="resetForm(\'image_'+id+'\')">Clear</button></span></div></div></div>');
-
-    });
-    
-    $("#removeLink").click(function () {
-    	var id = ($('.additionalImage .row').length).toString();
-        $("#additionalImage #row-image_"+ id).remove();
-    });
-    
-    $("#appDetailForm").validate({
-    	rules: {
-    	    // simple rule, converted to {required:true}
-    	    imageType: "required",
-    	  }	
-    });
+	/*! Customed function for dynamic addition of image with image type */
+	addImageFunction();
 });
-
-
-
 
 </script>
 <body>
@@ -144,10 +116,7 @@ $(document).ready(function(){
 <!-- 		</div> -->
 <!--     </div> -->
 <!--     <h4></h4> -->
-    <div id="additionalImage" class="additionalImage">
-
-    </div>
-    
+    <div id="additionalImage" class="additionalImage"></div>
     <h4></h4>
     <div class="row">
     	<div class="col-md-2">
