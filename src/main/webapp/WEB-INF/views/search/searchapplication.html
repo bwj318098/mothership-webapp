@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title=#{view.search.title})"></head>
+<script type="text/javascript">
+$(function () {
+    $('#datetimepicker_from').datetimepicker();
+    $('#datetimepicker_to').datetimepicker();
+    $("#datetimepicker_from").on("dp.change", function (e) {
+        $('#datetimepicker_to').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepicker_to").on("dp.change", function (e) {
+        $('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
+    });
+});
+</script>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
@@ -9,9 +21,72 @@
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">&nbsp;</div>
     </th:block>
-    <p>
-        Welcome to Application Search Screen
-    </p>
+    <h3>&nbsp;</h3>
+    
+    <form class="form-search form-horizontal">
+    <div class="row">
+		<div class="col-md-4">
+			<div class="input-group">
+				<label for="inputAppNo" class="input-group-addon" id="appNo-addon">Application No. :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<input type="text" class="form-control" id="inputAppNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" />
+			</div>
+		</div>
+		<div class="col-md-5">			
+			<div class='input-group date' id='datetimepicker_from'>
+				<label for="inputAppDate-from" class="input-group-addon" id="appDate-from-addon">Application Date :</label>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+		</div>
+		<div class="col-md-3">
+			<div class='input-group date' id='datetimepicker_to'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+		</div>
+    </div>
+    <h3></h3>
+    <div class="row">
+		<div class="col-md-6">
+			<div class="input-group">
+				<label for="inputCustomerName" class="input-group-addon" id="customerName-addon">Customer Name :&nbsp;&nbsp;&nbsp;</label>
+				<input type="text" class="form-control" id="inputCustomerName" name="customerName" aria-describedby="customerName-addon" maxlength="30"/>
+			</div>
+		</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-5">
+			<div class="input-group">
+				<label for="inputAppStatus" class="input-group-addon" id="appStatus-addon">Application Status :&nbsp;&nbsp;&nbsp;</label>
+					<select class="form-control" aria-describedby="appStatus-addon" id="inputAppStatus" name="appStatus">
+					    <option value="0"></option>
+					    <option value="1">Application Approved</option>
+					    <option value="2">Pending for Verification</option>
+					    <option value="3">Application Cancelled</option>
+					    <option value="4">Application Reject</option>
+					    <option value="5">Pending for Assessment</option>
+					</select>
+			</div>
+		</div>
+		
+    </div>
+    
+    <h4></h4>
+    <div class="row">
+	    <div class="col-md-12">
+			<div class="input-group">
+				<span class="text-right input-group-btn" >
+					<button name="search_app"  type="button" class="btn btn-primary">Search</button>
+					<button name="reset_fields" type="reset" class="btn btn-primary" >Reset</button>
+				</span>
+			</div>
+		</div>
+
+    </div>
+    </form>
 </div>
 </body>
 </html>
