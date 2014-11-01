@@ -2,13 +2,18 @@ body {
     padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
     padding-bottom: 40px;
     background-color: #ffffff;
+    height: 552px;
 }
+/*
+button {
+  border-radius: 4px;	
+}*/
 
 .form-narrow {
-    max-width: 650px;
+    max-width: 660px;
     padding: 19px 29px 29px;
     margin: 0 auto 20px;
-    background-color: #fff;
+    background-color: #f3f3f3;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
        -moz-border-radius: 5px;
@@ -19,9 +24,10 @@ body {
 }
 
 .form-search {
-    max-width: 1050px;
+    max-width: 1140px;
     padding: 19px 29px 29px;
     margin: 0 auto 20px;
+    background-color: #f3f3f3;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
        -moz-border-radius: 5px;
@@ -34,3 +40,5 @@ body {
 .input-group-btn {
   font-size: initial;
 }
+
+
