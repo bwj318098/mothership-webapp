@@ -22,7 +22,7 @@ import com.acss.kaizen.jooq.poc.base.UpdateableRepository;
 @Controller
 public class SignupController {
 	private static final String SIGNUP_VIEW_NAME = "signup/signup";
-	private static final String USER_HOME_VIEW_NAME = "home/homeSignedIn";
+	private static final String USER_HOME_VIEW_NAME = "home/merchantupload";
 	
 	@Autowired
 	private UpdateableRepository<Account,Long> accountRepo;
@@ -49,7 +49,7 @@ public class SignupController {
 		}
 		Account account = accountRepo.add(signupForm.createAccount());
 		userService.signin(account);
-        // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
+        // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/merchantupload.html
         MessageHelper.addSuccessAttribute(ra, "signup.success",signupForm.getUsername());
 		return "redirect:/";
 	}
