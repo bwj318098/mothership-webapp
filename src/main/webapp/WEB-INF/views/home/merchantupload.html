@@ -40,7 +40,7 @@ $(document).ready(function(){
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
-    <h3>&nbsp;</h3>
+    <h4>&nbsp;</h4>
     <form class="form-horizontal" method="post" th:action="@{/upload}">
     <div class="row">
 		<div class="col-md-12">
