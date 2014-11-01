@@ -33,7 +33,7 @@ $(function () {
 		</div>
 		<div class="col-md-5">			
 			<div class='input-group date' id='datetimepicker_from'>
-				<label for="inputAppDate-from" class="input-group-addon" id="appDate-from-addon">Application Date :</label>
+				<label for="inputAppDate-from" class="input-group-addon" id="appDate-from-addon">Application Date :&nbsp;&nbsp;&nbsp;</label>
                 <input type='text' class="form-control" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -60,7 +60,7 @@ $(function () {
 		<div class="col-md-1"></div>
 		<div class="col-md-5">
 			<div class="input-group">
-				<label for="inputAppStatus" class="input-group-addon" id="appStatus-addon">Application Status :&nbsp;&nbsp;&nbsp;</label>
+				<label for="inputAppStatus" class="input-group-addon" id="appStatus-addon">Application Status :&nbsp;</label>
 					<select class="form-control" aria-describedby="appStatus-addon" id="inputAppStatus" name="appStatus">
 					    <option value="0"></option>
 					    <option value="1">Application Approved</option>
@@ -87,6 +87,23 @@ $(function () {
 
     </div>
     </form>
+    
+    <div>
+    <table class="table table-striped" data-toggle="table" data-url="http://localhost:8080/HP/resources/json/data1.json" data-cache="false" data-height="450">
+    <thead class="row">
+        <tr>
+            <th class="col-md-1" data-sortable="true" data-field="appNo">Application No</th>
+            <th class="col-md-2" data-sortable="true" data-field="customerName">Customer Name</th>
+            <th class="col-md-2" data-sortable="true" data-field="appDateTime">Application Date</th>
+            <th class="col-md-1" data-sortable="true" data-field="stage">Stage</th>
+            <th class="col-md-2" data-sortable="true" data-field="status">Application Status</th>
+            <th class="col-md-1" data-sortable="true" data-field="settlementStatus">Settlement Status</th>
+            <th class="col-md-3" data-sortable="true" data-field="remarks">Remarks</th>
+        </tr>
+    </thead>
+	</table>
+    </div>
+    
 </div>
 </body>
 </html>

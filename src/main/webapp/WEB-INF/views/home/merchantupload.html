@@ -41,7 +41,7 @@ $(document).ready(function(){
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
     <h3>&nbsp;</h3>
-    <form class="form-horizontal">
+    <form class="form-horizontal" method="post" th:action="@{/upload}">
     <div class="row">
 		<div class="col-md-12">
 			<div class="input-group">
@@ -110,7 +110,7 @@ $(document).ready(function(){
 	    <div class="col-md-12">
 			<div class="input-group">
 				<span class="text-right input-group-btn" >
-					<button name="upload_images"  type="submit" class="btn btn-primary">Submit</button>
+					<button name="upload_images"  type="button" class="btn btn-primary">Submit</button>
 					<button name="pending_images" type="button" class="btn btn-primary" >Pending</button>
 				</span>
 			</div>

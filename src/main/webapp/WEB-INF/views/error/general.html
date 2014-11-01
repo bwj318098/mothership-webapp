@@ -9,6 +9,28 @@
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" th:fragment="header" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">HPS Online Submission</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/signin" th:href="@{/signin}">Sign in</a>
+                </li>
+             
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
 <!--  <div th:replace="fragments/header :: header">Header</div> -->
 <div class="container">
     <div th:replace="fragments/alert :: alert (type='danger', message=${errorMessage})">Error: Error</div>
