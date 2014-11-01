@@ -12,6 +12,12 @@ $(function () {
         $('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
     });
 });
+
+function appFormatter(value){
+	var $detail_url = '<a href="detail" th:href="@{/detail/{0}}">{1}</a>'.format(value,value);
+	return $detail_url;
+}
+
 </script>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
@@ -58,7 +64,7 @@ $(function () {
 		</div>
 		<div class="col-md-3">
 			<div class="input-group">
-				<label for="inputSeqNo" class="input-group-addon" id="seqNo-addon">Seq No. :</label>
+				<label for="inputSeqNo" class="input-group-addon" id="seqNo-addon">Sequence No. :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 				<input type="text" class="form-control" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
 			</div>
 		</div>
@@ -92,7 +98,7 @@ $(function () {
     <table id="table-pagination" class="table table-striped" data-toggle="table" data-url="http://192.168.51.67:8080/HP/resources/json/data1.json" data-cache="false" data-height="425" data-search="true" data-pagination="true">
     <thead class="row">
         <tr>
-            <th class="col-md-1" data-sortable="true" data-field="appNo">Application No</th>
+            <th class="col-md-1" data-sortable="true" data-field="appNo" data-formatter="appFormatter">Application No</th>
             <th class="col-md-3" data-sortable="true" data-field="customerName">Customer Name</th>
             <th class="col-md-2" data-sortable="true" data-field="appDateTime">Application Date</th>
             <th class="col-md-2" data-sortable="true" data-field="status">Application Status</th>
