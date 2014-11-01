@@ -18,15 +18,6 @@ $(document).ready(function(){
 	            $form.trigger('submit');
 	        });
 	});
-	
-	$('button[name="pending_images"]').on('click', function(e){
-	    var $form=$(this).closest('form');
-	    e.preventDefault();
-	    $('#pendingModal').modal({ backdrop: 'static', keyboard: false })
-	        .one('click', '#confirm', function (e) {
-	            $form.trigger('submit');
-	        });
-	});
 });
 
 
@@ -65,8 +56,8 @@ $(document).ready(function(){
 	<div th:each="mItem : ${appDetailsForm.images}">
 	   	<div class="row">
 			<div class="col-md-12">
-		    	<div class="input-group">
-					<label for="appImage" class="input-group-addon" id="appImage-addon" th:text="${mItem.imageType}">ImageName:</label>
+		    	<div class="input-group svX3">
+					<label for="appImage" style="width: 135px;" class="input-group-addon" id="appImage-addon" th:text="${mItem.imageType}">ImageName:</label>
 					<input type="text" class="form-control" id="appImage" name="appImage" aria-describedby="appImage-addon" readonly="readonly" th:value="${mItem.fileName}" />
 				</div>
 			</div>
@@ -129,7 +120,7 @@ $(document).ready(function(){
 			<div class="input-group">
 				<span class="text-right input-group-btn" >
 					<button name="upload_images"  type="button" class="btn btn-primary">Submit</button>
-					<button name="pending_images" type="button" class="btn btn-primary" >Pending</button>
+					<button name="view_images" type="button" class="btn btn-primary" >View Image</button>
 				</span>
 			</div>
 		</div>
