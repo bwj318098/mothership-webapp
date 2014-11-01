@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title=#{view.index.title})"></head>
+<script type="text/javascript">
+function resetForm(id){
+	$('#'+id).val(function(){
+		this.defaultValue;
+	});
+	
+}
+
+$(document).ready(function(){
+	$('button[name="upload_images"]').on('click', function(e){
+	    var $form=$(this).closest('form');
+	    e.preventDefault();
+	    $('#confirmModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirm', function (e) {
+	            $form.trigger('submit');
+	        });
+	});
+	
+	$('button[name="pending_images"]').on('click', function(e){
+	    var $form=$(this).closest('form');
+	    e.preventDefault();
+	    $('#pendingModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirm', function (e) {
+	            $form.trigger('submit');
+	        });
+	});
+});
+
+
+
+</script>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
@@ -9,9 +40,90 @@
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
-    <p>
-        Welcome to Merchant Upload Screen
-    </p>
+    <h3>&nbsp;</h3>
+    <form class="form-horizontal">
+    <div class="row">
+		<div class="col-md-12">
+			<div class="input-group">
+				<label for="inputAppNo" class="input-group-addon" id="appNo-addon">Application No. :&nbsp;&nbsp;&nbsp;</label>
+				<input type="text" class="form-control" id="inputAppNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" readonly="readonly" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-primary">Generate</button>
+				</span>
+			</div>
+		</div>
+    </div>
+    
+    <h3>&nbsp;</h3>
+    
+    <div class="row">
+		<div class="col-md-12">
+			<div class="input-group">
+				<label for="inputAppForm" class="input-group-addon" id="appForm-addon">Application Form :</label>
+				<input type="file" class="form-control" id="inputAppForm"  name="applicationNo" aria-describedby="AppForm-addon" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-primary" onclick="resetForm('inputAppForm')">Clear</button>
+				</span>
+			</div>
+		</div>
+    </div>
+   	<h4></h4>
+   	<div class="row show-grid">
+	    <div class="col-md-12">
+			<div class="input-group">
+				<label for="inputIdProof" class="input-group-addon" id="idProof-addon">ID Proof :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<input type="file" class="form-control" id="inputIdProof"  name="idProof" aria-describedby="idProof-addon" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-primary" onclick="resetForm('inputIdProof')">Clear</button>
+				</span>
+			</div>
+		</div>
+    </div>
+    <h4></h4>
+    <div class="row">
+	    <div class="col-md-12">
+			<div class="text-right input-group">
+				<label for="inputAddressProof" class="input-group-addon" id="addressProof-addon">Address Proof :&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<input type="file" class="form-control" id="inputAddressProof"  name="addressProof" aria-describedby="addressProof-addon" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-primary" onclick="resetForm('inputAddressProof')">Clear</button>
+				</span>
+			</div>
+		</div>
+    </div>
+    <h4></h4>
+    <div class="row">
+	    <div class="col-md-12">
+			<div class="input-group">
+				<label for="inputIncomeProof" class="input-group-addon" id="incomeProof-addon">Income Proof :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<input type="file" class="form-control" id="inputIncomeProof"  name="incomeProof" aria-describedby="incomeProof-addon" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-primary" onclick="resetForm('inputIncomeProof')">Clear</button>
+				</span>
+			</div>
+		</div>
+    </div>
+    
+    
+    <h4></h4>
+    <div class="row">
+	    <div class="col-md-12">
+			<div class="input-group">
+				<span class="text-right input-group-btn" >
+					<button name="upload_images"  type="submit" class="btn btn-primary">Submit</button>
+					<button name="pending_images" type="button" class="btn btn-primary" >Pending</button>
+				</span>
+			</div>
+		</div>
+
+    </div>
+    </form>
 </div>
+
+<!-- Modal For Submission-->
+<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='confirmModal',modal_title='Confirm Submission', modal_msg='Are you sure you want to submit these Documents?')">&nbsp;</div>
+
+<!-- Modal For Pending-->
+<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?')">&nbsp;</div>
 </body>
 </html>
