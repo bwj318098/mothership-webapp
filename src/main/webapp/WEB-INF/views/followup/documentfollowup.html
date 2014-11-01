@@ -20,9 +20,7 @@ $(function () {
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">&nbsp;</div>
-    </th:block>
-    <h3>&nbsp;</h3>
-    
+    </th:block>    
     <form class="form-search form-horizontal">
     <div class="row">
 		<div class="col-md-4">
@@ -68,9 +66,8 @@ $(function () {
 		</div>
     </div>
     </form>
-    
    	<div>
-    <table class="table table-striped" data-toggle="table" data-url="http://localhost:8080/HP/resources/json/data1.json" data-cache="false" data-height="450">
+    <table class="table table-striped" data-toggle="table" data-url="http://localhost:8080/HP/resources/json/data1.json" data-cache="false" data-height="425">
     <thead class="row">
         <tr>
             <th class="col-md-1" data-sortable="true" data-field="appNo">Application No</th>
