@@ -1,6 +1,8 @@
 package com.acss.core.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,8 +36,12 @@ public class OsaApplicationController {
 	
 	@Autowired
 	private HpsApplicationService rsApplicationService;
+	
 	@Autowired
 	private FileUploadService uploadService;
+		
+	@Autowired
+	private Environment env;
 	
 	@RequestMapping(value = "search")
 	public String search(Model model,
@@ -52,6 +58,7 @@ public class OsaApplicationController {
 		model.addAttribute(APPSEARCH_MODEL_ATTRIB_KEY,searchCriteria);
 		model.addAttribute(APPSEARCH_MODEL_APPSTATUS_KEY,ApplicationStatus.values());
 		model.addAttribute("searchUrl", searchCriteria.appendParameters(uri));
+		model.addAttribute("reportsUrl", env.getProperty("rs.reports.lon.url"));
 		
 		return "search/searchapplication";
 	}
