@@ -23,9 +23,8 @@ $(document).ready(function(){
 	$('button[name="view_images"]').on('click', function(e){
 		$('#links li:first a').click();
 	});
-	
-	
 	/*!I Summon the modal screen! */
+	
 	/*! Customed function for dynamic addition of image with image type */
 	addImageFunction();
 });
@@ -127,8 +126,8 @@ $(document).ready(function(){
     	<div class="col-md-2">
 			<div class="input-group">
 				<div class="input-group-btn">
-					<p>	<a href="#" id='addLink'><span class="glyphicon glyphicon-plus"></span>Add &nbsp;&nbsp;</a>
-						<a href="#" id='removeLink'><span class="glyphicon glyphicon-minus"></span>Remove</a>
+					<p>	<a href="#addLink" id='addLink'><span class="glyphicon glyphicon-plus"></span>Add &nbsp;&nbsp;</a>
+						<a href="#removeLink" id='removeLink'><span class="glyphicon glyphicon-minus"></span>Remove</a>
 					</p>
 				</div>
 			</div>
@@ -156,16 +155,16 @@ $(document).ready(function(){
 <div id="links" style="visibility : hidden">
 	<ul>
 		<li>
-	    	<a href="../../../resources/images/w.macalino_af.jpg" title="Application Form" data-gallery="samplegallery"></a>
+	    	<a href="../../../resources/images/w.macalino_af.jpg" th:href="@{/resources/images/w.macalino_af.jpg}"  title="Application Form" data-gallery="samplegallery"></a>
 	    </li>
 	    <li>
-	    	<a href="../../../resources/images/0029504_id1.jpg" title="Id Proof" data-gallery="samplegallery"></a>
+	    	<a href="../../../resources/images/0029504_id1.jpg" th:href="@{/resources/images/0029504_id1.jpg}" title="Id Proof" data-gallery="samplegallery"></a>
 	    </li>
 	    <li>
-	    	<a href="../../../resources/images/0029504_ps.jpg" title="Income Proof" data-gallery="samplegallery"></a>
+	    	<a href="../../../resources/images/0029504_ps.jpg" th:href="@{/resources/images/0029504_ps.jpg}" title="Income Proof" data-gallery="samplegallery"></a>
 		</li>
 		<li>
-	    	<a href="../../../resources/images/0029504_pob.jpg" title="Billing Proof" data-gallery="samplegallery"></a>
+	    	<a href="../../../resources/images/0029504_pob.jpg" th:href="@{/resources/images//0029504_pob.jpg}" title="Billing Proof" data-gallery="samplegallery"></a>
 		</li>
 	</ul>
 </div>
