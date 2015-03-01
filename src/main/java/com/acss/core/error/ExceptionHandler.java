@@ -3,7 +3,7 @@ package com.acss.core.error;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.base.Throwables;
 
@@ -17,10 +17,11 @@ class ExceptionHandler {
 	 * Handle exceptions thrown by handlers.
 	 */
 	@org.springframework.web.bind.annotation.ExceptionHandler(value = Exception.class)	
-	public ModelAndView exception(Exception exception, WebRequest request) {
-		ModelAndView modelAndView = new ModelAndView("error/general");
-		modelAndView.addObject("errorMessage", Throwables.getRootCause(exception));
-		modelAndView.addObject("detailedErrorMsg",ExceptionUtils.getStackTrace(exception));
-		return modelAndView;
+	public String exception(Exception exception, WebRequest request,RedirectAttributes ra) {
+		
+		ra.addFlashAttribute("message", Throwables.getRootCause(exception));
+		ra.addFlashAttribute("detailedErrorMsg", ExceptionUtils.getStackTrace(exception));
+		
+		return "redirect:/error";
 	}
 }

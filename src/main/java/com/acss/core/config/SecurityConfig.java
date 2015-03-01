@@ -56,7 +56,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/favicon.ico", "/resources/**","/forgotpwd","/changePassword","/invalidSession","/generalError/**").permitAll()
+                .antMatchers("/", "/favicon.ico", "/resources/**","/forgotpwd","/changePassword","/invalidSession","/generalError/**","/error").permitAll()
                 .antMatchers("/updatePassword").hasAnyAuthority("ROLE_TEMP")
                 .anyRequest().hasAnyAuthority("ROLE_USER")
                 .and()

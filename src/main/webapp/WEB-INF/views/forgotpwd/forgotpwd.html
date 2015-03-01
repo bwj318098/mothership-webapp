@@ -32,7 +32,10 @@
             </div>
         </div>
     </fieldset>
-</form>
+    	<!-- Include the CSRF Token -->
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
+	</form>
 <script type="text/javascript">
 $(document).ready(function(){
 	showLoadingGifOnFormSubmit();

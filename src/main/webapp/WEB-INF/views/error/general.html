@@ -34,13 +34,8 @@
 </nav>
 <!--  <div th:replace="fragments/header :: header">Header</div> -->
 <div class="container">
-    <!--<div th:replace="fragments/alert :: alert (type='danger', message=${errorMessage})">Error: Error</div>-->  
-	    <!-- /* Handle the flash message */-->
-    <th:block th:if="${message != null}">
-        <!-- /* The message code is returned from the @Controller */ -->
-        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0])})">&nbsp;</div>
-    </th:block>
-    
+    <div th:replace="fragments/alert :: alert (type='danger', message=${errorMessage})">Error: Error</div>
+	 
 	<div class="panel-group" id="accordion" th:if="${detailedErrorMsg!=null}">
 	  <div class="panel panel-danger" id="panel1">
 	    <div class="panel-heading">

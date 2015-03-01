@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.acss.core.support.web.MessageHelper;
 import com.google.common.base.Throwables;
 
 @Controller
@@ -43,10 +42,8 @@ class CustomErrorController {
 				statusCode.intValue() == HttpStatus.FORBIDDEN.value()){
 			return "redirect:/";
 		}
+		ra.addFlashAttribute("errorMessage",message);
 		
-		MessageHelper.addErrorAttribute(ra,message);
-		model.addAttribute("errorMessage", message);
-        
 		return "redirect:/error";
 	}
 	
