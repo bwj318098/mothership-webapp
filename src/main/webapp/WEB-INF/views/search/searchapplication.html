@@ -2,15 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title=#{view.search.title})"></head>
 <script type="text/javascript">
-$(function () {
-    $('#datetimepicker_from').datetimepicker();
-    $('#datetimepicker_to').datetimepicker();
+$(document).ready(function () {
+	showLoadingGifOnFormSubmit();
+    $('#datetimepicker_from').datetimepicker({
+    	//format: "YYYY-MM-DD HH:mm:ss"
+    	format: "YYYY-MM-DD"
+    });
+    $('#datetimepicker_to').datetimepicker({
+    	//format: "YYYY-MM-DD HH:mm:ss"
+    	format: "YYYY-MM-DD"
+    });
     $("#datetimepicker_from").on("dp.change", function (e) {
         $('#datetimepicker_to').data("DateTimePicker").minDate(e.date);
     });
     $("#datetimepicker_to").on("dp.change", function (e) {
         $('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
     });
+    /*
+    $('#reset_fields').on('click',function(e){
+    	e.preventDefault();
+    	$("form#appSearchForm :input").each(function(){
+    		 var input = $(this);
+    		 input.val('');
+    		});
+    	$("#inputAppStatus").val('0');
+    });*/
+    
 });
 
 function appFormatter(value){
@@ -20,6 +37,8 @@ function appFormatter(value){
 
 </script>
 <body>
+<!-- Loading gif -->
+<div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
     <!-- /* Handle the flash message */-->
@@ -27,19 +46,19 @@ function appFormatter(value){
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">&nbsp;</div>
     </th:block>    
-    <form class="form-search form-horizontal">
+    <form id="appSearchForm" class="form-search form-horizontal" th:object="${appSearchForm}">
     <div class="row">
 		<div class="col-md-4">
 			<div class="input-group svX3">
 				<label for="inputAppNo" class="input-group-addon imagetype-width" id="appNo-addon">Application No. :</label>
-				<input type="text" class="form-control" id="inputAppNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" />
+				<input type="text" class="form-control" id="inputAppNo" th:field="*{applicationNo}" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" />
 			</div>
 		</div>
 
 		<div class="col-md-5">			
 			<div class='input-group date' id='datetimepicker_from'>
 				<label for="inputAppDate-from" class="input-group-addon imagetype-width" id="appDate-from-addon">Application Date :</label>
-                <input type='text' class="form-control" />
+                <input type='text' class="form-control" name="appDateFrom" th:field="*{appDateFrom}" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -47,7 +66,7 @@ function appFormatter(value){
 		</div>
 		<div class="col-md-3">
 			<div class='input-group date' id='datetimepicker_to'>
-                <input type='text' class="form-control" />
+                <input type='text' class="form-control" name="appDateTo" th:field="*{appDateTo}"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -59,19 +78,19 @@ function appFormatter(value){
 		<div class="col-md-5">
 			<div class="input-group svX3">
 				<label for="inputCustomerName" class="input-group-addon imagetype-width" id="customerName-addon">Customer Name :</label>
-				<input type="text" class="form-control" id="inputCustomerName" name="customerName" aria-describedby="customerName-addon" maxlength="30"/>
+				<input type="text" class="form-control" id="inputCustomerName" th:field="*{customerName}" name="customerName" aria-describedby="customerName-addon" maxlength="30"/>
 			</div>
 		</div>
 		<div class="col-md-3">
 			<div class="input-group svX3">
 				<label for="inputSeqNo" class="input-group-addon imagetype-width" id="seqNo-addon">Sequence No. :</label>
-				<input type="text" class="form-control" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
+				<input type="text" class="form-control" id="inputSeqNo" name="seqNo" th:field="*{seqNo}" aria-describedby="seqNo-addon" maxlength="7" />
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="input-group svX3">
 				<label for="inputAppStatus" class="input-group-addon imagetype-width" id="appStatus-addon">Application Status :</label>
-					<select class="form-control" aria-describedby="appStatus-addon" id="inputAppStatus" name="appStatus">
+					<select class="form-control" aria-describedby="appStatus-addon" id="inputAppStatus" name="appStatus" th:field="*{appStatus}">
 					    <option value="0"></option>
 					    <option value="1">BAP Check</option>
 					    <option value="2">Accepted</option>
@@ -87,8 +106,8 @@ function appFormatter(value){
 			<div class="input-group">
 				<div class="text-right input-group-btn" >
 					<p>
-						<button name="search_app"  type="button" class="btn btn-primary">Search</button>
-						<button name="reset_fields" type="reset" class="btn btn-primary" >Reset</button>
+						<button name="search_app"  type="submit" class="btn btn-primary">Search</button>
+						<button name="resetFields" type="submit" class="btn btn-primary" >Reset</button>
 					</p>
 				</div>
 			</div>
@@ -97,13 +116,13 @@ function appFormatter(value){
     </form>
     
     <div>
-    <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{/applications}" data-cache="false" data-height="425" data-search="true" data-pagination="true">
+    <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{${searchUrl}}" data-cache="false" data-height="425" data-search="true" data-pagination="true">
     <thead class="row">
         <tr>
             <th class="col-md-1" data-sortable="true" data-field="appNo" data-formatter="appFormatter">Application No</th>
             <th class="col-md-3" data-sortable="true" data-field="customerName">Customer Name</th>
-            <th class="col-md-2" data-sortable="true" data-field="appDateTime">Application Date</th>
-            <th class="col-md-2" data-sortable="true" data-field="status">Application Status</th>
+            <th class="col-md-2" data-sortable="true" data-field="applicationDate">Application Date</th>
+            <th class="col-md-2" data-sortable="true" data-field="applicationStatus">Application Status</th>
             <th class="col-md-1" data-sortable="true" data-field="seqNo">SeqNo</th>
             <th class="col-md-3" data-sortable="true" data-field="remarks">Remarks</th>
         </tr>

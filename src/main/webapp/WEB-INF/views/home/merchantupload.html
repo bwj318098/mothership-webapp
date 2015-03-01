@@ -1,51 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title=#{view.index.title})"></head>
-<script type="text/javascript">
-$(window).load(function() {
-	// Animate loader off screen
-	$(".se-pre-con").delay('500').fadeOut("slow");;
-});
-
-function resetForm(id){
-	$('#'+id).val(function(){
-		this.defaultValue;
-	});
-}
-
-$(document).ready(function(){
-	
-	$('button[name="upload_images"]').on('click', function(e){
-	    var $form=$(this).closest('form');
-	    e.preventDefault();
-	    $('#confirmModal').modal({ backdrop: 'static', keyboard: false })
-	        .one('click', '#confirm', function (e) {
-	            $form.trigger('submit');
-	        });
-	});
-	
-	$('button[name="pending_images"]').on('click', function(e){
-	    var $form=$(this).closest('form');
-	    e.preventDefault();
-	    $('#pendingModal').modal({ backdrop: 'static', keyboard: false })
-	        .one('click', '#confirm', function (e) {
-	            $form.trigger('submit');
-	        });
-	});
-	
-	/* Clear fields to prevent the back button from populating using cache*/
-	$('#uploadForm')[0].reset();
-	
-	$("#removeLink").click(function () {
-		var id = ($('.additionalImage .row').length).toString();
-	    $("#additionalImage #row-image_"+ id).remove();
-	});
-	/* Prevents user to input character on fields marked with class numeric.*/
-	enableNumericOnlyForNumericClass();
-});
-
-</script>
 <body>
+<!-- Loading gif -->
+<div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
     <!-- /* Handle the flash message */-->
@@ -191,6 +149,7 @@ $(document).ready(function(){
 					<p>
 						<button name="upload_images"  type="button" class="btn btn-primary">Submit</button>
 						<button name="pending_images" type="button" class="btn btn-primary" >Pending</button>
+						<button name="pending" type="submit" class="btn btn-primary" style="display: none;">doPending</button>
 					</p>
 				</div>
 			</div>
@@ -204,7 +163,45 @@ $(document).ready(function(){
 
 <!-- Modal For Pending-->
 <div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?')">&nbsp;</div>
-<!-- Loading gif -->
-<div class="se-pre-con"></div>
+
+
+<!-- Scripts -->
+<script type="text/javascript">
+function resetForm(id){
+	$('#'+id).val(function(){
+		this.defaultValue;
+	});
+}
+$(document).ready(function(){
+	showLoadingGifOnFormSubmit();
+	$('button[name="upload_images"]').on('click', function(e){
+	    var $form=$(this).closest('form');
+	    e.preventDefault();
+	    $('#confirmModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirm', function (e) {
+	            $form.trigger('submit');
+	        });
+	});
+	
+	$('button[name="pending_images"]').on('click', function(e){
+	    var $form=$(this).closest('form');
+	    e.preventDefault();
+	    $('#pendingModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirm', function (e) {
+	        	$('button[name="pending"]').click();
+	        });
+	});
+	
+	/* Clear fields to prevent the back button from populating using cache*/
+	$('#uploadForm')[0].reset();
+	
+	$("#removeLink").click(function () {
+		var id = ($('.additionalImage .row').length).toString();
+	    $("#additionalImage #row-image_"+ id).remove();
+	});
+	/* Prevents user to input character on fields marked with class numeric.*/
+	enableNumericOnlyForNumericClass();
+});
+</script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.acss.core.error;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +20,7 @@ class ExceptionHandler {
 	public ModelAndView exception(Exception exception, WebRequest request) {
 		ModelAndView modelAndView = new ModelAndView("error/general");
 		modelAndView.addObject("errorMessage", Throwables.getRootCause(exception));
+		modelAndView.addObject("detailedErrorMsg",ExceptionUtils.getStackTrace(exception));
 		return modelAndView;
 	}
 }

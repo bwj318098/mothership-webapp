@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.acss.core.model.application.ApplicationSeqNo;
+import com.acss.core.model.image.ApplicationImage;
 import com.acss.core.model.image.ImageBuilder;
+import com.acss.core.search.ApplicationDetailDTO;
 
 
 /**
@@ -23,24 +26,26 @@ import com.acss.core.model.image.ImageBuilder;
  *
  */
 @Service
-public class FileUpload implements FileUploadService {
+public class RSFileUpload implements FileUploadService {
 	
 	@Autowired
 	private Environment env;
 	/**
 	 * refer to osa.properties for the value of key 'upload.directory'
 	 */
-	private final String UPLOAD_DIRECTORY_KEY = "upload.directory";
+	private final static String UPLOAD_DIRECTORY_KEY = "upload.directory";
 	/**
 	 * refer to osa.properties for the value of key 'rs.images.url'
 	 */
-	private final String RS_IMAGES_URL_KEY = "rs.images.url";
-	private final String RS_SEQUENCE_URL_KEY = "rs.sequence.url";
-	private final String RS_APPNO_URL_KEY = "rs.appno.url";
+	private final static String RS_IMAGES_URL_KEY = "rs.images.url";
+	private final static String RS_SEQUENCE_URL_KEY = "rs.sequence.url";
+	private final static String RS_APPNO_URL_KEY = "rs.appno.url";
+	private final static String RS_APPSEQNO_URL_KEY = "rs.appseqno.url";
 	
-	private final String IMAGECODE_NUMTYPE_ENTRY = "T_IMAGE_IMAGECODE";
-	private final String GROUPID_NUMTYPE_ENTRY = "T_IMAGE_GROUPID";
-	private final String APPNO_NUMTYPE_ENTRY = "T_APPLICATION_APPCD";
+	private final static String IMAGECODE_NUMTYPE_ENTRY = "T_IMAGE_IMAGECODE";
+	private final static String GROUPID_NUMTYPE_ENTRY = "T_IMAGE_GROUPID";
+	private final static String APPNO_NUMTYPE_ENTRY = "T_APPLICATION_APPCD";
+	private final static BigDecimal PENDING_STATUS_IN_OSA = new BigDecimal(3);
 	
 	/**
 	 * Saves the file into the server.
@@ -51,7 +56,7 @@ public class FileUpload implements FileUploadService {
 	 * @param file - the uploaded file from the client.
 	 * @return boolean
 	 */
-	private boolean saveFile(String groupFolder,MultipartFile file,com.acss.core.model.image.ApplicationImage appImage) {
+	private boolean saveFile(String groupFolder,MultipartFile file,ApplicationImage appImage) {
 		String saveDirectory = env.getProperty(UPLOAD_DIRECTORY_KEY);
 		String fileName = file.getOriginalFilename();
 		String fileExtension = FilenameUtils.getExtension(fileName);
@@ -99,30 +104,62 @@ public class FileUpload implements FileUploadService {
 	 * 								by the client.
 	 * @return boolean
 	 */
-	public boolean processUpload(UploadInformation uploadInformation) {
-		List<HpsUploadFile> hpsFiles = uploadInformation.getUploadFiles();
+	public boolean processUpload(UploadInformationDTO uploadInformation) {
 		String appNo = uploadInformation.getAppNo();
+		
+		RestTemplate rt = new RestTemplate();
+		ApplicationSeqNo appSeqNo = new ApplicationSeqNo();
+		appSeqNo.setAppCd(uploadInformation.getAppNo());
+		appSeqNo.setAppSeqNo(uploadInformation.getSeqNo());
+
+		//saves the new sequence no with this application no.
+		rt.postForEntity(env.getProperty(RS_APPSEQNO_URL_KEY), appSeqNo, ApplicationSeqNo.class);
+		return doPostInRsImageUpload(appNo,uploadInformation.getUploadFiles(),uploadInformation.isForPendingSubmission());
+	}
+	
+	/**
+	 * Implements the uploading of additional images.
+	 * @param additionalUpload
+	 * @return boolean
+	 */
+	public boolean uploadMoreImages(ApplicationDetailDTO additionalUpload) {
+		String appNo = additionalUpload.getAppNo();
+		//do a post on image restful web services.
+		return doPostInRsImageUpload(appNo,additionalUpload.getAdditionalImages(),false);
+	}
+	/**
+	 * POST's to the image web services to create a new image.
+	 * @param appNo
+	 * @param hpsFiles
+	 * @return true if succeed false if not.
+	 */
+	private boolean doPostInRsImageUpload(String appNo,List<HpsUploadFileDTO> hpsFiles,boolean isForPendingSubmission){
+		//get a sequence number first.
 		String usingThisGroup = generateRequestedNumType(GROUPID_NUMTYPE_ENTRY);
 		RestTemplate rt = new RestTemplate();
+		
 		//if files aren't empty then proceed.
 		if(!hpsFiles.isEmpty()){
-			for(HpsUploadFile hpsFile:hpsFiles){
+			for(HpsUploadFileDTO hpsFile:hpsFiles){
 				MultipartFile withThisFile = hpsFile.getImageFile();
 				//creates a new instance of application image dto to persist
-				com.acss.core.model.image.ApplicationImage withThisDTO = 
+				ApplicationImage withThisDTO = 
 						new ImageBuilder().withDefaultValues().build();
 				
 				withThisDTO.setDataCd(appNo);
 				withThisDTO.setGroupId(usingThisGroup);
 				withThisDTO.setImageType(new BigDecimal(hpsFile.getImageType()));
+				//set the regStatus into 3 - meaning this application is pending.
+				if(isForPendingSubmission){
+					withThisDTO.setRegStatus(PENDING_STATUS_IN_OSA);
+				}
 				
 				if(!saveFile(usingThisGroup,withThisFile,withThisDTO)) return false;
 
 					//do a post on rs-images restful end point.
 					try {
 						String imagesRestFulEndpoint = env.getProperty(RS_IMAGES_URL_KEY);
-						rt.postForEntity(imagesRestFulEndpoint,withThisDTO,
-										com.acss.core.model.image.ApplicationImage.class);
+						rt.postForEntity(imagesRestFulEndpoint,withThisDTO,ApplicationImage.class);
 					//need to create an elegant way to implement exception handling
 					} catch (Exception e) {
 						return false;
@@ -132,6 +169,7 @@ public class FileUpload implements FileUploadService {
 		}else{
 			return false;
 		}
+		//return true if no errors encountered.
 		return true;
 	}
 
@@ -144,5 +182,4 @@ public class FileUpload implements FileUploadService {
 		ResponseEntity<String> res = rt.postForEntity(appNoGeneratorURI,APPNO_NUMTYPE_ENTRY,String.class);
 		return res.getBody();
 	}
-
 }

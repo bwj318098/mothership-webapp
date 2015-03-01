@@ -43,3 +43,8 @@ function addImageFunction(){
 function enableNumericOnlyForNumericClass(){
 	$(".numeric").numeric({ decimal: false, negative: false }, function() {this.value = ""; this.focus(); });
 }
+
+/* Show loading screen for every form submit only*/
+function showLoadingGifOnFormSubmit(){
+	$("form").on('submit',function(){$(".se-pre-con").show();});
+}

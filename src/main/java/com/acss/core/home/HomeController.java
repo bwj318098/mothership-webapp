@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.acss.core.merchantupload.UploadInformation;
+import com.acss.core.merchantupload.UploadInformationDTO;
 
 @Controller
 public class HomeController {
@@ -16,7 +16,7 @@ public class HomeController {
 	public String index(Principal principal,Model model) {
 		//if model already contains this attribute then initialize it.
 		if(!model.containsAttribute("uploadInformation")){
-			model.addAttribute("uploadInformation",new UploadInformation());
+			model.addAttribute("uploadInformation",new UploadInformationDTO());
 		}
 		return principal != null ? "home/merchantupload" : "home/index";
 	}

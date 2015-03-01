@@ -51,7 +51,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/favicon.ico", "/resources/**", "/signup","/generalError/**").permitAll()
+                .antMatchers("/", "/favicon.ico", "/resources/**", "/signup","/invalidSession","/generalError/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -64,9 +64,14 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .permitAll()
                 .logoutSuccessUrl("/signin?logout")
+                .invalidateHttpSession(false)
                 .and()
             .rememberMe()
                 .rememberMeServices(rememberMeServices())
-                .key("remember-me-key");
+                .key("remember-me-key")
+                .and()
+            .sessionManagement()
+            	.invalidSessionUrl("/invalidSession")
+            	.sessionFixation().none();
     }
 }

@@ -1,45 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title=#{view.appDetail.title})"></head>
-<script type="text/javascript">
-function resetForm(id){
-	$('#'+id).val(function(){
-		this.defaultValue;
-	});
-	
-}
-
-$(document).ready(function(){
-	/*!I Summon the modal screen! */
-	$('button[name="upload_images"]').on('click', function(e){
-	    var $form=$(this).closest('form');
-	    e.preventDefault();
-	    $('#confirmModal').modal({ backdrop: 'static', keyboard: false })
-	        .one('click', '#confirm', function (e) {
-	            $form.trigger('submit');
-	        });
-	});
-	
-	$('button[name="view_images"]').on('click', function(e){
-		$('#links li:first a').click();
-	});
-	/*!I Summon the modal screen! */
-	
-	/*! Customed function for dynamic addition of image with image type */
-	addImageFunction();
-});
-
-</script>
 <body>
+<!-- Loading gif -->
+<div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
-        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
     </th:block>
+    
+    <th:block th:if="${#fields.hasErrors('${appDetailsForm.*}')}">
+        <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
+    </th:block>
+    
     <h4>&nbsp;</h4>
-    <form id="appDetailForm" class="form-horizontal" method="post" th:action="@{/upload}" th:object="${appDetailsForm}">
+    <form id="appDetailForm" class="form-horizontal" method="post" th:action="@{/detail/} + *{appNo}" th:object="${appDetailsForm}" enctype="multipart/form-data">
     
     <div class="row">
 		<div class="col-md-6">
@@ -56,41 +34,86 @@ $(document).ready(function(){
 			</div>
 		</div>
     </div>
-    
+   	 
     <h3>&nbsp;</h3>
     
 	<!-- Existing Application Images -->
-	<div th:each="mItem : ${appDetailsForm.images}">
+	<div th:each="mItem, rowStat : *{existingImages}">
 	   	<div class="row">	   		
 			<div class="col-md-12">
 		    	<div class="input-group svX3">
 					<label for="appImage" class="input-group-addon imagetype-width" id="appImage-addon" th:text="${mItem.imageType}">ImageName:</label>
-					<input type="text" class="form-control" id="appImage" name="appImage" aria-describedby="appImage-addon" readonly="readonly" th:value="${mItem.fileName}" />
+					<input type="text" th:field="*{existingImages[__${rowStat.index}__].imageFilename}" class="form-control" id="appImage" name="appImage" aria-describedby="appImage-addon" readonly="readonly" th:value="${mItem.imageFilename}" />
+					<!-- This is for preserving the values for viewing images -->
+					<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageCode}" class="form-control"/>
+					<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageType}" class="form-control"/>
 				</div>
 			</div>
 	    </div>
 	    <h4></h4>
     </div>
- 
-    <div id="additionalImage" class="additionalImage"></div>
+    
+	<div id="additionalImage" class="additionalImage">
+		<div class="has-error">
+			<span class="help-block" th:if="${#fields.hasErrors('additionalImages')}" th:errors="*{additionalImages}">At least one image is required.</span>
+		</div>
+		
+		<div th:each="image, rowStat : *{additionalImages}">
+			<h4></h4>
+			<div class="row" th:id="${'row-image_'+rowStat.count}">
+				<div class="col-md-4 col-xs-6" th:classappend="${#fields.hasErrors('additionalImages[__${rowStat.index}__].imageType')}? 'has-error'">
+					<div class="input-group svX3">
+						<label th:attr="for=${'inputImageType_'+rowStat.count}"
+							class="input-group-addon imagetype-width" th:id="${'imageType-addon_'+rowStat.count}">Image
+							Type :&nbsp;</label>
+							<select class="form-control" th:field="*{additionalImages[__${rowStat.index}__].imageType}"
+							th:attr="aria-describedby=${'imageType-addon_'+rowStat.count}" th:id="${'inputImageType_'+rowStat.count}"
+							th:name="${'imageType_'+rowStat.count}">
+							<option value=""></option>
+	<!-- 					<option value="1">Application Form</option> -->
+							<option value="1">ID Proof</option>
+							<option value="2">Proof of Billing</option>
+							<option value="3">Proof of Income</option></select>
+					</div>
+					<span class="help-block" th:if="${#fields.hasErrors('additionalImages[__${rowStat.index}__].imageType')}" th:errors="*{additionalImages[__${rowStat.index}__].imageType}">This field is required.</span>
+				</div>
+				<div class="col-md-8 col-xs-6" th:classappend="${#fields.hasErrors('additionalImages[__${rowStat.index}__].imageFile')}? 'has-error'">
+					<div class="input-group">
+						<input type="file" accept="image/*" class="form-control" th:id="${'image_'+rowStat.count}" 
+						th:field="*{additionalImages[__${rowStat.index}__].imageFile}"
+							th:name="${'image_'+rowStat.count}"></input><span
+								class="input-group-btn"><button type="button"
+									class="btn btn-primary" th:attr="onclick=${'resetForm(&quot;image_'+rowStat.count +'&quot;)'}">Clear</button></span>
+					</div>
+					<span class="help-block" th:if="${#fields.hasErrors('additionalImages[__${rowStat.index}__].imageFile')}" th:errors="*{additionalImages[__${rowStat.index}__].imageFile}">This field is required.</span>
+				</div>
+				
+			</div>
+			<h4></h4>
+		</div>	
+	</div>
+	
     <h4></h4>
     <div class="row">
-    	<div class="col-md-2">
+    	<div class="col-md-3 col-xs-6">
 			<div class="input-group">
 				<div class="input-group-btn">
-					<p>	<a href="#addLink" id='addLink'><span class="glyphicon glyphicon-plus"></span>Add &nbsp;&nbsp;</a>
-						<a href="#removeLink" id='removeLink'><span class="glyphicon glyphicon-minus"></span>Remove</a>
+					<p>	
+						<button type="submit" name="addImage" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add</button>
+						<button type="button" id="removeLink" class="btn btn-primary"><span class="glyphicon glyphicon-minus"></span>&nbsp;Remove</button>
 					</p>
 				</div>
 			</div>
 		</div>
     	
-	    <div class="col-md-10">
+	    <div class="col-md-9 col-xs-6">
 			<div class="input-group">
-				<span class="text-right input-group-btn" >
-					<button name="upload_images"  type="button" class="btn btn-primary">Submit</button>
-					<button name="view_images" type="button" class="btn btn-primary" >View Image</button>
-				</span>
+				<div class="text-right input-group-btn" >
+					<p>
+						<button name="upload_images" type="button" class="btn btn-primary">Submit</button>
+						<button name="view_images" type="button" class="btn btn-primary" >View Image</button>
+					</p>
+				</div>
 			</div>
 		</div>
 
@@ -105,22 +128,13 @@ $(document).ready(function(){
 <div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?')">&nbsp;</div>
 
 <div id="links" style="visibility : hidden">
-	<ul>
+	<ul th:each="mItem : ${appDetailsForm.existingImages}">
 		<li>
-	    	<a href="../../../resources/images/w.macalino_af.jpg" th:href="@{/resources/images/w.macalino_af.jpg}"  title="Application Form" data-gallery="samplegallery"></a>
+	    	<a href="../../../resources/images/w.macalino_af.jpg" th:href="@{#{image.url}} + ${mItem.imageCode} + '/view'" th:title="${mItem.imageType}" title="Application Form" data-gallery="samplegallery"></a>
 	    </li>
-	    <li>
-	    	<a href="../../../resources/images/0029504_id1.jpg" th:href="@{/resources/images/0029504_id1.jpg}" title="Id Proof" data-gallery="samplegallery"></a>
-	    </li>
-	    <li>
-	    	<a href="../../../resources/images/0029504_ps.jpg" th:href="@{/resources/images/0029504_ps.jpg}" title="Income Proof" data-gallery="samplegallery"></a>
-		</li>
-		<li>
-	    	<a href="../../../resources/images/0029504_pob.jpg" th:href="@{/resources/images//0029504_pob.jpg}" title="Billing Proof" data-gallery="samplegallery"></a>
-		</li>
 	</ul>
 </div>
-
+	
 <div id="blueimp-gallery" class="blueimp-gallery">
 	    <!-- The container for the modal slides -->
 	    <div class="slides"></div>
@@ -155,5 +169,37 @@ $(document).ready(function(){
 	        </div>
 	    </div>
 	</div>
+
+<script type="text/javascript">
+function resetForm(id){
+	$('#'+id).val(function(){
+		this.defaultValue;
+	});
+	
+}
+
+$(document).ready(function(){
+	showLoadingGifOnFormSubmit();
+	/*!I Summon the modal screen! */
+	$('button[name="upload_images"]').on('click', function(e){
+	    var $form=$(this).closest('form');
+	    e.preventDefault();
+	    $('#confirmModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirm', function (e) {
+	            $form.trigger('submit');
+	        });
+	});
+	
+	$('button[name="view_images"]').on('click', function(e){
+		$('#links li:first a').click();
+	});
+	/*!I Summon the modal screen! */
+	$("#removeLink").click(function () {
+		var id = ($('.additionalImage .row').length).toString();
+	    $("#additionalImage #row-image_"+ id).remove();
+	});
+});
+
+</script>
 </body>
 </html>

@@ -6,6 +6,12 @@
 <body>
 <div th:replace="fragments/header :: header">Header</div>
 <form class="form-narrow form-horizontal" action="#" method="post" th:action="@{/authenticate}">
+    <!-- /* Handle the flash message */-->
+    <th:block th:if="${message != null}">
+        <!-- /* The message code is returned from the @Controller */ -->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
+    </th:block>
+    
     <th:block th:if="${param.error != null}">
         <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert</div>
     </th:block>

@@ -4,22 +4,30 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.acss.core.merchantupload.validator.NotInValidImageFile;
-
-public class HpsUploadFile {
+import com.acss.core.merchantupload.validator.PendingUploadInformaionData;
+import com.acss.core.merchantupload.validator.UploadInformationData;
+/**
+ * The upload file object used by the UploadInformationDTO
+ * to describe the uploaded file in OSA.
+ * DTO for the upload file.
+ * @author gvargas
+ *
+ */
+public class HpsUploadFileDTO {
 	
 	private static final String NOT_BLANK_MESSAGE = "{notBlank.message}";
 	
-	public HpsUploadFile() {}
+	public HpsUploadFileDTO() {}
 	
-	public HpsUploadFile(String imageType, MultipartFile imageFile) {
+	public HpsUploadFileDTO(String imageType, MultipartFile imageFile) {
 		this.imageType = imageType;
 		this.imageFile = imageFile;
 	}
-
-	@NotBlank(message = HpsUploadFile.NOT_BLANK_MESSAGE)
+	
+	@NotBlank(message = HpsUploadFileDTO.NOT_BLANK_MESSAGE,groups = {UploadInformationData.class,PendingUploadInformaionData.class})
 	private String imageType;
 	
-	@NotInValidImageFile()
+	@NotInValidImageFile(groups = {UploadInformationData.class,PendingUploadInformaionData.class})
 	private MultipartFile imageFile;
 	
 	public String getImageType() {
