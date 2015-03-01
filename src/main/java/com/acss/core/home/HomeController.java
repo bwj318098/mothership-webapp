@@ -14,7 +14,10 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Principal principal,Model model) {
-		model.addAttribute(new UploadInformation());
+		//if model already contains this attribute then initialize it.
+		if(!model.containsAttribute("uploadInformation")){
+			model.addAttribute("uploadInformation",new UploadInformation());
+		}
 		return principal != null ? "home/merchantupload" : "home/index";
 	}
 }

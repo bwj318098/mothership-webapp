@@ -15,7 +15,7 @@ import com.acss.core.model.image.ImageBuilder;
 
 
 /**
- * Implements the fileupload service used for saving file to the server directory
+ * Implements the file-upload service used for saving file to the server directory
  * for streaming purposes.
  * @author gvargas
  *
@@ -26,14 +26,26 @@ public class FileUpload implements FileUploadService {
 	@Autowired
 	private Environment env;
 	/**
-	 * refer to osa.properties for the value of key "upload.directory"
+	 * refer to osa.properties for the value of key 'upload.directory'
 	 */
 	private final String UPLOAD_DIRECTORY_KEY = "upload.directory";
-	private final String RS_IMAGES_URL = "http://localhost:18081/images";
+	/**
+	 * refer to osa.properties for the value of key 'rs.images.url'
+	 */
+	private final String RS_IMAGES_URL_KEY = "rs.images.url";
+	
 	private RestTemplate rt;
 	
 	
-	
+	/**
+	 * Saves the file into the server.
+	 * the upload directory can be configured in osa.properties.
+	 * with key 'upload.directory'
+	 * 
+	 * @param applicationFolder - application number as file grouping.
+	 * @param file - the uploaded file from the client.
+	 * @return boolean
+	 */
 	private boolean saveFile(String applicationFolder,MultipartFile file) {
 		String saveDirectory = env.getProperty(UPLOAD_DIRECTORY_KEY);
 		 String fileName = file.getOriginalFilename();
@@ -45,16 +57,20 @@ public class FileUpload implements FileUploadService {
 	        		if(!newDirectory.exists()) newDirectory.mkdirs();
 					
 	        		file.transferTo(new File(newDirectory.getAbsolutePath()+File.separator+fileName));
+	        		return true;
 				} catch (IllegalStateException | IOException e) {
 					return false;
 				}
-	        }
-		return true;
+	        }else
+	        	return false;
 	}
 	
 	/**
 	 * Processes the uploaded images and information supplied.
 	 * return true if success; false otherwise
+	 * @param uploadInformation - the multipartFile from client which contains information of the upload
+	 * 								by the client.
+	 * @return boolean
 	 */
 	public boolean processUpload(UploadInformation uploadInformation) {
 		List<MultipartFile> files = uploadInformation.getUploadFiles();
@@ -76,7 +92,8 @@ public class FileUpload implements FileUploadService {
 					newImage.setDataCd(appFolder);
 					//do a post on rs-images restful end point.
 					try {
-						rt.postForEntity(RS_IMAGES_URL,newImage,
+						String imagesRestFulEndpoint = env.getProperty(RS_IMAGES_URL_KEY);
+						rt.postForEntity(imagesRestFulEndpoint,newImage,
 										com.acss.core.model.image.ApplicationImage.class);
 					//need to create an elegant way to implement exception handling
 					} catch (Exception e) {

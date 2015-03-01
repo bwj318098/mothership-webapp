@@ -11,7 +11,7 @@ public class SigninController {
 	@RequestMapping(value = "signin")
 	public String signin(Principal principal) {
 		//dispatch to signed in page if logged in instead of login page.
-		return principal != null ? "home/merchantupload" : "signin/signin";
+		return principal != null ? "redirect:/" : "signin/signin";
     }
 
 }

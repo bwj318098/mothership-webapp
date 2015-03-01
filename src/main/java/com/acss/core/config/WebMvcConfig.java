@@ -76,7 +76,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         thymeleafViewResolver.setCharacterEncoding("UTF-8");
         return thymeleafViewResolver;
     }
-
+    
     @Override
     public Validator getValidator() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
@@ -86,7 +86,9 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(RESOURCES_HANDLER).addResourceLocations(RESOURCES_LOCATION);
+        registry
+        	.addResourceHandler(RESOURCES_HANDLER)
+        	.addResourceLocations(RESOURCES_LOCATION);
     }
 
     @Override
@@ -113,7 +115,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     static class FaviconController {
         @RequestMapping("favicon.ico")
         String favicon() {
-            return "forward:/resources/images/favicon.ico";
+            return "forward:/resources/img/favicon.ico";
         }
     }
 }

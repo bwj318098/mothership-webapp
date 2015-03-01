@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,26 +20,42 @@ import com.acss.core.support.web.MessageHelper;
 @Controller
 public class MerchantUploadController {
 	
-	private static final String UPLOAD_VIEW_NAME = "home/merchantupload";
-	
+	final String BINDING_RESULT_KEY = "org.springframework.validation.BindingResult.";
+	final String FILEUPLOAD_MODEL_ATTRIB_KEY = "uploadInformation";
 	
 	@Autowired
 	private FileUploadService uploadService;
 	
-	
 	@RequestMapping(value = "upload" , method = RequestMethod.POST)
 	public String upload(RedirectAttributes ra,
-			@ModelAttribute @Valid UploadInformation uploadInformation,Errors errors){
+			@ModelAttribute @Valid UploadInformation uploadInformation,BindingResult errors){
 		
 		if (errors.hasErrors()) {
-			return UPLOAD_VIEW_NAME;
+			//This is to preserve the validation results in case of redirection.
+			ra.addFlashAttribute(FILEUPLOAD_MODEL_ATTRIB_KEY, uploadInformation);
+			ra.addFlashAttribute(BINDING_RESULT_KEY+FILEUPLOAD_MODEL_ATTRIB_KEY, errors);
+			return "redirect:/";
 		}
 		
         if(uploadService.processUpload(uploadInformation)){
         	MessageHelper.addSuccessAttribute(ra, "upload.success",uploadInformation.getAppNo());
-        }else
+        }else{
         	MessageHelper.addErrorAttribute(ra, "upload.error");
-          
+        }
+        
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "upload",params = {"addImage"})
+	public String addMoreImage(RedirectAttributes ra,
+			@ModelAttribute UploadInformation newUpload,
+			BindingResult errors){
+
+		AdditionalImage additionalImage = new AdditionalImage();
+		newUpload.addMoreImages(additionalImage);
+		
+		ra.addFlashAttribute(FILEUPLOAD_MODEL_ATTRIB_KEY, newUpload);
+		ra.addFlashAttribute(BINDING_RESULT_KEY+FILEUPLOAD_MODEL_ATTRIB_KEY, errors);
 		return "redirect:/";
 	}
 	
