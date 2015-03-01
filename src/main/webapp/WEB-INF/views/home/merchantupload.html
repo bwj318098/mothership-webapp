@@ -45,9 +45,9 @@ $(document).ready(function(){
     <h4>&nbsp;</h4>
     <form id="uploadForm" class="form-horizontal" method="post" th:action="@{/upload}" >
     <div class="row">
-		<div class="col-md-9 col-xs-7">
+		<div class="col-md-9">
 			<div class="input-group">
-				<label for="inputAppNo" class="input-group-addon" id="appNo-addon">Application No. :&nbsp;&nbsp;&nbsp;</label>
+				<label for="inputAppNo" class="input-group-addon imagetype-width" id="appNo-addon">Application No. :&nbsp;&nbsp;&nbsp;</label>
 				<input type="text" class="form-control" id="inputAppNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" readonly="readonly" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary">Generate</button>
@@ -55,9 +55,9 @@ $(document).ready(function(){
 			</div>
 		</div>
 		
-		<div class="col-md-3 col-xs-5">
+		<div class="col-md-3">
 			<div class="input-group">
-				<label for="inputSeqNo" class="input-group-addon" id="seqNo-addon">Sequence No. :&nbsp;&nbsp;&nbsp;</label>
+				<label for="inputSeqNo" class="input-group-addon imagetype-width" id="seqNo-addon">Sequence No. :&nbsp;&nbsp;&nbsp;</label>
 				<input type="text" class="form-control" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
 			</div>
 		</div>
@@ -68,7 +68,7 @@ $(document).ready(function(){
     <div class="row">
 		<div class="col-md-12">
 			<div class="input-group">
-				<label for="inputAppForm" class="input-group-addon" id="appForm-addon">Application Form :</label>
+				<label for="inputAppForm" class="input-group-addon imagetype-width" id="appForm-addon">Application Form :</label>
 				<input type="file" class="form-control" id="inputAppForm"  name="applicationNo" aria-describedby="AppForm-addon" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputAppForm')">Clear</button>
@@ -80,7 +80,7 @@ $(document).ready(function(){
    	<div class="row show-grid">
 	    <div class="col-md-12">
 			<div class="input-group">
-				<label for="inputIdProof" class="input-group-addon" id="idProof-addon">ID Proof &nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<label for="inputIdProof" class="input-group-addon imagetype-width" id="idProof-addon">ID Proof &nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 				<input type="file" class="form-control" id="inputIdProof"  name="idProof" aria-describedby="idProof-addon" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputIdProof')">Clear</button>
@@ -92,7 +92,7 @@ $(document).ready(function(){
     <div class="row">
 	    <div class="col-md-12">
 			<div class="text-right input-group">
-				<label for="inputAddressProof" class="input-group-addon" id="addressProof-addon">Proof of Billing:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<label for="inputAddressProof" class="input-group-addon imagetype-width" id="addressProof-addon">Proof of Billing:&nbsp;&nbsp;&nbsp;&nbsp;</label>
 				<input type="file" class="form-control" id="inputAddressProof"  name="addressProof" aria-describedby="addressProof-addon" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputAddressProof')">Clear</button>
@@ -104,7 +104,7 @@ $(document).ready(function(){
     <div class="row">
 	    <div class="col-md-12">
 			<div class="input-group">
-				<label for="inputIncomeProof" class="input-group-addon" id="incomeProof-addon">Proof of Income :&nbsp;</label>
+				<label for="inputIncomeProof" class="input-group-addon imagetype-width" id="incomeProof-addon">Proof of Income :&nbsp;</label>
 				<input type="file" class="form-control" id="inputIncomeProof"  name="incomeProof" aria-describedby="incomeProof-addon" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputIncomeProof')">Clear</button>

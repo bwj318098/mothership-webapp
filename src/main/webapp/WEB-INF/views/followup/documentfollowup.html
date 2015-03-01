@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/resources :: resources(title=#{view.search.title})"></head>
+<head th:replace="fragments/resources :: resources(title=#{view.followup.title})"></head>
 <script type="text/javascript">
 $(function () {
     $('#datetimepicker_from').datetimepicker();
@@ -30,14 +30,14 @@ function appFormatter(value){
     <form class="form-search form-horizontal">
     <div class="row">
 		<div class="col-md-4">
-			<div class="input-group">
-				<label for="inputAppNo" class="input-group-addon" id="appNo-addon">Application No. :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			<div class="input-group svX3">
+				<label for="inputAppNo" class="input-group-addon imagetype-width" id="appNo-addon">Application No. :</label>
 				<input type="text" class="form-control" id="inputAppNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" />
 			</div>
 		</div>
 		<div class="col-md-5">			
 			<div class='input-group date' id='datetimepicker_from'>
-				<label for="inputAppDate-from" class="input-group-addon" id="appDate-from-addon">Application Date :&nbsp;&nbsp;&nbsp;</label>
+				<label for="inputAppDate-from" class="input-group-addon imagetype-width" id="appDate-from-addon">Application Date :</label>
                 <input type='text' class="form-control" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -56,21 +56,21 @@ function appFormatter(value){
     <h3></h3>
     <div class="row">
 		<div class="col-md-6">
-			<div class="input-group">
-				<label for="inputCustomerName" class="input-group-addon" id="customerName-addon">Customer Name :&nbsp;&nbsp;&nbsp;</label>
+			<div class="input-group svX3">
+				<label for="inputCustomerName" class="input-group-addon imagetype-width" id="customerName-addon">Customer Name :</label>
 				<input type="text" class="form-control" id="inputCustomerName" name="customerName" aria-describedby="customerName-addon" maxlength="30"/>
 			</div>
 		</div>
 		
 		<div class="col-md-3">
-			<div class="input-group">
-				<label for="inputSeqNo" class="input-group-addon" id="seqNo-addon">Sequence No. :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			<div class="input-group svX3">
+				<label for="inputSeqNo" class="input-group-addon imagetype-width" id="seqNo-addon">Sequence No. :</label>
 				<input type="text" class="form-control" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
 			</div>
 		</div>
 		
 		<div class="col-md-3">
-			<div class="input-group">
+			<div class="input-group svX3">
 				<span class="text-right input-group-btn" >
 					<button name="search_app"  type="button" class="btn btn-primary">Search</button>
 					<button name="reset_fields" type="reset" class="btn btn-primary" >Reset</button>

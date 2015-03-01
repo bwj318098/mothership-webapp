@@ -45,6 +45,10 @@ button {
 	width: 100%;
 }
 
+.imagetype-width{
+	width: 140px;
+}
+
 .input-group-addon{
 	text-align: left;
 }

@@ -19,8 +19,13 @@ $(document).ready(function(){
 	            $form.trigger('submit');
 	        });
 	});
-	/*!I Summon the modal screen! */
 	
+	$('button[name="view_images"]').on('click', function(e){
+		$('#links li:first a').click();
+	});
+	
+	
+	/*!I Summon the modal screen! */
 	/*! Customed function for dynamic addition of image with image type */
 	addImageFunction();
 });
@@ -39,15 +44,15 @@ $(document).ready(function(){
     
     <div class="row">
 		<div class="col-md-6">
-			<div class="input-group">
-				<label for="inputAppNo" class="input-group-addon" id="appNo-addon">Application No. :&nbsp;&nbsp;&nbsp;</label>
+			<div class="input-group svX3">
+				<label for="inputAppNo" class="input-group-addon imagetype-width" id="appNo-addon">Application No. :</label>
 				<input type="text" class="form-control" id="inputAppNo" th:field="*{appNo}" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" readonly="readonly" />
 			</div>
 		</div>
 		
 		<div class="col-md-6">
-			<div class="input-group" >
-				<label for="inputCustomerName" class="input-group-addon" id="customerName-addon">Customer Name :&nbsp;</label>
+			<div class="input-group svX3" >
+				<label for="inputCustomerName" class="input-group-addon imagetype-width" id="customerName-addon">Customer Name :</label>
 				<input type="text" class="form-control" id="inputCustomerName" th:field="*{customerName}" name="customerName" aria-describedby="customerName-addon" maxlength="11" readonly="readonly" />
 			</div>
 		</div>
@@ -60,7 +65,7 @@ $(document).ready(function(){
 	   	<div class="row">	   		
 			<div class="col-md-12">
 		    	<div class="input-group svX3">
-					<label for="appImage" style="width: 135px;" class="input-group-addon" id="appImage-addon" th:text="${mItem.imageType}">ImageName:</label>
+					<label for="appImage" class="input-group-addon imagetype-width" id="appImage-addon" th:text="${mItem.imageType}">ImageName:</label>
 					<input type="text" class="form-control" id="appImage" name="appImage" aria-describedby="appImage-addon" readonly="readonly" th:value="${mItem.fileName}" />
 				</div>
 			</div>
@@ -147,5 +152,57 @@ $(document).ready(function(){
 
 <!-- Modal For Pending-->
 <div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?')">&nbsp;</div>
+
+<div id="links" style="visibility : hidden">
+	<ul>
+		<li>
+	    	<a href="../../../resources/images/w.macalino_af.jpg" title="Application Form" data-gallery="samplegallery"></a>
+	    </li>
+	    <li>
+	    	<a href="../../../resources/images/0029504_id1.jpg" title="Id Proof" data-gallery="samplegallery"></a>
+	    </li>
+	    <li>
+	    	<a href="../../../resources/images/0029504_ps.jpg" title="Income Proof" data-gallery="samplegallery"></a>
+		</li>
+		<li>
+	    	<a href="../../../resources/images/0029504_pob.jpg" title="Billing Proof" data-gallery="samplegallery"></a>
+		</li>
+	</ul>
+</div>
+
+<div id="blueimp-gallery" class="blueimp-gallery">
+	    <!-- The container for the modal slides -->
+	    <div class="slides"></div>
+	    <!-- Controls for the borderless lightbox -->
+	    <h3 class="title"></h3>
+	    <a class="prev">‹</a>
+	    <a class="next">›</a>
+	    <a class="close">×</a>
+	    <a class="play-pause"></a>
+	    <ol class="indicator"></ol>
+	    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+	    <div class="modal">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <button type="button" class="close" aria-hidden="true">&times;</button>
+	                    <h4 class="modal-title"></h4>
+	                </div>
+	                <div class="modal-body next">
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-default pull-left prev">
+	                        <i class="glyphicon glyphicon-chevron-left"></i>
+	                        Previous
+	                    </button>
+	                    <button type="button" class="btn btn-primary next">
+	                        Next
+	                        <i class="glyphicon glyphicon-chevron-right"></i>
+	                    </button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </body>
 </html>

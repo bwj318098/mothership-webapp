@@ -16,7 +16,7 @@ function addImageFunction(){
 	    var id = ($('.additionalImage .row').length + 1).toString();
 	    $('#additionalImage').append('<h4></h4><div class="row" id="row-image_'+id+'">'
 	    		+'<div class="col-md-4 col-xs-6"><div class="input-group svX3">'
-	    		+'<label for="inputImageType_'+id+'" style="width: 135px;" class="input-group-addon" id="imageType-addon_'+id+'">Image Type :&nbsp;</label>'
+	    		+'<label for="inputImageType_'+id+'" class="input-group-addon imagetype-width" id="imageType-addon_'+id+'">Image Type :&nbsp;</label>'
 	    		+'<select class="form-control" aria-describedby="imageType-addon_'+id+'" id="inputImageType_'+id+'" name="imageType_'+id+'">'
 	    		+ '<option value="0"></option><option value="1">Application Form</option><option value="2">ID Proof</option><option value="3">Proof of Billing</option><option value="4">Proof of Income</option>'
 	    		+'</select>'
