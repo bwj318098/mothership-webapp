@@ -5,7 +5,7 @@
 </head>
 <body>
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" th:fragment="header" role="navigation">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="icon-bar"></span>
@@ -16,18 +16,18 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
-                <li th:if="${#authorization.expression('isAuthenticated()')}"><a href="#" th:href="@{/}"><span class="glyphicon glyphicon-home"></span>   Merchant Upload</a></li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}"><a href="#about" th:href="@{/search}"><span class="glyphicon glyphicon-search"></span>   Search Application</a></li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}"><a href="#contact" th:href="@{/followup}"><span class="glyphicon glyphicon-folder-open"></span>   Document Follow up</a></li>
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#" th:href="@{/}"><span class="glyphicon glyphicon-home"></span>   Merchant Upload</a></li>
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#about" th:href="@{/search}"><span class="glyphicon glyphicon-search"></span>   Search Application</a></li>
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#contact" th:href="@{/followup}"><span class="glyphicon glyphicon-folder-open"></span>   Document Follow up</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                <li th:if="${#authorization.expression('!hasAnyRole(''ROLE_USER'')')}">
                     <a href="/signin" th:href="@{/signin}">Sign in</a>
                 </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}">
                		<a href="#user"><span class="glyphicon glyphicon-cog"></span>   <span th:text="${#authentication.name}">User Name</span></a>
                 </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}">
                     <a href="/logout" th:href="@{#}" onclick="$('#form').submit();"><span class="glyphicon glyphicon-off"></span>   Logout</a>
                     <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
                 </li>

@@ -35,8 +35,13 @@ class CustomErrorController {
 			statusCode, requestUri, exceptionMessage
 		); 
 		
+		//Redirects to home in case of 404.
+		if(statusCode.intValue() == HttpStatus.NOT_FOUND.value()){
+			return "redirect:/";
+		}
 		model.addAttribute("errorMessage", message);
-        return "error/general";
+        
+		return "error/general";
 	}
 
 	private String getExceptionMessage(Throwable throwable, Integer statusCode) {

@@ -12,7 +12,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -110,7 +109,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         
     /**
      * Handles favicon.ico requests assuring no <code>404 Not Found</code> error is returned.
-     */
+     
     @Controller
     static class FaviconController {
         @RequestMapping("favicon.ico")
@@ -118,4 +117,5 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
             return "forward:/resources/img/favicon.ico";
         }
     }
+    */
 }

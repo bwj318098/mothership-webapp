@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org">
 <head>
-    <title>Welcome to the Spring MVC Quickstart application! Get started quickly by signing up!</title>
+    <title>Error Page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
@@ -11,7 +11,7 @@
 </head>
 <body>
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" th:fragment="header" role="navigation">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="icon-bar"></span>
@@ -36,7 +36,7 @@
 <div class="container">
     <div th:replace="fragments/alert :: alert (type='danger', message=${errorMessage})">Error: Error</div>     
 	
-	<div class="panel-group" id="accordion">
+	<div class="panel-group" id="accordion" th:if="${detailedErrorMsg!=null}">
 	  <div class="panel panel-danger" id="panel1">
 	    <div class="panel-heading">
 	      <h4 class="panel-title">

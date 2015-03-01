@@ -30,17 +30,28 @@ $(document).ready(function () {
     
 });
 
+/*
+function remarkFormatter(value){
+	var $detail_url = 
+		'<table class="table table-striped"><thead class="row"><tr><th class="col-md-1 text-center">VERIFICATION HOME/MOBILE</th><th class="col-md-1 text-center">VERIFICATION OFFICE</th><th class="col-md-1 text-center">OVERALL STAT</th></tr></thead>'
+		+'<tbody><tr><td class="col-md-1">Pending</td>'
+		+'<td class="col-md-1">Pending</td>'
+		+'<td class="col-md-1">Pending</td>'
+		+'</tr></tbody>'
+		+'</table>';
+	return $detail_url;
+}
+*/
 function appFormatter(value){
 	var $detail_url = '<a href="detail" th:href="@{/detail/{0}}">{1}</a>'.format(value,value);
 	return $detail_url;
 }
-
 </script>
 <body>
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
-<div class="container">
+<div class="container-fluid">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
@@ -92,10 +103,17 @@ function appFormatter(value){
 				<label for="inputAppStatus" class="input-group-addon imagetype-width" id="appStatus-addon">Application Status :</label>
 					<select class="form-control" aria-describedby="appStatus-addon" id="inputAppStatus" name="appStatus" th:field="*{appStatus}">
 					    <option value="0"></option>
-					    <option value="1">BAP Check</option>
-					    <option value="2">Accepted</option>
-					    <option value="3">First Assessment</option>
-					    <option value="4">Final Assessment</option>
+					    <option value="1">Documents Submitted</option>
+					    <option value="2">DE1 Finished</option>
+					    <option value="3">BAP Check</option>
+					    <option value="4">Accepted</option>
+					    <option value="5">Survey Requested</option>
+					    <option value="6">1st Assessment</option>
+					    <option value="7">Final Assessment</option>
+					    <option value="8">Verification Pending</option>
+					    <option value="9">Approved</option>
+					    <option value="10">Rejected</option>
+					    <option value="11">Cancelled</option>
 					</select>
 			</div>
 		</div>

@@ -29,6 +29,7 @@ public class ApplicationSearchCriteriaDTO {
 		uri=seqNo!=null?uri+"seqNo="+seqNo+"&":uri;
 		uri=appDateFrom!=null?uri+"appDateFrom="+getAppDateFromAsYYYYMMDD()+"&":uri;
 		uri=appDateTo!=null?uri+"appDateTo="+getAppDateToAsYYYYMMDD()+"&":uri;
+		uri=appStatus!=null?uri+"appStatus="+appStatus+"&":uri;
 		return uri;
 	}
 	

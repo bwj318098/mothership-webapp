@@ -1,7 +1,6 @@
 package com.acss.core.signup;
 
-import java.security.Principal;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,9 @@ public class SignupController {
 	 * Displays the login page
 	 */
 	@RequestMapping(value = "signup")
-	public String signup(Principal principal,Model model) {
+	public String signup(HttpServletRequest request,Model model) {
 		model.addAttribute(new SignupForm());
-		return principal != null ? "redirect:/" : SIGNUP_VIEW_NAME;
+		return request.isUserInRole("ROLE_USER") ? "redirect:/" : SIGNUP_VIEW_NAME;
 	}
 	
 	/**

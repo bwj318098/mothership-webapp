@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: resources(title='Update Password')"></head>
+<body>
+<form class="form-narrow form-horizontal" method="post" th:action="@{/updatePassword}" th:object="${updatePasswordForm}">
+    <!--/* Show general error message when form contains errors */-->
+    <th:block th:if="${#fields.hasErrors('${updatePasswordForm.*}')}">
+        <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
+    </th:block>
+    <fieldset>
+        <legend>Update your password</legend>
+        <div class="form-group" th:classappend="${#fields.hasErrors('password') || #fields.hasErrors('global')}? 'has-error'">
+            <label for="password" class="col-lg-4 control-label">New Password</label>
+            <div class="col-lg-8">
+                <input type="password" class="form-control" id="password" placeholder="password" th:field="*{password}" />
+                <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect password</span>
+            </div>
+        </div>
+        
+        <div class="form-group" th:classappend="${#fields.hasErrors('confirmPassword') || #fields.hasErrors('global')}? 'has-error'">
+            <label for="confirmPassword" class="col-lg-4 control-label">Confirm New Password</label>
+            <div class="col-lg-8">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="confirm password" th:field="*{confirmPassword}" />
+                <span class="help-block" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Incorrect confirmPassword</span>
+            	<span class="help-block" th:if="${#fields.hasErrors('global')}" th:errors="*{global}">Password should match</span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-lg-offset-4 col-lg-8">
+                <button type="submit" class="btn btn-primary">Update Password</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-4 col-lg-8">
+                <p>Already have an account? <a href="signin" th:href="@{/signin}">Sign In</a></p>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</body>
+</html>

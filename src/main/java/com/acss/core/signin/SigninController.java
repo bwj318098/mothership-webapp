@@ -1,6 +1,6 @@
 package com.acss.core.signin;
 
-import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +11,9 @@ import com.acss.core.support.web.MessageHelper;
 public class SigninController {
 
 	@RequestMapping(value = "signin")
-	public String signin(Principal principal) {
+	public String signin(HttpServletRequest request) {
 		//dispatch to signed in page if logged in instead of login page.
-		return principal != null ? "redirect:/" : "signin/signin";
+		return request.isUserInRole("ROLE_USER") ? "redirect:/" : "signin/signin";
     }
 	
 	@RequestMapping(value="invalidSession")

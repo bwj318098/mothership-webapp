@@ -112,12 +112,21 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+		</dependency>
 		
 		<dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-		
+		<!-- Mail Support -->
+		<dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
 		<!-- In-house Artifact -->
 		<dependency>
 			<groupId>com.acss.kaizen</groupId>
@@ -129,6 +138,7 @@
 			<artifactId>acss-model</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
 	</dependencies>
 	
   <build>
@@ -139,7 +149,8 @@
 			<artifactId>tomcat7-maven-plugin</artifactId>
 			<version>2.2</version>
 			<configuration>
-				<path>/HP</path>
+				<path>/</path>
+				<port>80</port>
 			</configuration>
 		</plugin>
 		

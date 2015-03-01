@@ -73,6 +73,7 @@ public class UserService implements UserDetailsService{
 	 * @return
 	 */
 	private GrantedAuthority createAuthority(Account account) {
+		//TODO split the roles here gail in case of multiple modules grants
 		return new SimpleGrantedAuthority(account.getAuthority().getRole());
 	}
 
