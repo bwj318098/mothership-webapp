@@ -3,8 +3,13 @@ package com.acss.core.merchantupload;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,10 +20,26 @@ import com.acss.core.support.web.MessageHelper;
 @Controller
 public class MerchantUploadController {
 	
+	private static final String UPLOAD_VIEW_NAME = "home/merchantupload";
+	
+	
+	@Autowired
+	private FileUploadService uploadService;
+	
+	
 	@RequestMapping(value = "upload" , method = RequestMethod.POST)
-	public String upload(RedirectAttributes ra){
-        MessageHelper.addSuccessAttribute(ra, "upload.success");
-        //TODO Please add details in here for retrieving from web service.
+	public String upload(RedirectAttributes ra,
+			@ModelAttribute @Valid UploadInformation uploadInformation,Errors errors){
+		
+		if (errors.hasErrors()) {
+			return UPLOAD_VIEW_NAME;
+		}
+		
+        if(uploadService.processUpload(uploadInformation)){
+        	MessageHelper.addSuccessAttribute(ra, "upload.success",uploadInformation.getAppNo());
+        }else
+        	MessageHelper.addErrorAttribute(ra, "upload.error");
+          
 		return "redirect:/";
 	}
 	
@@ -43,7 +64,7 @@ public class MerchantUploadController {
 		List<ApplicationImage> images = new ArrayList<ApplicationImage>();
 		images.add(appImage);
 		images.add(idImage);
-		//TODO replace this stub with live implementation.
+		
 		appDetailsForm.setCustomerName(appNo+"'s Name");
 		appDetailsForm.setAppNo(appNo);
 		appDetailsForm.setImages(images);
