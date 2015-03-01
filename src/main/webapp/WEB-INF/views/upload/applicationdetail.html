@@ -124,10 +124,14 @@
     	<div class="col-md-3 col-xs-6">
 			<div class="input-group">
 				<div class="input-group-btn">
-					<p>	
-						<button type="submit" name="addImage" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add</button>
-						<button type="button" id="removeLink" class="btn btn-primary"><span class="glyphicon glyphicon-minus"></span>&nbsp;Remove</button>
-					</p>
+					<div class="row">
+						<div class="col-md-4 col-xs-4">
+							<button type="submit" name="addImage" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add</button>
+						</div>
+						<div class="col-md-8 col-xs-8">
+							<button type="button" id="removeLink" class="btn btn-primary"><span class="glyphicon glyphicon-minus"></span>&nbsp;Remove</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -135,14 +139,17 @@
 	    <div class="col-md-9 col-xs-6">
 			<div class="input-group">
 				<div class="text-right input-group-btn" >
-					<p>
 						<input type="hidden" th:field="*{applicationStatus}" name="applicationStatus"/>
 						<button th:if="${appDetailsForm.applicationStatus=='With Pending Documents'}"  name="completeSubmission" type="button" class="btn btn-primary">Submit</button>
 						<button name="complete" type="submit" class="btn btn-primary" style="display: none;">doCompleteApplication</button>
-						
-						<button name="attach_images" type="button" class="btn btn-primary">Attach Image/s</button>
-						<button name="view_images" type="button" class="btn btn-primary" >View Image/s</button>
-					</p>
+						<div class="row">
+							<div class="col-md-8 col-md-offset-2 col-xs-4 col-xs-offset-2">
+								<button name="attach_images" type="button" class="btn btn-primary">Attach Image/s</button>
+							</div>
+							<div class="col-md-2 col-xs-6">
+								<button name="view_images" type="button" class="btn btn-primary" >View Image/s</button>
+							</div>
+						</div>
 				</div>
 			</div>
 		</div>

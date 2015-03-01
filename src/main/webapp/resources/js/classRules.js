@@ -17,7 +17,8 @@ jQuery.extend(jQuery.validator.messages, {
     range: jQuery.validator.format("Please enter a value between {0} and {1}."),
     max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
     min: jQuery.validator.format("Please enter a value greater than or equal to {0}."),
-    regex: " "
+    regex: " ",
+    skip_or_fill_minimum: " "
 });
 
 $.validator.addMethod("regex", function(value, element, param) {
@@ -36,7 +37,6 @@ $.validator.addMethod("checkUserName", $.validator.methods.remote,
 
 $.validator.addMethod("checkStoreCd", $.validator.methods.remote,
 "Store Code does not exists!");
-
 
 $.validator.addClassRules({
     
@@ -78,6 +78,39 @@ $.validator.addClassRules({
         maxlength: 50,
         required: true
    },
+   //id card type and card no. group
+   idGroup:{
+	   required: true,
+	   skip_or_fill_minimum: [2,".idGroup"]
+   },
+   otherGroup:{
+	   skip_or_fill_minimum: [2,".otherGroup"]
+   },
+   
+   //only product 1 is required
+   productGroup_1: {
+	   required: true,
+	   skip_or_fill_minimum: [6,".productGroup_1"]
+   },
+   
+   productGroup_2: {       
+	   skip_or_fill_minimum: [6,".productGroup_2"]
+   },
+   
+   productGroup_3: {       
+	   skip_or_fill_minimum: [6,".productGroup_3"]
+   },
+   
+   //name group
+   spouseName:{
+	   skip_or_fill_minimum: [2,".spouseName"]
+   },
+   
+   motherMaidenName:{
+	   skip_or_fill_minimum: [2,".motherMaidenName"]
+   },
+   
+   
    
    /**
     * <validation name>_<size>_<req or not req>
@@ -110,10 +143,58 @@ $.validator.addClassRules({
        required: true
        //regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+"
    },
+   
+   phone_reg_4: {
+       maxlength: 4,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   phoneno_11: {
+       maxlength: 11,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   phone_reg_4_req: {
+       maxlength: 4,
+       required: true,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   phoneno_11_req: {
+       maxlength: 11,
+       required: true,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   //made a separate grouping for other phone elements
+   homePhone :{
+	   skip_or_fill_minimum: [2,".homePhone"]
+   },
+
+   homeMobile :{
+	   skip_or_fill_minimum: [2,".homeMobile"]
+   },
+   otherPhone :{
+	   skip_or_fill_minimum: [2,".otherPhone"]
+   },
+   corpPhone :{
+	   skip_or_fill_minimum: [2,".corpPhone"]
+   },
+   
+   //reference
+   refHomePhone :{
+	   skip_or_fill_minimum: [2,".refHomePhone"]
+   },
+   refHomeMobile :{
+	   skip_or_fill_minimum: [2,".refHomeMobile"]
+   },
+   refCorpPhone :{
+	   skip_or_fill_minimum: [2,".refCorpPhone"]
+   },
+   
+   
    any_5_req: {
        maxlength: 5,
-       required: true,
-       regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+"
+       required: true
    },
    any_6_req: {
        maxlength: 6,
@@ -127,32 +208,51 @@ $.validator.addClassRules({
        required: true
    },
    
+   any_30: {
+       maxlength: 30
+   },
+   
+   any_30_req: {
+       maxlength: 30,
+       required: true
+   },
+   
+   currency_10: {
+       maxlength: 10,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
    currency_10_req: {
        maxlength: 10,
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?",
        required: true
    },
    
-   any_20_req: {
-       maxlength: 10,
+   any_20: {
+       maxlength: 20,
        //regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+",
+   },
+   
+   any_20_req: {
+       maxlength: 20,
        required: true
    },
    
    any_50_req: {
        maxlength: 50,
-       regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+",
        required: true
    },
    
    any_50: {
-       maxlength: 50,
-       regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+"
+       maxlength: 50
+   },
+   
+   any_70: {
+       maxlength: 70
    },
    
    any_70_req: {
        maxlength: 70,
-       regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+",
        required: true
    },
    
@@ -166,6 +266,7 @@ $.validator.addClassRules({
 function validateForm(arg){
 	_form = arg;
 	$(_form).validate({
+
 		highlight: function (element) {
             $(element).closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
         },

@@ -17,6 +17,11 @@ public class InstallmentDetail {
 	private ProcessingFeePayType processingFeePayType;
 	private BigDecimal promoVoucher;
 	
+	public InstallmentDetail(){
+		//initialize into normal processing fee payment type.
+		setProcessingFeePayType(ProcessingFeePayType.NORMAL);
+	}
+	
 	public ProductDetail getFirstProduct() {
 		return firstProduct;
 	}

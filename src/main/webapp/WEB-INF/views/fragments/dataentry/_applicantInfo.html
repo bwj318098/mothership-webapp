@@ -46,12 +46,12 @@
 								<div class="col-md-3"><label class="control-label" for="idType">Type of ID </label></div>
 								<div class="col-md-3">
 									
-									<select th:field="*{applicantId.idType}" name="idType" class="form-control selectField" id="idType">
+									<select th:field="*{applicantId.idType}" name="idType" class="form-control selectField idGroup" id="idType">
 										<option value=""></option>
 							  			<option th:each="item : ${idTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
 									</select>
 								</div>
-								<div class="col-md-3"><input th:field="*{applicantId.idCardNo}" name="idNo" type="text" class="form-control any_20_req" id="idNo" placeholder="ID No." maxlength="20" /> </div>
+								<div class="col-md-3"><input th:field="*{applicantId.idCardNo}" name="idNo" type="text" class="form-control any_20_req idGroup" id="idNo" placeholder="ID No." maxlength="20" /> </div>
 								<div class="col-md-3"></div>
 							</div>
 						</div>
@@ -78,13 +78,13 @@
 							<div class="row">
 								<div class="col-md-3"><label class="control-label" for="otherIdType">Other ID </label></div>
 								<div class="col-md-3">
-									<select th:field="*{otherId.idType}" name="otherIdType" class="form-control selectField" id="otherIdType">
+									<select th:field="*{otherId.idType}" name="otherIdType" class="form-control otherGroup" id="otherIdType">
 							  			<option value=""></option>					
 										<option th:each="item : ${idTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
 									</select> 
 								
 								</div>
-								<div class="col-md-3"><input th:field="*{otherId.idCardNo}" name="otherIdNo" type="text" class="form-control any_20_req" id="otherIdNo" placeholder="ID No." maxlength="20" /> </div>
+								<div class="col-md-3"><input th:field="*{otherId.idCardNo}" name="otherIdNo" type="text" class="form-control any_20 otherGroup" id="otherIdNo" placeholder="ID No." maxlength="20" /> </div>
 								<div class="col-md-3"></div>
 							</div>
 						</div>
@@ -210,10 +210,10 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<div class="col-xs-5">
-											<input th:field="*{homePhone.region}" name="homePhoneReg" type="text" class="form-control numeric" id="homePhoneReg" placeholder="_ _ _" maxlength="4"/> 
+											<input th:field="*{homePhone.region}" name="homePhoneReg" type="text" class="form-control numeric phone_reg_4 homePhone" id="homePhoneReg" placeholder="_ _ _" maxlength="4"/> 
 										</div>
 										<div class="col-xs-7">
-											<input th:field="*{homePhone.phoneNo}" name="homePhoneNo" type="text" class="form-control numeric" id="homePhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
+											<input th:field="*{homePhone.phoneNo}" name="homePhoneNo" type="text" class="form-control numeric phoneno_11 homePhone" id="homePhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
 										</div> 
 									</div>
 								</div>
@@ -222,10 +222,10 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<div class="col-xs-5">
-											<input th:field="*{homeMobile.region}" name="homeMobileReg" type="text" class="form-control numeric" id="homeMobileReg" placeholder="_ _ _" maxlength="4"/> 
+											<input th:field="*{homeMobile.region}" name="homeMobileReg" type="text" class="form-control numeric phone_reg_4 homeMobile" id="homeMobileReg" placeholder="_ _ _" maxlength="4"/> 
 										</div>
 										<div class="col-xs-7">
-											<input th:field="*{homeMobile.phoneNo}" name="homeMobileNo" type="text" class="form-control numeric" id="homeMobileNo" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
+											<input th:field="*{homeMobile.phoneNo}" name="homeMobileNo" type="text" class="form-control numeric phoneno_11 homeMobile" id="homeMobileNo" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
 										</div> 
 									</div>
 								</div>
@@ -240,10 +240,10 @@
 							  <div class="col-md-6">
 							  		<div class="form-group">
 										<div class="col-xs-5">
-											<input th:field="*{otherPhone.region}" name="homeotherNumberReg" type="text" class="form-control numeric"	id="homeotherNumberReg" placeholder="_ _ _" maxlength="4"/> 
+											<input th:field="*{otherPhone.region}" name="homeotherNumberReg" type="text" class="form-control numeric phone_reg_4 otherPhone"	id="homeotherNumberReg" placeholder="_ _ _" maxlength="4"/> 
 										</div>
 										<div class="col-xs-7">
-											<input th:field="*{otherPhone.phoneNo}" name="homeotherNumberNo" type="text" class="form-control numeric" id="homeotherNumber" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
+											<input th:field="*{otherPhone.phoneNo}" name="homeotherNumberNo" type="text" class="form-control numeric phoneno_11 otherPhone" id="homeotherNumber" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
 										</div> 
 									</div>
 							  </div>
@@ -309,9 +309,9 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-3"><label class="control-label" for="spouseName">Spouse Name</label></div>
-							  	<div class="col-md-3"><input th:field="*{spouseName.firstName}" name="spouseFirstName" type="text" class="form-control name_30_req" id="spouseFirstName" placeholder="First Name" maxlength="30" /> </div>
+							  	<div class="col-md-3"><input th:field="*{spouseName.firstName}" name="spouseFirstName" type="text" class="form-control name_30 spouseName" id="spouseFirstName" placeholder="First Name" maxlength="30" /> </div>
 							  	<div class="col-md-3"><input th:field="*{spouseName.middleName}" name="spouseMiddleName" type="text" class="form-control name_30" id="spouseMiddleName" placeholder="Middle Name" maxlength="30"/> </div>
-							  	<div class="col-md-3"><input th:field="*{spouseName.surName}" name="spouseSurName" type="text" class="form-control name_30_req" id="spouseSurName" placeholder="Surname" maxlength="30"/> </div>
+							  	<div class="col-md-3"><input th:field="*{spouseName.surName}" name="spouseSurName" type="text" class="form-control name_30 spouseName" id="spouseSurName" placeholder="Surname" maxlength="30"/> </div>
 						  	</div>
 						</div>
 					</div>
@@ -396,9 +396,9 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-3"><label class="control-label" for="motherMaidenName">Mother's Maiden Name</label></div>
-							  	<div class="col-md-3"><input th:field="*{motherMaidenName.firstName}" name="motherMaidenFirstName" type="text" class="form-control name_30" id="motherMaidenFirstName" placeholder="First Name" maxlength="30"/> </div>
+							  	<div class="col-md-3"><input th:field="*{motherMaidenName.firstName}" name="motherMaidenFirstName" type="text" class="form-control name_30 motherMaidenName" id="motherMaidenFirstName" placeholder="First Name" maxlength="30"/> </div>
 							  	<div class="col-md-3"><input th:field="*{motherMaidenName.middleName}" name="motherMaidenMiddleName" type="text" class="form-control name_30" id="motherMaidenMiddleName" placeholder="Middle Name" maxlength="30" /> </div>
-							  	<div class="col-md-3"><input th:field="*{motherMaidenName.surName}" name="motherMaidenSurName" type="text" class="form-control name_30" id="motherMaidenSurName" placeholder="Surname" maxlength="30"/> </div>
+							  	<div class="col-md-3"><input th:field="*{motherMaidenName.surName}" name="motherMaidenSurName" type="text" class="form-control name_30 motherMaidenName" id="motherMaidenSurName" placeholder="Surname" maxlength="30"/> </div>
 						  	</div>
 						</div>
 					</div>

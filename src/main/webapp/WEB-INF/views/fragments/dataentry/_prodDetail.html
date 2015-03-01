@@ -27,12 +27,12 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input th:field="*{installment.firstProduct.category}" name="category_1" type="text" class="form-control name_30_req" id="category_1" placeholder="Category I" maxlength="30"/></div>
-						<div class="col-md-3"><input th:field="*{installment.firstProduct.description}" name="description_1" type="text" class="form-control any_70_req" id="description_1" placeholder="Description I" maxlength="70"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.brand}" name="brand_1" type="text" class="form-control name_30_req" id="brand_1" placeholder="Brand I" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.modelNo}" name="model_1" type="text" class="form-control name_30_req" id="model_1" placeholder="Model I" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.price}" name="price_1" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_1" placeholder="Price I" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:field="*{installment.firstProduct.downPayment}" name="downpayment_1" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_1" placeholder="DP I" maxlength="11"/></div>
+						<div class="col-md-2"><input th:field="*{installment.firstProduct.category}" name="category_1" type="text" class="form-control any_30_req productGroup_1" id="category_1" placeholder="Category I" maxlength="30"/></div>
+						<div class="col-md-3"><input th:field="*{installment.firstProduct.description}" name="description_1" type="text" class="form-control any_70_req productGroup_1" id="description_1" placeholder="Description I" maxlength="70"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.brand}" name="brand_1" type="text" class="form-control any_30_req productGroup_1" id="brand_1" placeholder="Brand I" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.modelNo}" name="model_1" type="text" class="form-control any_30_req productGroup_1" id="model_1" placeholder="Model I" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.price}" name="price_1" type="text" class="form-control numeric-decimal text-right currency_10_req productGroup_1" id="price_1" placeholder="Price I" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.firstProduct.downPayment}" name="downpayment_1" type="text" class="form-control numeric-decimal text-right currency_10_req productGroup_1" id="downpayment_1" placeholder="DP I" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -42,12 +42,12 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input th:field="*{installment.secondProduct.category}" name="category_2" type="text" class="form-control name_30_req" id="category_2" placeholder="Category II" maxlength="30"/></div>
-						<div class="col-md-3"><input th:field="*{installment.secondProduct.description}"  name="description_2" type="text" class="form-control any_70_req" id="description_2" placeholder="Description II" maxlength="70"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.brand}" name="brand_2" type="text" class="form-control name_30_req" id="brand_2" placeholder="Brand II" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.modelNo}" name="model_2" type="text" class="form-control name_30_req" id="model_2" placeholder="Model II" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.price}" name="price_2" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_2" placeholder="Price II" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:field="*{installment.secondProduct.downPayment}" name="downpayment_2" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_2" placeholder="DP II" maxlength="11"/></div>
+						<div class="col-md-2"><input th:field="*{installment.secondProduct.category}" name="category_2" type="text" class="form-control any_30 productGroup_2" id="category_2" placeholder="Category II" maxlength="30"/></div>
+						<div class="col-md-3"><input th:field="*{installment.secondProduct.description}"  name="description_2" type="text" class="form-control any_70 productGroup_2" id="description_2" placeholder="Description II" maxlength="70"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.brand}" name="brand_2" type="text" class="form-control any_30 productGroup_2" id="brand_2" placeholder="Brand II" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.modelNo}" name="model_2" type="text" class="form-control any_30 productGroup_2" id="model_2" placeholder="Model II" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.price}" name="price_2" type="text" class="form-control numeric-decimal text-right currency_10 productGroup_2" id="price_2" placeholder="Price II" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.secondProduct.downPayment}" name="downpayment_2" type="text" class="form-control numeric-decimal text-right currency_10 productGroup_2" id="downpayment_2" placeholder="DP II" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -57,12 +57,12 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input th:field="*{installment.thirdProduct.category}" name="category_3" type="text" class="form-control name_30_req" id="category_3" placeholder="Category III" maxlength="30"/></div>
-						<div class="col-md-3"><input th:field="*{installment.thirdProduct.description}" name="description_3" type="text" class="form-control any_70_req" id="description_3" placeholder="Description III" maxlength="70"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.brand}" name="brand_3" type="text" class="form-control name_30_req" id="brand_3" placeholder="Brand III" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.modelNo}" name="model_3" type="text" class="form-control name_30_req" id="model_3" placeholder="Model III" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.price}" name="price_3" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_3" placeholder="Price III" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:field="*{installment.thirdProduct.downPayment}" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_3" placeholder="DP III" maxlength="11"/></div>
+						<div class="col-md-2"><input th:field="*{installment.thirdProduct.category}" name="category_3" type="text" class="form-control any_30 productGroup_3" id="category_3" placeholder="Category III" maxlength="30"/></div>
+						<div class="col-md-3"><input th:field="*{installment.thirdProduct.description}" name="description_3" type="text" class="form-control any_70 productGroup_3" id="description_3" placeholder="Description III" maxlength="70"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.brand}" name="brand_3" type="text" class="form-control any_30 productGroup_3" id="brand_3" placeholder="Brand III" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.modelNo}" name="model_3" type="text" class="form-control any_30 productGroup_3" id="model_3" placeholder="Model III" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.price}" name="price_3" type="text" class="form-control numeric-decimal text-right currency_10 productGroup_3" id="price_3" placeholder="Price III" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.thirdProduct.downPayment}" type="text" class="form-control numeric-decimal text-right currency_10 productGroup_3" id="downpayment_3" placeholder="DP III" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -74,7 +74,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Monthly Interest Rate</label></div>
-						<div class="col-md-1"><input  th:field="*{installment.rate}" name="interest" type="text" class="form-control size_5_mandatory numeric-decimal" id="interest" placeholder="%" maxlength="5"/></div>
+						<div class="col-md-1"><input  th:field="*{installment.rate}" name="interest" type="text" class="form-control any_6_req numeric-decimal" id="interest" placeholder="%" maxlength="5"/></div>
 						<div class="col-md-2"><label class="control-label" for="category_1">Installment Term</label></div>
 					  	<div class="col-md-1">
 					  		<select th:field="*{installment.term}" name="accountType" class="form-control selectField" id="accountType">
@@ -120,7 +120,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Store Code</label></div>
-						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Store Code" readonly="readonly"/></div>
+						<div class="col-md-3"><input th:field="*{store.storeCd}" type="text" class="form-control" id="storeCd" placeholder="Store Code" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Finance Amount</label></div>
 						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Finance Amount" readonly="readonly" maxlength="11"/></div>
 				  	</div>
@@ -128,7 +128,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Store Name</label></div>
-						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Store Name" readonly="readonly"/></div>
+						<div class="col-md-3"><input th:field="*{store.storeName}" type="text" class="form-control" id="storeName" placeholder="Store Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Interest Amount</label></div>
 						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Interest Amount" readonly="readonly" maxlength="11"/></div>
 				  	</div>
@@ -136,7 +136,16 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Store Phone No.</label></div>
-						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Store Phone No." readonly="readonly"/></div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<div class="col-xs-5">
+									<input th:field="*{store.storePhone.region}" name="storePhoneReg" type="text" class="form-control numeric" id="storePhoneReg" placeholder="_ _ _" maxlength="4" readonly="readonly"/> 
+								</div>
+								<div class="col-xs-7">
+									<input th:field="*{store.storePhone.phoneNo}" name="storePhoneNo" type="text" class="form-control numeric" id="storePhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="10" readonly="readonly"/>
+								</div> 
+							</div>
+						</div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Total Installment Amount</label></div>
 						<div class="col-md-3"><input type="text" class="form-control numeric text-right" id="category_3" placeholder="Total Installment Amount" readonly="readonly" maxlength="11"/></div>
 				  	</div>
@@ -144,7 +153,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Merchant Staff Name</label></div>
-						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Staff Name" readonly="readonly"/></div>
+						<div class="col-md-3"><input th:field="*{store.merchantStaffName}" type="text" class="form-control" id="merchantStaffName" placeholder="Staff Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Monthly Installment</label></div>
 						<div class="col-md-3"><input type="text" class="form-control numeric text-right" id="category_3" placeholder="Monthly Installment" readonly="readonly" maxlength="11"/></div>
 				  	</div>
@@ -152,15 +161,20 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">AEON Staff</label></div>
-						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Staff Name" readonly="readonly"/></div>
+						<div class="col-md-3"><input th:field="*{store.aeonStaff}" type="text" class="form-control" id="aeonStaff" placeholder="Staff Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Processing Fee(b)</label></div>
 						<div class="col-md-3"><input type="text" class="form-control numeric text-right" id="category_3" placeholder="Processing Fee" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="category_1">AEON Staff Date Received</label></div>
-						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Staff Date Received" readonly="readonly"/></div>					
+						<div class="col-md-2"><label class="control-label" for="receivedDate">AEON Staff Date Received </label></div>
+						  <div class="col-md-3">
+							<div class="input-group date" id='receivedDatePicker'> 
+								<input type='text' th:field="*{store.receivedDate}" class="form-control any_10_req" name="receivedDate" maxlength="10"/>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						  	</div>
+						</div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Initial Cash Outlay(a+b)</label></div>
 						<div class="col-md-3"><input type="text" class="form-control numeric text-right" id="category_3" placeholder="Initial Cashout" readonly="readonly" maxlength="11"/></div>
 				  	</div>
@@ -169,11 +183,9 @@
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Promoter Screening</label></div>
 						<div class="col-md-3">
-							<select class="form-control" id="promoterScreening">
+							<select th:field="*{store.promoScreening}" name="promoScreening" class="form-control selectField" id="promoScreening">
 					  			<option value=""></option>					
-								<option>A</option>
-								<option>B</option>
-								<option>C</option>
+								<option th:each="item : ${promoterScreeningList}" th:value="${item}" th:text="#{${item.value}}"></option>
 							</select>
 						</div>						
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">First Payment Date</label></div>
@@ -183,7 +195,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Comment</label></div>
-						<div class="col-md-5"><textarea class="form-control"></textarea></div>
+						<div class="col-md-5"><textarea th:field="*{comment}" class="form-control"></textarea></div>
 						<div class="col-md-2"><label class="control-label" for="category_1">Final Payment Date</label></div>
 						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
 				  	</div>

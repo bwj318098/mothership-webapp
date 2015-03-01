@@ -12,6 +12,7 @@ import com.acss.core.dataentry.common.InstallmentDetail;
 import com.acss.core.dataentry.common.NameField;
 import com.acss.core.dataentry.common.PhoneField;
 import com.acss.core.dataentry.common.ReferenceData;
+import com.acss.core.dataentry.common.StoreInformation;
 import com.acss.core.dataentry.common.constants.BankAccountType;
 import com.acss.core.dataentry.common.constants.Citizenship;
 import com.acss.core.dataentry.common.constants.CivilStatus;
@@ -78,15 +79,18 @@ public class DataEntryDTO {
 	private String accountNo;
 	private BankAccountType accountType;
 	private String accountName;
-	//* * * * * * * * * * * * * * * *Bank Account Information Ends Here * * * * * * * * * * * * * *
+	//* * * * * * * * * * * * * * * *Bank Account Information Ends Here * * * * * * * * * * * * * 
 	
 	//* * * * * * * * * * * * * * * *Reference Information Starts Here * * * * * * * * * * * * * *
 	private ReferenceData referenceData;
-	//* * * * * * * * * * * * * * * *Reference Information Ends Here * * * * * * * * * * * * * * *
 	
-	//* * * * * * * * * * * * * * * *Installment Information Starts Here * * * * * * * * * * * * * *
+	//* * * * * * * * * * * * * * * *Installment Information Starts Here * * * * * * * * * * * * *
 	private InstallmentDetail installment;
-	//* * * * * * * * * * * * * * * *Installment Information Ends Here * * * * * * * * * * * * * * *
+	
+	//* * * * * * * * * * * * * * * *Installment Information Starts Here * * * * * * * * * * * * *
+	private StoreInformation store;
+	
+	private String comment;
 	
 	public NameField getApplicantName() {
 		return applicantName;
@@ -334,7 +338,18 @@ public class DataEntryDTO {
 	public void setInstallment(InstallmentDetail installment) {
 		this.installment = installment;
 	}
+	public StoreInformation getStore() {
+		return store;
+	}
+	public void setStore(StoreInformation store) {
+		this.store = store;
+	}
 	
-	
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 	
 }
