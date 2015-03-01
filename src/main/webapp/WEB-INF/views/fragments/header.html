@@ -16,7 +16,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
-                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#" th:href="@{/}"><span class="glyphicon glyphicon-home"></span>    Merchant Upload</a></li>
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#" th:href="@{/}" id="merchantUpload"><span class="glyphicon glyphicon-home"></span>    Merchant Upload</a></li>
                 <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#about" th:href="@{/search}"><span class="glyphicon glyphicon-search"></span>    Search Application</a></li>
                 <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#contact" th:href="@{/followup}"><span class="glyphicon glyphicon-folder-open"></span>     Document Follow up</a></li>
             	<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#settings" th:href="@{/signup}"><span class="glyphicon glyphicon-user"></span>         Account Registration</a></li>
@@ -29,7 +29,7 @@
                		<a href="#user"><span class="glyphicon glyphicon-cog"></span>   <span th:text="${#authentication.name}">User Name</span></a>
                 </li>
                 <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}">
-                    <a href="/logout" th:href="@{#}" onclick="$('#form').submit();"><span class="glyphicon glyphicon-off"></span>   Logout</a>
+                    <a href="/logout" th:href="@{#logout}" onclick="$('#form').submit();"><span class="glyphicon glyphicon-off"></span>   Logout</a>
                     <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
                 </li>
             </ul>

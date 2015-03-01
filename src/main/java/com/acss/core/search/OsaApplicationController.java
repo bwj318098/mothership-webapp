@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.acss.core.merchantupload.FileUploadService;
+import com.acss.core.merchantupload.HpsImageType;
 import com.acss.core.merchantupload.HpsUploadFileDTO;
 import com.acss.core.merchantupload.validator.UploadInformationData;
 import com.acss.core.support.web.MessageHelper;
@@ -27,6 +28,7 @@ public class OsaApplicationController {
 	private static final String BINDING_RESULT_KEY = "org.springframework.validation.BindingResult.";
 	private static final String APPDETAIL_MODEL_ATTRIB_KEY = "appDetailsForm";
 	private static final String APPSEARCH_MODEL_ATTRIB_KEY = "appSearchForm";
+	private static final String APPSEARCH_MODEL_APPSTATUS_KEY = "listAppStatus";
 	private static final String uri = "/applications?";
 	
 	@Autowired
@@ -47,6 +49,7 @@ public class OsaApplicationController {
 				customerName, appDateFrom, appDateTo, appStatus);
 		//retain the search parameter
 		model.addAttribute(APPSEARCH_MODEL_ATTRIB_KEY,searchCriteria);
+		model.addAttribute(APPSEARCH_MODEL_APPSTATUS_KEY,ApplicationStatus.values());
 		model.addAttribute("searchUrl", searchCriteria.appendParameters(uri));
 		
 		return "search/searchapplication";
@@ -71,6 +74,7 @@ public class OsaApplicationController {
 	 */
 	@RequestMapping(value = "detail/{appNo}")
 	public String getApplication(@PathVariable String appNo,Model model){
+		model.addAttribute("listImageType", HpsImageType.values());
 		if(!model.containsAttribute(APPDETAIL_MODEL_ATTRIB_KEY)){
 			ApplicationDetailDTO appDetail = rsApplicationService.getHpsApplication(appNo);
 			model.addAttribute("appDetailsForm",appDetail);

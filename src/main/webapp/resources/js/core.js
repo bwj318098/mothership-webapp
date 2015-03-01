@@ -48,3 +48,37 @@ function enableNumericOnlyForNumericClass(){
 function showLoadingGifOnFormSubmit(){
 	$("form").on('submit',function(){$(".se-pre-con").show();});
 }
+
+/* Show tool-tip for user guide*/
+function enableToolTipForHeader(){
+	$('#merchantUpload').tooltip({title: "Upload new set of images for an application.", animation: true,placement: "auto"});
+	$('[href="/search"]').tooltip({title: "Search existing or previously uploaded application from the system.", animation: true,placement: "auto"});
+	$('[href="/followup"]').tooltip({title: "Search applications for document followup from Head office.", animation: true,placement: "auto"});
+	$('[href="/signup"]').tooltip({title: "Register new merchant promoter or staff in Online Submission Application.", animation: true,placement: "auto"});
+	$('[href="#logout"]').tooltip({title: "Logout to OSA-PH.", animation: true,placement: "auto"});
+}
+
+function enableToolTipForMerchantUpload(){
+	$('[name="generate"]').tooltip({title: "Generate a new application number. Note that this will clear all currently uploaded image/s.", animation: true,placement: "auto"});
+	$('#appNo-addon').tooltip({title: "Generated Application No.", animation: true,placement: "auto"});
+	$('#seqNo-addon').tooltip({title: "Sequence No. stated in physical Application Form.", animation: true,placement: "auto"});
+	$('#appForm-addon').tooltip({title: "Scanned Application Form", animation: true,placement: "auto"});
+	$('#idProof-addon').tooltip({title: "Id Proof e.g. SSS, Govt ID, TIN, Office ID, Passport.", animation: true,placement: "auto"});
+	$('#addressProof-addon').tooltip({title: "Proof of Billing e.g. Electric Bill, Water Bill, Internet Bill.", animation: true,placement: "auto"});
+	$('#incomeProof-addon').tooltip({title: "Proof of Income e.g. Payslip, Bank Statement.", animation: true,placement: "auto"});
+	
+	$('[name="addImage"]').tooltip({title: "Add more images if the above default is not enough. Note that this will clear all currently uploaded image/s.", animation: true,placement: "auto"});
+	$('#removeLink').tooltip({title: "Remove image/s that was previouly added.", animation: true,placement: "auto"});
+	$('[name="clearUpload"]').tooltip({title: "Clears the uploaded file.", animation: true,placement: "auto"});
+	$('[name="upload_images"]').tooltip({title: "Submit the application for Data Entry.", animation: true,placement: "auto"});
+	$('[name="pending_images"]').tooltip({title: "Submit the application as Pending to be completed later. Only Application Form is required.", animation: true,placement: "auto"});
+	$('[id^="imageType-addon_"]').tooltip({title: "Select the appropriate image type per image uploaded.", animation: true,placement: "auto"});
+	$('[name="view_images"]').tooltip({title: "Show images pop-up.", animation: true,placement: "auto",html:true});	
+}
+
+function enableTooltipForSignup(){
+	$('[for="storeCd"]').tooltip({title: "Please enter a valid and existing store code otherwise this will lead to validation error.", animation: true,placement: "auto"});
+	$('[for="username"]').tooltip({title: "Any existing username will result into validation error.", animation: true,placement: "auto"});
+	$('[for="email"]').tooltip({title: "Token for reset password will be sent to this email. Please put a valid email.", animation: true,placement: "auto"});
+	$('[type="submit"]').tooltip({title: "Register a new user with ROLE_USER privileges under the store code entered.", animation: true,placement: "auto"});
+}

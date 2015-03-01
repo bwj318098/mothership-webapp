@@ -1,52 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title=#{view.search.title})"></head>
-<script type="text/javascript">
-$(document).ready(function () {
-	showLoadingGifOnFormSubmit();
-    $('#datetimepicker_from').datetimepicker({
-    	//format: "YYYY-MM-DD HH:mm:ss"
-    	format: "YYYY-MM-DD"
-    });
-    $('#datetimepicker_to').datetimepicker({
-    	//format: "YYYY-MM-DD HH:mm:ss"
-    	format: "YYYY-MM-DD"
-    });
-    $("#datetimepicker_from").on("dp.change", function (e) {
-        $('#datetimepicker_to').data("DateTimePicker").minDate(e.date);
-    });
-    $("#datetimepicker_to").on("dp.change", function (e) {
-        $('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
-    });
-    /*
-    $('#reset_fields').on('click',function(e){
-    	e.preventDefault();
-    	$("form#appSearchForm :input").each(function(){
-    		 var input = $(this);
-    		 input.val('');
-    		});
-    	$("#inputAppStatus").val('0');
-    });*/
-    
-});
-
-/*
-function remarkFormatter(value){
-	var $detail_url = 
-		'<table class="table table-striped"><thead class="row"><tr><th class="col-md-1 text-center">VERIFICATION HOME/MOBILE</th><th class="col-md-1 text-center">VERIFICATION OFFICE</th><th class="col-md-1 text-center">OVERALL STAT</th></tr></thead>'
-		+'<tbody><tr><td class="col-md-1">Pending</td>'
-		+'<td class="col-md-1">Pending</td>'
-		+'<td class="col-md-1">Pending</td>'
-		+'</tr></tbody>'
-		+'</table>';
-	return $detail_url;
-}
-*/
-function appFormatter(value){
-	var $detail_url = '<a href="detail" th:href="@{/detail/{0}}">{1}</a>'.format(value,value);
-	return $detail_url;
-}
-</script>
 <body>
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
@@ -101,19 +55,9 @@ function appFormatter(value){
 		<div class="col-md-4">
 			<div class="input-group svX3">
 				<label for="inputAppStatus" class="input-group-addon imagetype-width" id="appStatus-addon">Application Status :</label>
-					<select class="form-control" aria-describedby="appStatus-addon" id="inputAppStatus" name="appStatus" th:field="*{appStatus}">
-					    <option value="0"></option>
-					    <option value="1">Documents Submitted</option>
-					    <option value="2">DE1 Finished</option>
-					    <option value="3">BAP Check</option>
-					    <option value="4">Accepted</option>
-					    <option value="5">Survey Requested</option>
-					    <option value="6">1st Assessment</option>
-					    <option value="7">Final Assessment</option>
-					    <option value="8">Verification Pending</option>
-					    <option value="9">Approved</option>
-					    <option value="10">Rejected</option>
-					    <option value="11">Cancelled</option>
+					
+					<select class="form-control" aria-describedby="appStatus-addon" id="inputAppStatus" name="appStatus" th:field="*{appStatus}">					
+						<option th:each="enumAppStatus : ${listAppStatus}" th:value="${enumAppStatus.code}" th:text="#{${enumAppStatus.value}}">App Status</option>
 					</select>
 			</div>
 		</div>
@@ -146,8 +90,34 @@ function appFormatter(value){
         </tr>
     </thead>
 	</table>
-    </div>
-    
+    </div>    
 </div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+	showLoadingGifOnFormSubmit();
+	enableToolTipForHeader();
+    $('#datetimepicker_from').datetimepicker({
+    	//format: "YYYY-MM-DD HH:mm:ss"
+    	format: "YYYY-MM-DD"
+    });
+    $('#datetimepicker_to').datetimepicker({
+    	//format: "YYYY-MM-DD HH:mm:ss"
+    	format: "YYYY-MM-DD"
+    });
+    $("#datetimepicker_from").on("dp.change", function (e) {
+        $('#datetimepicker_to').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepicker_to").on("dp.change", function (e) {
+        $('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
+    }); 
+});
+
+
+function appFormatter(value){
+	var $detail_url = '<a href="detail" th:href="@{/detail/{0}}">{1}</a>'.format(value,value);
+	return $detail_url;
+}
+</script>
 </body>
 </html>

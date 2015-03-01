@@ -15,7 +15,7 @@ public class ApplicationSearchCriteriaDTO {
 	private String appDateFrom;
 	private String appDateTo;
 	private String appStatus;
-	
+
 	public ApplicationSearchCriteriaDTO() {}
 	
 	/**

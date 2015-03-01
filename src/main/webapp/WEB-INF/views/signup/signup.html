@@ -27,7 +27,7 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
             <label for="password" class="col-lg-2 control-label">Password</label>
             <div class="col-lg-10">
-                <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+                <input type="password" class="form-control passwordField" id="password" placeholder="Password" th:field="*{password}"/>
                 <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect password</span>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
             <label for="email" class="col-lg-2 control-label">Email</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control" id="email" placeholder="Email Address" th:field="*{email}" />
+                <input type="text" class="form-control emailField" id="email" placeholder="Email Address" th:field="*{email}" />
                 <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
             </div>
         </div>
@@ -87,9 +87,10 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	validateForm('#signupForm');
+	enableToolTipForHeader();
+	enableTooltipForSignup();
+	showLoadingGifOnFormSubmit();
 });
-
-
 </script>
 </body>
 </html>

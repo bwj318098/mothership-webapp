@@ -42,7 +42,7 @@
 	   	<div class="row">	   		
 			<div class="col-md-12">
 		    	<div class="input-group svX3">
-					<label for="appImage" class="input-group-addon imagetype-width" id="appImage-addon" th:text="${mItem.imageType}">ImageName:</label>
+					<label for="appImage" class="input-group-addon imagetype-width" id="appImage-addon" th:text="#{${mItem.imageTypeDesc}}">ImageName:</label>
 					<input type="text" th:field="*{existingImages[__${rowStat.index}__].imageFilename}" class="form-control" id="appImage" name="appImage" aria-describedby="appImage-addon" readonly="readonly" th:value="${mItem.imageFilename}" />
 					<!-- This is for preserving the values for viewing images -->
 					<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageCode}" class="form-control"/>
@@ -64,16 +64,13 @@
 				<div class="col-md-4 col-xs-6" th:classappend="${#fields.hasErrors('additionalImages[__${rowStat.index}__].imageType')}? 'has-error'">
 					<div class="input-group svX3">
 						<label th:attr="for=${'inputImageType_'+rowStat.count}"
-							class="input-group-addon imagetype-width" th:id="${'imageType-addon_'+rowStat.count}">Image
-							Type :&nbsp;</label>
+							class="input-group-addon imagetype-width" th:id="${'imageType-addon_'+rowStat.count}">Image Type :&nbsp;</label>
 							<select class="form-control" th:field="*{additionalImages[__${rowStat.index}__].imageType}"
 							th:attr="aria-describedby=${'imageType-addon_'+rowStat.count}" th:id="${'inputImageType_'+rowStat.count}"
 							th:name="${'imageType_'+rowStat.count}">
 							<option value=""></option>
-	<!-- 					<option value="1">Application Form</option> -->
-							<option value="1">ID Proof</option>
-							<option value="2">Proof of Billing</option>
-							<option value="3">Proof of Income</option></select>
+							<option th:each="enumImageType : ${listImageType}" th:value="${enumImageType.code}" th:text="#{${enumImageType.value}}">Image Type</option>
+							</select>
 					</div>
 					<span class="help-block" th:if="${#fields.hasErrors('additionalImages[__${rowStat.index}__].imageType')}" th:errors="*{additionalImages[__${rowStat.index}__].imageType}">This field is required.</span>
 				</div>
@@ -82,7 +79,7 @@
 						<input type="file" accept="image/*" class="form-control" th:id="${'image_'+rowStat.count}" 
 						th:field="*{additionalImages[__${rowStat.index}__].imageFile}"
 							th:name="${'image_'+rowStat.count}"></input><span
-								class="input-group-btn"><button type="button"
+								class="input-group-btn"><button type="button" name="clearUpload"
 									class="btn btn-primary" th:attr="onclick=${'resetForm(&quot;image_'+rowStat.count +'&quot;)'}">Clear</button></span>
 					</div>
 					<span class="help-block" th:if="${#fields.hasErrors('additionalImages[__${rowStat.index}__].imageFile')}" th:errors="*{additionalImages[__${rowStat.index}__].imageFile}">This field is required.</span>
@@ -130,7 +127,7 @@
 <div id="links" style="visibility : hidden">
 	<ul th:each="mItem : ${appDetailsForm.existingImages}">
 		<li>
-	    	<a href="../../../resources/images/w.macalino_af.jpg" th:href="@{#{image.url}} + ${mItem.imageCode} + '/view'" th:title="${mItem.imageType}" title="Application Form" data-gallery="samplegallery"></a>
+	    	<a href="../../../resources/images/w.macalino_af.jpg" th:href="@{#{image.url}} + ${mItem.imageCode} + '/view'" th:title="#{${mItem.imageTypeDesc}}" title="Application Form" data-gallery="samplegallery"></a>
 	    </li>
 	</ul>
 </div>
@@ -180,6 +177,8 @@ function resetForm(id){
 
 $(document).ready(function(){
 	showLoadingGifOnFormSubmit();
+	enableToolTipForHeader();
+	enableToolTipForMerchantUpload();
 	/*!I Summon the modal screen! */
 	$('button[name="upload_images"]').on('click', function(e){
 	    var $form=$(this).closest('form');

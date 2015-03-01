@@ -81,3 +81,9 @@ body.loading {
 	margin-bottom: 10px;
 	font-weight: 300;
 }
+
+.tooltip-inner {
+    max-width: 250px;
+    /* If max-width does not work, try using width instead */
+    width: 175px; 
+}

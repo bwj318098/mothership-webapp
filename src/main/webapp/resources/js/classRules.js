@@ -1,3 +1,7 @@
+jQuery.extend(jQuery.validator.messages, {
+    remote: "",
+});
+
 //alias the remote validator method and add the custom message.
 $.validator.addMethod("checkUserName", $.validator.methods.remote,
 "Username already exists!");
@@ -16,19 +20,30 @@ $.validator.addClassRules({
 	
 	 required: true,
 	 maxlength: 20,
-		 //Do a remote checking if username is already taken.
-		 checkUserName:{
-			 url: "../users", //make sure to return true or false with a 200 status code
-			 type: "GET"
-		 }
+	 //Do a remote checking if username is already taken.
+	 checkUserName:{
+		 url: "../users", //make sure to return true or false with a 200 status code
+		 type: "GET"
+	 }
     },
+    
     storeCdCheckRemotely:{
     	required: true,
     	checkStoreCd:{
     		url: "../stores",
     		type: "GET"
     	}
-    }
+    },
+    passwordField: {
+        required: true,
+        minlength: 6,
+        maxlength: 20
+    },
+    emailField: {
+   	 email: true,
+        maxlength: 50,
+        required: true
+   },
 	
 });
 

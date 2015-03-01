@@ -3,6 +3,7 @@
 <head th:replace="fragments/resources :: resources(title=#{view.followup.title})"></head>
 <script type="text/javascript">
 $(function () {
+	enableToolTipForHeader();
     $('#datetimepicker_from').datetimepicker();
     $('#datetimepicker_to').datetimepicker();
     $("#datetimepicker_from").on("dp.change", function (e) {
