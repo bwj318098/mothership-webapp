@@ -36,9 +36,13 @@ class CustomErrorController {
 		); 
 		
 		//Redirects to home in case of 404.
-		if(statusCode.intValue() == HttpStatus.NOT_FOUND.value()){
+		if(statusCode.intValue() == HttpStatus.NOT_FOUND.value() ||
+				//Redirects to home in case of 403.
+				statusCode.intValue() == HttpStatus.FORBIDDEN.value()){
 			return "redirect:/";
 		}
+		
+		
 		model.addAttribute("errorMessage", message);
         
 		return "error/general";

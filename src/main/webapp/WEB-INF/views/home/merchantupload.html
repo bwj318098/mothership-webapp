@@ -50,6 +50,7 @@
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputAppForm')">Clear</button>
 				</span>
 			</div>
+			
 			<span class="help-block" th:if="${#fields.hasErrors('appForm')}" th:errors="*{appForm}">This field is required.</span>
 		</div>
     </div>
@@ -63,6 +64,7 @@
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputIdProof')">Clear</button>
 				</span>
 			</div>
+			
 			<span class="help-block" th:if="${#fields.hasErrors('idProof')}" th:errors="*{idProof}">This field is required.</span>
 		</div>
     </div>
@@ -76,6 +78,7 @@
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputAddressProof')">Clear</button>
 				</span>
 			</div>
+			
 			<span class="help-block" th:if="${#fields.hasErrors('addressProof')}" th:errors="*{addressProof}">This field is required.</span>
 		</div>
     </div>

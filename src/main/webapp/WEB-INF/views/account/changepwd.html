@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title='Update Password')"></head>
 <body>
+<!-- Loading gif -->
+<div class="se-pre-con"></div>
 <form class="form-narrow form-horizontal" method="post" th:action="@{/updatePassword}" th:object="${updatePasswordForm}">
     <!--/* Show general error message when form contains errors */-->
     <th:block th:if="${#fields.hasErrors('${updatePasswordForm.*}')}">
@@ -38,5 +40,10 @@
         </div>
     </fieldset>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+	showLoadingGifOnFormSubmit();
+});
+</script>
 </body>
 </html>

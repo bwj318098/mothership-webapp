@@ -2,6 +2,7 @@ package com.acss.core.account;
 
 import static com.acss.kaizen.jooq.poc.db.tables.MAccount.M_ACCOUNT;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,13 +15,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.acss.kaizen.jooq.poc.account.Account;
 import com.acss.kaizen.jooq.poc.base.UpdateableRepository;
 
-public class UserService implements UserDetailsService{
+public class UserService implements OsaUserDetailsService{
 	
 	@Autowired
 	private UpdateableRepository<Account,Long> accountRepo;
@@ -42,6 +42,15 @@ public class UserService implements UserDetailsService{
 			throw new UsernameNotFoundException("users not found"); 
 	}
 	
+	public String getStorecdByUsername(String username){
+		Condition whereUserNameEquals = M_ACCOUNT.USERNAME.equal(username);
+		Account account = accountRepo.findUsingCondition(whereUserNameEquals).get(0);
+		if(account!=null){
+			return account.getStoreCd();
+		}else
+			throw new UsernameNotFoundException("user not found");
+	}
+	
 	/**
 	 * Signs in with an account.
 	 */
@@ -50,12 +59,22 @@ public class UserService implements UserDetailsService{
 	}
 	
 	/**
+	 * 
+	 */
+	public void authenticateTemporarily(Account account){
+		UserDetails user = createUserDetails(account);
+		final Authentication auth = new UsernamePasswordAuthenticationToken(user, null,Collections.singleton(createTempAuthority()));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+	}
+	
+	
+	/**
 	 * Authenticates this account.
 	 * @param account
 	 * @return Authentication
 	 */
 	private Authentication authenticate(Account account) {
-		return new UsernamePasswordAuthenticationToken(createUserDetails(account), null, Collections.singleton(createAuthority(account)));		
+		return new UsernamePasswordAuthenticationToken(createUserDetails(account), null, createAuthorities(account));		
 	}
 	
 	/**
@@ -64,7 +83,7 @@ public class UserService implements UserDetailsService{
 	 * @return
 	 */
 	private User createUserDetails(Account account) {
-		return new User(account.getUsername(), account.getPassword(), Collections.singleton(createAuthority(account)));
+		return new User(account.getUsername(), account.getPassword(), createAuthorities(account));
 	}
 	
 	/**
@@ -72,9 +91,22 @@ public class UserService implements UserDetailsService{
 	 * @param account
 	 * @return
 	 */
-	private GrantedAuthority createAuthority(Account account) {
-		//TODO split the roles here gail in case of multiple modules grants
-		return new SimpleGrantedAuthority(account.getAuthority().getRole());
+	private List<GrantedAuthority> createAuthorities(Account account) {
+		String sRoles = account.getAuthority().getRole();
+		String[] arrayRoles = sRoles.split(",");
+		List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>(arrayRoles.length);
+		
+		for(String sRole:arrayRoles){
+			authorities.add(new SimpleGrantedAuthority(sRole));
+		}
+		return Collections.unmodifiableList(authorities);
 	}
-
+	
+	/**
+	 * ROLE_TEMP for password update only.
+	 * @return
+	 */
+	private GrantedAuthority createTempAuthority() {
+		return new SimpleGrantedAuthority("ROLE_TEMP");
+	}
 }

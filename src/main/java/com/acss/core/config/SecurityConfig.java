@@ -2,6 +2,7 @@ package com.acss.core.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -39,7 +40,11 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         return resolver;
     }
     
-    @Override
+    @Bean(name="myAuthenticationManager")
+    public AuthenticationManager authenticationManagerBean() throws Exception {	
+    	return super.authenticationManagerBean();
+    }
+    
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .eraseCredentials(true)
@@ -51,9 +56,9 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/favicon.ico", "/resources/**", "/signup","/forgotpwd","/changePassword","/invalidSession","/generalError/**").permitAll()
+                .antMatchers("/", "/favicon.ico", "/resources/**","/forgotpwd","/changePassword","/invalidSession","/generalError/**").permitAll()
                 .antMatchers("/updatePassword").hasAnyAuthority("ROLE_TEMP")
-                .anyRequest().hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .anyRequest().hasAnyAuthority("ROLE_USER")
                 .and()
             .formLogin()
                 .loginPage("/signin")

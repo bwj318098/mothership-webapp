@@ -9,10 +9,13 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.acss.core.account.OsaUserDetailsService;
 import com.acss.core.model.application.ApplicationSeqNo;
 import com.acss.core.model.image.ApplicationImage;
 import com.acss.core.model.image.ImageBuilder;
@@ -30,6 +33,8 @@ public class RSFileUpload implements FileUploadService {
 	
 	@Autowired
 	private Environment env;
+	@Autowired
+	private OsaUserDetailsService userService;
 	/**
 	 * refer to osa.properties for the value of key 'upload.directory'
 	 */
@@ -137,6 +142,8 @@ public class RSFileUpload implements FileUploadService {
 		//get a sequence number first.
 		String usingThisGroup = generateRequestedNumType(GROUPID_NUMTYPE_ENTRY);
 		RestTemplate rt = new RestTemplate();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String storeCd = userService.getStorecdByUsername(auth.getName());
 		
 		//if files aren't empty then proceed.
 		if(!hpsFiles.isEmpty()){
@@ -145,7 +152,7 @@ public class RSFileUpload implements FileUploadService {
 				//creates a new instance of application image dto to persist
 				ApplicationImage withThisDTO = 
 						new ImageBuilder().withDefaultValues().build();
-				
+				withThisDTO.setStoreCd(storeCd);
 				withThisDTO.setDataCd(appNo);
 				withThisDTO.setGroupId(usingThisGroup);
 				withThisDTO.setImageType(new BigDecimal(hpsFile.getImageType()));

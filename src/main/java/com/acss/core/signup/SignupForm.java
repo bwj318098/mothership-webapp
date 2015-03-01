@@ -21,6 +21,8 @@ public class SignupForm {
     @NotBlank(message = SignupForm.NOT_BLANK_MESSAGE)
 	private String username;
     @NotBlank(message = SignupForm.NOT_BLANK_MESSAGE)
+	private String storeCd;
+    @NotBlank(message = SignupForm.NOT_BLANK_MESSAGE)
 	private String firstName;
     @NotBlank(message = SignupForm.NOT_BLANK_MESSAGE)
 	private String lastName;
@@ -75,6 +77,14 @@ public class SignupForm {
 		this.password = password;
 	}
 	
+	public String getStoreCd() {
+		return storeCd;
+	}
+
+	public void setStoreCd(String storeCd) {
+		this.storeCd = storeCd;
+	}
+
 	/**
 	 * Maps the an front-end POJO into an Account Entity.
 	 * @return
@@ -94,7 +104,8 @@ public class SignupForm {
 			.withFirstName(getFirstName())
 			.withRole(role)
 			.withStatus(AccountStatus.ACTIVE)
-			.withEmail(getEmail());
+			.withEmail(getEmail())
+			.withStoreCd(getStoreCd());
 		
         return builder.build();
 	}

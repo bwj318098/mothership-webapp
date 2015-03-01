@@ -4,10 +4,13 @@ import static com.acss.kaizen.jooq.poc.db.tables.MAccount.M_ACCOUNT;
 import static com.acss.kaizen.jooq.poc.db.tables.TPasswordresettoken.T_PASSWORDRESETTOKEN;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -56,7 +59,15 @@ public class OsaResetPassword implements ResetPasswordService{
 	 * Gets the generated token for the user
 	 */
 	public PasswordResetToken getPasswordResetToken(String token) {
-		ResetToken rToken = resetTokenRepo.findUsingCondition(T_PASSWORDRESETTOKEN.TOKEN.eq(token)).get(0);
+		ResetToken rToken = null;
+		
+		try{
+			rToken = resetTokenRepo.findUsingCondition(T_PASSWORDRESETTOKEN.TOKEN.eq(token)).get(0);
+		}catch(DataRetrievalFailureException e){
+			//token not found return null
+			return null;
+		}
+		
 		DateTime expiryDate = ACSSDateUtil.getDateAsDateTimeFromBigDecimalDateTime(rToken.getExpiryDate());
 		PasswordResetToken pToken = new PasswordResetToken();
 		pToken.setExpiryDate(expiryDate);
@@ -85,19 +96,29 @@ public class OsaResetPassword implements ResetPasswordService{
 		String url = contextPath + "/changePassword?id=" + user.getId() + "&token=" + token;
 		String message = "To reset the Password please follow the link. ";
 		SimpleMailMessage email = new SimpleMailMessage();
-		//TODO please use the user's email here Gail after the UAT. make sure email is added to whitelist.
 		email.setTo(user.getEmail());
 		email.setSubject("Reset Password");
-		email.setText(message + " rn" + url);
+		email.setText(message + " rn " + url);
 		email.setFrom("osa@aeonphilippines.com.ph");
 		return email;
 	}
 	/**
 	 * Deletes the token after successful update of password.
 	 */
-	public void deleteTokenAfterSuccessfulUpdate(String userId) {
-		ResetToken rToken = resetTokenRepo.findUsingCondition(T_PASSWORDRESETTOKEN.USER_ID.eq(new Integer(userId))).get(0);
-		resetTokenRepo.delete(rToken.getId());
+	public boolean deleteResetToken(String userId) {
+		
+		List<ResetToken> rToken = new ArrayList<>();
+		try{
+			rToken = resetTokenRepo.findUsingCondition(T_PASSWORDRESETTOKEN.USER_ID.eq(new Integer(userId)));
+		}catch(DataRetrievalFailureException e){
+			return false;
+		}
+		if(!rToken.isEmpty()){
+			for(ResetToken token : rToken){
+				resetTokenRepo.delete(token.getId());
+			}
+		}
+		return true;
 	}
 
 }
