@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Registration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${signupForm}">
+    <!--/* Show general error message when form contains errors */-->
+    <th:block th:if="${#fields.hasErrors('${signupForm.*}')}">
+        <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
+    </th:block>
+    <fieldset>
+        <legend>Register Here</legend>
+        <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
+            <label for="username" class="col-lg-2 control-label">Username</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}" />
+                <span class="help-block" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Incorrect username</span>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+            <label for="password" class="col-lg-2 control-label">Password</label>
+            <div class="col-lg-10">
+                <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+                <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect password</span>
+            </div>
+        </div>
+        		
+		<div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-error'">
+            <label for="firstName" class="col-lg-2 control-label">First Name</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="firstName" placeholder="First Name" th:field="*{firstName}" />
+                <span class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Incorrect firstName</span>
+            </div>
+        </div>
+        
+        <div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
+            <label for="lastName" class="col-lg-2 control-label">Last Name</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name" th:field="*{lastName}" />
+                <span class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Incorrect lastName</span>
+            </div>
+        </div>
+        
+        <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+            <label for="email" class="col-lg-2 control-label">Email</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="email" placeholder="Email Address" th:field="*{email}" />
+                <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
+            </div>
+        </div>
+        
+        <div class="form-group" th:classappend="${#fields.hasErrors('address')}? 'has-error'">
+            <label for="address" class="col-lg-2 control-label">Address</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" id="address" placeholder="Address" th:field="*{address}" ></textarea>
+                <span class="help-block" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Incorrect address</span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="submit" class="btn btn-primary">Sign up</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <p>Already have an account? <a href="signin" th:href="@{/signin}">Sign In</a></p>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</body>
+</html>
