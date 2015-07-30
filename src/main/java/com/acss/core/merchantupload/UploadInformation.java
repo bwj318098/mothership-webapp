@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.acss.core.merchantupload.validator.NotEmptyUpload;
+import com.acss.core.merchantupload.validator.NotInValidImageFile;
 
 /**
  * Contains the upload files information, the application number and the sequence number.
@@ -23,7 +23,6 @@ public class UploadInformation {
 	 * example: {notBlank.message} will resolve into #{notBlank.message} message.properties
 	 */
 	private static final String NOT_BLANK_MESSAGE = "{notBlank.message}";
-	private static final String FILE_NOT_BLANK_MESSAGE = "{fileNotBlank.message}";
 	
 	@NotBlank(message = UploadInformation.NOT_BLANK_MESSAGE)
 	private String appNo;
@@ -31,37 +30,37 @@ public class UploadInformation {
 	@NotBlank(message = UploadInformation.NOT_BLANK_MESSAGE)
 	private String seqNo;
 	
-	@NotEmptyUpload(message = UploadInformation.FILE_NOT_BLANK_MESSAGE)
+
+	@NotInValidImageFile
 	private MultipartFile appForm;
-	@NotEmptyUpload(message = UploadInformation.FILE_NOT_BLANK_MESSAGE)
+	
+	@NotInValidImageFile
 	private MultipartFile idProof;
-	@NotEmptyUpload(message = UploadInformation.FILE_NOT_BLANK_MESSAGE)
+	
+	@NotInValidImageFile
 	private MultipartFile addressProof;
-	@NotEmptyUpload(message = UploadInformation.FILE_NOT_BLANK_MESSAGE)
+	
+	@NotInValidImageFile
 	private MultipartFile incomeProof;
 	
 	@Valid
 	@NotNull
-	@Size(min = 1)
-	private List<AdditionalImage> additionalImages;
+	@Size(min = 0)
+	private List<HpsUploadFile> additionalImages;
 	
-	public UploadInformation(){additionalImages=new ArrayList<AdditionalImage>();}
+	public UploadInformation(){additionalImages=new ArrayList<HpsUploadFile>();}
 	
-	public List<MultipartFile> getUploadFiles(){
-		List<MultipartFile> files = new ArrayList<>();
-		if(!this.appForm.isEmpty())files.add(this.appForm);
-		if(!this.idProof.isEmpty())files.add(this.idProof);
-		if(!this.addressProof.isEmpty())files.add(this.addressProof);
-		if(!this.incomeProof.isEmpty())files.add(this.incomeProof);
-		//add more images
-		for(AdditionalImage additionalImage:this.additionalImages){
-			MultipartFile moreImage = additionalImage.getImageFile();
-			files.add(moreImage);
-		}
+	public List<HpsUploadFile> getUploadFiles(){
+		List<HpsUploadFile> files = new ArrayList<>();
+		if(!this.appForm.isEmpty())files.add(new HpsUploadFile("0", this.appForm));
+		if(!this.idProof.isEmpty())files.add(new HpsUploadFile("1", this.idProof));
+		if(!this.addressProof.isEmpty())files.add(new HpsUploadFile("2", this.addressProof));
+		if(!this.incomeProof.isEmpty())files.add(new HpsUploadFile("3", this.incomeProof));
+		files.addAll(this.additionalImages);
 		return files;
 	}
 	
-	public void addMoreImages(AdditionalImage image){
+	public void addMoreImages(HpsUploadFile image){
 		this.additionalImages.add(image);
 	}
 	
@@ -104,11 +103,11 @@ public class UploadInformation {
 		this.appNo = appNo;
 	}
 
-	public List<AdditionalImage> getAdditionalImages() {
+	public List<HpsUploadFile> getAdditionalImages() {
 		return additionalImages;
 	}
 
-	public void setAdditionalImages(List<AdditionalImage> additionalImages) {
+	public void setAdditionalImages(List<HpsUploadFile> additionalImages) {
 		this.additionalImages = additionalImages;
 	}
 	

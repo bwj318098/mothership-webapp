@@ -8,4 +8,9 @@ public interface FileUploadService {
 	 * @return true is success false if failed.
 	 */
 	public boolean processUpload(UploadInformation uploadInformation);
+	/**
+	 * Generates App No
+	 * @return Application No.
+	 */
+	public String generateAppNo();
 }

@@ -16,24 +16,24 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
-@Constraint(validatedBy = CheckFileValidator.class)
+@Constraint(validatedBy = CheckFileExtensionValidator.class)
 @Documented
-public @interface NotEmptyUpload {
+public @interface NotInValidImageFile {
 
 	String message() default "{fileNotBlank.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     
     /**
-	 * Defines several {@link NotEmptyUpload} annotations on the same element.
+	 * Defines several {@link NotInValidImageFile} annotations on the same element.
 	 * 
-	 * @see NotEmptyUpload
+	 * @see NotInValidImageFile
 	 */
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 	@Retention(RUNTIME)
 	@Documented
 	@interface List {
-		NotEmptyUpload[] value();
+		NotInValidImageFile[] value();
 	}
 	
 }

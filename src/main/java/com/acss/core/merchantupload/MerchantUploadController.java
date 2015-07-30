@@ -1,22 +1,25 @@
 package com.acss.core.merchantupload;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.acss.core.support.web.MessageHelper;
 
+/**
+ * Controller for the merchant upload process which controls the page transition, handles validation
+ * and delegate process to appropriate service.
+ * Controllers should have minimal process/code.
+ * 
+ * @author gvargas
+ *
+ */
 @Controller
 public class MerchantUploadController {
 	
@@ -26,6 +29,15 @@ public class MerchantUploadController {
 	@Autowired
 	private FileUploadService uploadService;
 	
+	/**
+	 * Uploads the images to server and persists the information to hps database via
+	 * web services.
+	 * 
+	 * @param ra
+	 * @param uploadInformation
+	 * @param errors
+	 * @return redirect to home.
+	 */
 	@RequestMapping(value = "upload" , method = RequestMethod.POST)
 	public String upload(RedirectAttributes ra,
 			@ModelAttribute @Valid UploadInformation uploadInformation,BindingResult errors){
@@ -46,12 +58,20 @@ public class MerchantUploadController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * Adds more image/s in case the pre-defined image set is not enough.
+	 * 
+	 * @param ra
+	 * @param newUpload
+	 * @param errors
+	 * @return redirect to home.
+	 */
 	@RequestMapping(value = "upload",params = {"addImage"})
 	public String addMoreImage(RedirectAttributes ra,
 			@ModelAttribute UploadInformation newUpload,
 			BindingResult errors){
 
-		AdditionalImage additionalImage = new AdditionalImage();
+		HpsUploadFile additionalImage = new HpsUploadFile();
 		newUpload.addMoreImages(additionalImage);
 		
 		ra.addFlashAttribute(FILEUPLOAD_MODEL_ATTRIB_KEY, newUpload);
@@ -59,31 +79,23 @@ public class MerchantUploadController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value = "detail/{appNo}", method = RequestMethod.GET)
-	public String appDetail(@PathVariable String appNo,RedirectAttributes ra,Model model){
-        ApplicationUploadDetails appDetailsForm = new ApplicationUploadDetails();
-		setApplicationDetailStub(appNo,appDetailsForm);
-		
-		model.addAttribute("appDetailsForm",appDetailsForm);
-		return "upload/applicationdetail";
+	/**
+	 * Generates Application No.
+	 * @param ra
+	 * @param newUpload
+	 * @param errors
+	 * @return application No.
+	 */
+	@RequestMapping(value = "upload",params = {"generate"})
+	public String generateAppCd(RedirectAttributes ra,
+			@ModelAttribute UploadInformation newUpload,
+			BindingResult errors){
+		newUpload.setAppNo(uploadService.generateAppNo());
+		ra.addFlashAttribute(FILEUPLOAD_MODEL_ATTRIB_KEY, newUpload);
+		ra.addFlashAttribute(BINDING_RESULT_KEY+FILEUPLOAD_MODEL_ATTRIB_KEY, errors);
+		return "redirect:/";
 	}
 	
-	/**
-	 * Put some stub object. this will be replace with real deal once back end services are complete.
-	 * @param appNo
-	 * @param appDetailsForm
-	 */
-	private void setApplicationDetailStub(String appNo,
-			ApplicationUploadDetails appDetailsForm) {
-		ApplicationImage appImage = new ApplicationImage("C:\\dev\\images\\"+appNo+"\\"+appNo+"_AF.jpg","Application Form:");
-		ApplicationImage idImage = new ApplicationImage("C:\\dev\\images\\"+appNo+"\\"+appNo+"_ID.jpg","ID Proof:");
-		List<ApplicationImage> images = new ArrayList<ApplicationImage>();
-		images.add(appImage);
-		images.add(idImage);
-		
-		appDetailsForm.setCustomerName(appNo+"'s Name");
-		appDetailsForm.setAppNo(appNo);
-		appDetailsForm.setImages(images);
-	}
+	
 	
 }

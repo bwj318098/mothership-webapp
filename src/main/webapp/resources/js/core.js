@@ -38,3 +38,8 @@ function addImageFunction(){
 	});
 	/*! Customed function for dynamic addition of image with image type */
 };
+
+/* Prevents user to input character on fields marked with class numeric.*/
+function enableNumericOnlyForNumericClass(){
+	$(".numeric").numeric({ decimal: false, negative: false }, function() {this.value = ""; this.focus(); });
+}

@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title=#{view.index.title})"></head>
 <script type="text/javascript">
+$(window).load(function() {
+	// Animate loader off screen
+	$(".se-pre-con").delay('500').fadeOut("slow");;
+});
+
 function resetForm(id){
 	$('#'+id).val(function(){
 		this.defaultValue;
 	});
-	
 }
 
 $(document).ready(function(){
@@ -29,14 +33,15 @@ $(document).ready(function(){
 	        });
 	});
 	
-	$('button[name="generate"]').on('click', function(){
-		$('#inputAppNo').val('999999999-9');
-	});
-	
-	/*! Customed function for dynamic addition of image with image type */
-	addImageFunction();
 	/* Clear fields to prevent the back button from populating using cache*/
 	$('#uploadForm')[0].reset();
+	
+	$("#removeLink").click(function () {
+		var id = ($('.additionalImage .row').length).toString();
+	    $("#additionalImage #row-image_"+ id).remove();
+	});
+	/* Prevents user to input character on fields marked with class numeric.*/
+	enableNumericOnlyForNumericClass();
 });
 
 </script>
@@ -61,7 +66,7 @@ $(document).ready(function(){
 				<label for="inputAppNo" class="input-group-addon imagetype-width" id="appNo-addon">Application No. :&nbsp;&nbsp;&nbsp;</label>
 				<input type="text" class="form-control" id="inputAppNo" th:field="*{appNo}" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" readonly="readonly" />
 				<span class="input-group-btn">
-					<button type="button" class="btn btn-primary" name="generate">Generate</button>
+					<button type="submit" class="btn btn-primary" name="generate">Generate</button>
 				</span>
 			</div>
 			<span class="help-block" th:if="${#fields.hasErrors('appNo')}" th:errors="*{appNo}">This field is required.</span>
@@ -70,7 +75,7 @@ $(document).ready(function(){
 		<div class="col-md-3" th:classappend="${#fields.hasErrors('seqNo')}? 'has-error'">
 			<div class="input-group svX3" >
 				<label for="inputSeqNo" class="input-group-addon imagetype-width" id="seqNo-addon">Sequence No. :&nbsp;&nbsp;&nbsp;</label>
-				<input type="text" class="form-control" th:field="*{seqNo}" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
+				<input type="text" class="form-control numeric" th:field="*{seqNo}" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
 			</div>
 			<span class="help-block" th:if="${#fields.hasErrors('seqNo')}" th:errors="*{seqNo}">This field is required.</span>
 		</div>
@@ -82,7 +87,7 @@ $(document).ready(function(){
 		<div class="col-md-12" th:classappend="${#fields.hasErrors('appForm')}? 'has-error'">
 			<div class="input-group svX3">
 				<label for="inputAppForm" class="input-group-addon imagetype-width" id="appForm-addon">Application Form :</label>
-				<input type="file" class="form-control" id="inputAppForm" th:field="*{appForm}" name="appForm" aria-describedby="AppForm-addon" />
+				<input type="file" accept="image/*" class="form-control" id="inputAppForm" th:field="*{appForm}" name="appForm" aria-describedby="AppForm-addon" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputAppForm')">Clear</button>
 				</span>
@@ -95,7 +100,7 @@ $(document).ready(function(){
 	    <div class="col-md-12" th:classappend="${#fields.hasErrors('idProof')}? 'has-error'">
 			<div class="input-group svX3">
 				<label for="inputIdProof" class="input-group-addon imagetype-width" id="idProof-addon">ID Proof :</label>
-				<input type="file" class="form-control" id="inputIdProof" th:field="*{idProof}" name="idProof" aria-describedby="idProof-addon" />
+				<input type="file" accept="image/*" class="form-control" id="inputIdProof" th:field="*{idProof}" name="idProof" aria-describedby="idProof-addon" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputIdProof')">Clear</button>
 				</span>
@@ -108,7 +113,7 @@ $(document).ready(function(){
 	    <div class="col-md-12" th:classappend="${#fields.hasErrors('addressProof')}? 'has-error'">
 			<div class="input-group svX3">
 				<label for="inputAddressProof" class="input-group-addon imagetype-width" id="addressProof-addon">Proof of Billing:</label>
-				<input type="file" class="form-control" id="inputAddressProof" th:field="*{addressProof}" name="addressProof" aria-describedby="addressProof-addon" />
+				<input type="file" accept="image/*" class="form-control" id="inputAddressProof" th:field="*{addressProof}" name="addressProof" aria-describedby="addressProof-addon" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputAddressProof')">Clear</button>
 				</span>
@@ -121,7 +126,7 @@ $(document).ready(function(){
 	    <div class="col-md-12" th:classappend="${#fields.hasErrors('incomeProof')}? 'has-error'">
 			<div class="input-group svX3">
 				<label for="inputIncomeProof" class="input-group-addon imagetype-width" id="incomeProof-addon">Proof of Income :</label>
-				<input type="file" class="form-control" id="inputIncomeProof" th:field="*{incomeProof}" name="incomeProof" aria-describedby="incomeProof-addon" />
+				<input type="file" accept="image/*" class="form-control" id="inputIncomeProof" th:field="*{incomeProof}" name="incomeProof" aria-describedby="incomeProof-addon" />
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-primary" onclick="resetForm('inputIncomeProof')">Clear</button>
 				</span>
@@ -153,7 +158,7 @@ $(document).ready(function(){
 			</div>
 			<div class="col-md-8 col-xs-6" th:classappend="${#fields.hasErrors('additionalImages[__${rowStat.index}__].imageFile')}? 'has-error'">
 				<div class="input-group">
-					<input type="file" class="form-control" th:id="${'image_'+rowStat.count}" 
+					<input type="file" accept="image/*" class="form-control" th:id="${'image_'+rowStat.count}" 
 					th:field="*{additionalImages[__${rowStat.index}__].imageFile}"
 						th:name="${'image_'+rowStat.count}"></input><span
 							class="input-group-btn"><button type="button"
@@ -170,7 +175,7 @@ $(document).ready(function(){
     
     <h4></h4>
     <div class="row">
-    	<div class="col-md-2">
+    	<div class="col-md-3 col-xs-6">
 			<div class="input-group">
 				<div class="input-group-btn">
 					<p>	
@@ -180,7 +185,7 @@ $(document).ready(function(){
 				</div>
 			</div>
 		</div>
-	    <div class="col-md-10">
+	    <div class="col-md-9 col-xs-6">
 			<div class="input-group">
 				<div class="text-right input-group-btn">
 					<p>
@@ -199,5 +204,7 @@ $(document).ready(function(){
 
 <!-- Modal For Pending-->
 <div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?')">&nbsp;</div>
+<!-- Loading gif -->
+<div class="se-pre-con"></div>
 </body>
 </html>

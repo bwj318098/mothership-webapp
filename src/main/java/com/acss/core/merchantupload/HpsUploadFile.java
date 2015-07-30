@@ -3,17 +3,23 @@ package com.acss.core.merchantupload;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.acss.core.merchantupload.validator.NotEmptyUpload;
+import com.acss.core.merchantupload.validator.NotInValidImageFile;
 
-public class AdditionalImage {
+public class HpsUploadFile {
 	
-	private static final String FILE_NOT_BLANK_MESSAGE = "{fileNotBlank.message}";
 	private static final String NOT_BLANK_MESSAGE = "{notBlank.message}";
 	
-	@NotBlank(message = AdditionalImage.NOT_BLANK_MESSAGE)
+	public HpsUploadFile() {}
+	
+	public HpsUploadFile(String imageType, MultipartFile imageFile) {
+		this.imageType = imageType;
+		this.imageFile = imageFile;
+	}
+
+	@NotBlank(message = HpsUploadFile.NOT_BLANK_MESSAGE)
 	private String imageType;
 	
-	@NotEmptyUpload(message = AdditionalImage.FILE_NOT_BLANK_MESSAGE)
+	@NotInValidImageFile()
 	private MultipartFile imageFile;
 	
 	public String getImageType() {
