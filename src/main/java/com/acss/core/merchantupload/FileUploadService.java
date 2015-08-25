@@ -17,6 +17,12 @@ public interface FileUploadService {
 	public boolean uploadMoreImages(ApplicationDetailDTO additionalUpload);
 	
 	/**
+	 * Updates the whole application related images as complete submission so that
+	 * it will now be available at data entry module.
+	 */
+	public boolean updateApplicationStatusAsComplete(String applicationCd);	
+	
+	/**
 	 * Generates App No
 	 * @return Application No.
 	 */

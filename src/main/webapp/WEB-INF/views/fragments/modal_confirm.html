@@ -16,9 +16,12 @@
       </div>
       <div class="modal-body">
         <p th:text="${modal_msg}">Are you sure you want to submit these Documents?</p>
+        <label th:if="${modal_id=='pendingModal'}" for="inputPendingRemarks" class="input-group" id="pendingRemarks-addon">Pending Remarks:</label>
+      	<input th:if="${modal_id=='pendingModal'}" type="text" class="form-control" th:field="*{__${pendingRemarks}__}" id="inputPendingRemarks" name="pendingRemarks"/>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirm">Submit</button>
+        <button th:if="${modal_id!='messageModal'}" type="button" class="btn btn-primary" data-dismiss="modal" id="confirm">Submit</button>
+        
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

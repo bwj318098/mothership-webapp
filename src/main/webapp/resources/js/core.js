@@ -74,6 +74,9 @@ function enableToolTipForMerchantUpload(){
 	$('[name="pending_images"]').tooltip({title: "Submit the application as Pending to be completed later. Only Application Form is required.", animation: true,placement: "auto"});
 	$('[id^="imageType-addon_"]').tooltip({title: "Select the appropriate image type per image uploaded.", animation: true,placement: "auto"});
 	$('[name="view_images"]').tooltip({title: "Show images pop-up.", animation: true,placement: "auto",html:true});	
+	$('[name="completeSubmission"]').tooltip({title: "Submit the application as complete.", animation: true,placement: "auto"});
+	$('[name="attach_images"]').tooltip({title: "Attach more image/s to this application", animation: true,placement: "auto"});
+
 }
 
 function enableTooltipForSignup(){

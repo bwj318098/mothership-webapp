@@ -1,3 +1,3 @@
 package com.acss.core.merchantupload.validator;
 
-public interface PendingUploadInformaionData {}
+public interface PendingUploadInformationData {}

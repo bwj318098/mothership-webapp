@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.acss.core.merchantupload.HpsImageType;
 import com.acss.core.merchantupload.UploadInformationDTO;
 
 @Controller
@@ -14,6 +15,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(HttpServletRequest request,Model model) {
+		model.addAttribute("listImageType", HpsImageType.values());
 		//if model already contains this attribute then initialize it.
 		if(!model.containsAttribute("uploadInformation")){
 			model.addAttribute("uploadInformation",new UploadInformationDTO());

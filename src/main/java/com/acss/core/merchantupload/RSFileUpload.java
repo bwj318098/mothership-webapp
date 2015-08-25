@@ -8,6 +8,10 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -119,7 +123,9 @@ public class RSFileUpload implements FileUploadService {
 
 		//saves the new sequence no with this application no.
 		rt.postForEntity(env.getProperty(RS_APPSEQNO_URL_KEY), appSeqNo, ApplicationSeqNo.class);
-		return doPostInRsImageUpload(appNo,uploadInformation.getUploadFiles(),uploadInformation.isForPendingSubmission());
+		
+		return doPostInRsImageUpload(appNo, uploadInformation.getUploadFiles(),
+				uploadInformation.isForPendingSubmission(),uploadInformation.getPendingRemarks());
 	}
 	
 	/**
@@ -130,7 +136,7 @@ public class RSFileUpload implements FileUploadService {
 	public boolean uploadMoreImages(ApplicationDetailDTO additionalUpload) {
 		String appNo = additionalUpload.getAppNo();
 		//do a post on image restful web services.
-		return doPostInRsImageUpload(appNo,additionalUpload.getAdditionalImages(),false);
+		return doPostInRsImageUpload(appNo,additionalUpload.getAdditionalImages(),false,"");
 	}
 	/**
 	 * POST's to the image web services to create a new image.
@@ -138,7 +144,7 @@ public class RSFileUpload implements FileUploadService {
 	 * @param hpsFiles
 	 * @return true if succeed false if not.
 	 */
-	private boolean doPostInRsImageUpload(String appNo,List<HpsUploadFileDTO> hpsFiles,boolean isForPendingSubmission){
+	private boolean doPostInRsImageUpload(String appNo,List<HpsUploadFileDTO> hpsFiles,boolean isForPendingSubmission,String pendingRemarks){
 		//get a sequence number first.
 		String usingThisGroup = generateRequestedNumType(GROUPID_NUMTYPE_ENTRY);
 		RestTemplate rt = new RestTemplate();
@@ -156,6 +162,7 @@ public class RSFileUpload implements FileUploadService {
 				withThisDTO.setDataCd(appNo);
 				withThisDTO.setGroupId(usingThisGroup);
 				withThisDTO.setImageType(new BigDecimal(hpsFile.getImageType()));
+				withThisDTO.setComments(pendingRemarks);
 				//set the regStatus into 3 - meaning this application is pending.
 				if(isForPendingSubmission){
 					withThisDTO.setRegStatus(PENDING_STATUS_IN_OSA);
@@ -188,5 +195,19 @@ public class RSFileUpload implements FileUploadService {
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<String> res = rt.postForEntity(appNoGeneratorURI,APPNO_NUMTYPE_ENTRY,String.class);
 		return res.getBody();
+	}
+
+	@Override
+	public boolean updateApplicationStatusAsComplete(String applicationCd) {
+		RestTemplate rt = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-Type", "application/json");
+	    headers.add("Accept", "*/*");
+		HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = rt.exchange(env.getProperty(RS_IMAGES_URL_KEY)+"/"+applicationCd,HttpMethod.PUT,requestEntity, String.class);
+		if (response == null) {
+			return false;
+		 }
+		 	return HttpStatus.OK.equals(response.getStatusCode());
 	}
 }

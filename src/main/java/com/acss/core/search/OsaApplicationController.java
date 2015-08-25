@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.acss.core.merchantupload.FileUploadService;
 import com.acss.core.merchantupload.HpsImageType;
 import com.acss.core.merchantupload.HpsUploadFileDTO;
+import com.acss.core.merchantupload.validator.TaggedAsCompleteInformationData;
 import com.acss.core.merchantupload.validator.UploadInformationData;
 import com.acss.core.support.web.MessageHelper;
 
@@ -124,6 +125,44 @@ public class OsaApplicationController {
         	MessageHelper.addSuccessAttribute(ra, "upload.success",appDetailsForm.getAppNo());
         }else{
         	MessageHelper.addErrorAttribute(ra, "upload.error");
+        }
+		
+		return "redirect:/detail/"+appNo;
+	}
+	
+	
+	/**
+	 * Tags the application as complete and becomes ready for Data Entry.
+	 * @RequestMapping(value = "upload",params = {"pending"})
+	 * @param ra
+	 * @param completeUpload
+	 * @param errors
+	 * @return view
+	 */
+	@RequestMapping(value = "detail/{appNo}",method = RequestMethod.POST,params = {"complete"})
+	public String completeSubmission(RedirectAttributes ra,
+			@PathVariable String appNo,
+			@ModelAttribute @Validated(TaggedAsCompleteInformationData.class)ApplicationDetailDTO completeUpload,
+			BindingResult errors){
+		
+		if (errors.hasErrors()) {
+			//This is to preserve the validation results in case of redirection.
+			ra.addFlashAttribute(APPDETAIL_MODEL_ATTRIB_KEY, completeUpload);
+			ra.addFlashAttribute(BINDING_RESULT_KEY+APPDETAIL_MODEL_ATTRIB_KEY, errors);
+			return "redirect:/detail/"+appNo;
+		}
+		
+		if(completeUpload.getAdditionalImages().size() > 1){
+			if(!uploadService.uploadMoreImages(completeUpload)){
+				//put error if it fails.
+				MessageHelper.addErrorAttribute(ra, "upload.error");
+			}
+		}
+		
+		if(uploadService.updateApplicationStatusAsComplete(appNo)){
+        	MessageHelper.addSuccessAttribute(ra, "upload.success",appNo);
+        }else{
+        	MessageHelper.addErrorAttribute(ra, "upload.status.error");
         }
 		
 		return "redirect:/detail/"+appNo;

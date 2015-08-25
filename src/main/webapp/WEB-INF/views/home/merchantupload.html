@@ -15,9 +15,13 @@
     <th:block th:if="${#fields.hasErrors('${uploadInformation.*}')}">
         <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
     </th:block>
-
     <h4>&nbsp;</h4>
     <form id="uploadForm" th:object="${uploadInformation}" class="form-horizontal" method="post" th:action="@{/upload}" enctype="multipart/form-data" >
+    
+    <div class="has-error">
+		<span class="help-block" th:if="${#fields.hasErrors('pendingRemarks')}" th:errors="*{pendingRemarks}">At least one image is required.</span>
+	</div>
+    
     <div class="row">
 		<div class="col-md-9" th:classappend="${#fields.hasErrors('appNo')}? 'has-error'">
 			<div class="input-group svX3">
@@ -156,18 +160,23 @@
 			</div>
 		</div>
     </div>
+
+	<!-- Modal For Submission-->
+	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='confirmModal',modal_title='Confirm Submission', modal_msg='Are you sure you want to submit these Documents?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+
+	<!-- Modal For Pending-->
+	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+    
+    <!-- Modal For Completing instead-->
+	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='completeInsteadModal',modal_title='Submit as Complete', modal_msg='Minimum requirement was met.Submit the Application as Complete instead?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+    
     </form>
+
 </div>
-
-<!-- Modal For Submission-->
-<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='confirmModal',modal_title='Confirm Submission', modal_msg='Are you sure you want to submit these Documents?')">&nbsp;</div>
-
-<!-- Modal For Pending-->
-<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?')">&nbsp;</div>
-
 
 <!-- Scripts -->
 <script type="text/javascript">
+//<![CDATA[
 function resetForm(id){
 	$('#'+id).val(function(){
 		this.defaultValue;
@@ -189,10 +198,28 @@ $(document).ready(function(){
 	$('button[name="pending_images"]').on('click', function(e){
 	    var $form=$(this).closest('form');
 	    e.preventDefault();
-	    $('#pendingModal').modal({ backdrop: 'static', keyboard: false })
+	    /*	Check if this file/s are available. if yes then proceed with a 'complete' submission instead.
+	    	inputAppForm
+	    	inputIdProof
+	    	inputAddressProof
+	    	inputIncomeProof
+	    */
+	    if($('#inputIdProof').get(0).files.length != 0 &&
+	    			$('#inputAddressProof').get(0).files.length != 0 &&
+	    				$('#inputIncomeProof').get(0).files.length != 0) {
+	    	//submit the application as complete instead if minimum requirement was met.
+	    	$('#completeInsteadModal').modal({ backdrop: 'static', keyboard: false })
+	        	.one('click', '#confirm', function (e) {
+	        		$form.trigger('submit');
+	        	});
+	    //else show the pending modal screen.
+	    }else{
+	    	$('#pendingModal').modal({ backdrop: 'static', keyboard: false })
 	        .one('click', '#confirm', function (e) {
 	        	$('button[name="pending"]').click();
 	        });
+	    }
+	    
 	});
 	
 	/* Clear fields to prevent the back button from populating using cache*/
@@ -205,6 +232,7 @@ $(document).ready(function(){
 	/* Prevents user to input character on fields marked with class numeric.*/
 	enableNumericOnlyForNumericClass();
 });
+//]]>
 </script>
 </body>
 </html>

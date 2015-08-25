@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.acss.core.merchantupload.validator.PendingUploadInformaionData;
+import com.acss.core.merchantupload.validator.PendingUploadInformationData;
 import com.acss.core.merchantupload.validator.UploadInformationData;
 import com.acss.core.support.web.MessageHelper;
 
@@ -106,7 +106,7 @@ public class MerchantUploadController {
 	 */
 	@RequestMapping(value = "upload",params = {"pending"})
 	public String pending(RedirectAttributes ra,
-			@ModelAttribute @Validated(PendingUploadInformaionData.class)UploadInformationDTO pendingUpload,
+			@ModelAttribute @Validated(PendingUploadInformationData.class)UploadInformationDTO pendingUpload,
 			BindingResult errors){
 
 		if (errors.hasErrors()) {
@@ -126,4 +126,5 @@ public class MerchantUploadController {
 		
 		return "redirect:/";
 	}
+	
 }

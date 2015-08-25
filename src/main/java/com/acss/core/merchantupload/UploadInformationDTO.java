@@ -7,12 +7,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.acss.core.merchantupload.validator.NotInValidImageFile;
 import com.acss.core.merchantupload.validator.NotInValidSeqNo;
 import com.acss.core.merchantupload.validator.NotInvalidAppNo;
-import com.acss.core.merchantupload.validator.PendingUploadInformaionData;
+import com.acss.core.merchantupload.validator.PendingUploadInformationData;
 import com.acss.core.merchantupload.validator.UploadInformationData;
 
 /**
@@ -22,13 +23,15 @@ import com.acss.core.merchantupload.validator.UploadInformationData;
  */
 public class UploadInformationDTO {
 	
-	@NotInvalidAppNo(groups = {UploadInformationData.class,PendingUploadInformaionData.class})
+	private static final String NOT_BLANK_MESSAGE = "{notBlankPending.message}";
+	
+	@NotInvalidAppNo(groups = {UploadInformationData.class,PendingUploadInformationData.class})
 	private String appNo;
 	
-	@NotInValidSeqNo(groups = {UploadInformationData.class,PendingUploadInformaionData.class})
+	@NotInValidSeqNo(groups = {UploadInformationData.class,PendingUploadInformationData.class})
 	private String seqNo;
 	
-	@NotInValidImageFile(groups = {UploadInformationData.class,PendingUploadInformaionData.class})
+	@NotInValidImageFile(groups = {UploadInformationData.class,PendingUploadInformationData.class})
 	private MultipartFile appForm;
 	
 	@NotInValidImageFile(groups = UploadInformationData.class)
@@ -40,9 +43,12 @@ public class UploadInformationDTO {
 	@NotInValidImageFile(groups = UploadInformationData.class)
 	private MultipartFile incomeProof;
 	
+	@NotBlank(message = UploadInformationDTO.NOT_BLANK_MESSAGE,groups = {PendingUploadInformationData.class})
+	private String pendingRemarks;
+	
 	@Valid
 	@NotNull(groups = UploadInformationData.class)
-	@Size(min = 0,groups = UploadInformationData.class)
+	@Size(min = 0,groups = {UploadInformationData.class})
 	private List<HpsUploadFileDTO> additionalImages;
 	
 	public UploadInformationDTO(){additionalImages=new ArrayList<HpsUploadFileDTO>();}
@@ -118,4 +124,12 @@ public class UploadInformationDTO {
 		this.additionalImages = additionalImages;
 	}
 
+	public String getPendingRemarks() {
+		return pendingRemarks;
+	}
+
+	public void setPendingRemarks(String pendingRemarks) {
+		this.pendingRemarks = pendingRemarks;
+	}
+	
 }

@@ -107,23 +107,34 @@
 			<div class="input-group">
 				<div class="text-right input-group-btn" >
 					<p>
-						<button name="upload_images" type="button" class="btn btn-primary">Submit</button>
-						<button name="view_images" type="button" class="btn btn-primary" >View Image</button>
+						<input type="hidden" th:field="*{applicationStatus}" name="applicationStatus"/>
+						<button th:if="${appDetailsForm.applicationStatus=='With Pending Documents'}"  name="completeSubmission" type="button" class="btn btn-primary">Submit</button>
+						<button name="complete" type="submit" class="btn btn-primary" style="display: none;">doCompleteApplication</button>
+						
+						<button name="attach_images" type="button" class="btn btn-primary">Attach Image/s</button>
+						<button name="view_images" type="button" class="btn btn-primary" >View Image/s</button>
 					</p>
 				</div>
 			</div>
 		</div>
 
     </div>
+    
+    <!-- Modal For Submission-->
+	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='confirmModal',modal_title='Confirm Submission', modal_msg='Are you sure you want to submit these Documents?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+
+	<!-- Modal For Pending-->
+	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+    
+    <!-- Modal For Validation Message for incomplete application.-->
+	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='messageModal',modal_title='Image Incomplete',modal_msg='Cannot tagged as complete application did not meet the requirements.',pendingRemarks='pendingRemarks')">&nbsp;</div>
+    
+    <!-- Modal For Completing instead-->
+	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='completeInsteadModal',modal_title='Submit as Complete', modal_msg='Minimum requirement was met.Submit the Application as Complete instead?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+    
+    
     </form>
 </div>
-
-<!-- Modal For Submission-->
-<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='confirmModal',modal_title='Confirm Submission', modal_msg='Are you sure you want to submit these Documents?')">&nbsp;</div>
-
-<!-- Modal For Pending-->
-<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='pendingModal',modal_title='Confirm Pending',modal_msg='Are you sure you want to save these images as Pending?')">&nbsp;</div>
-
 <div id="links" style="visibility : hidden">
 	<ul th:each="mItem : ${appDetailsForm.existingImages}">
 		<li>
@@ -168,6 +179,7 @@
 	</div>
 
 <script type="text/javascript">
+//<![CDATA[
 function resetForm(id){
 	$('#'+id).val(function(){
 		this.defaultValue;
@@ -180,13 +192,81 @@ $(document).ready(function(){
 	enableToolTipForHeader();
 	enableToolTipForMerchantUpload();
 	/*!I Summon the modal screen! */
-	$('button[name="upload_images"]').on('click', function(e){
+	$('button[name="attach_images"]').on('click', function(e){
 	    var $form=$(this).closest('form');
 	    e.preventDefault();
-	    $('#confirmModal').modal({ backdrop: 'static', keyboard: false })
+	    /* Please get rid of duplicates in future. - you from me*/
+	   	var valresult = '';
+	    var existingImages = '';
+	  	//get the existing image and express as string, concatenanted imageType
+	    $('[id^=existingImages][id$=imageType]').each(function(){
+	    	existingImages+=$(this).val();
+    	});
+	    
+	    //do some validation check if one of each is existing:
+    	$('[id^=inputImageType_]').each(function(){
+    		valresult+=$(this).val();
+    		console.log(valresult);
+    	});
+	    //combine the existing to newly added image types.
+	    valresult+=existingImages;
+	    //status should match atleast one of each image types 1234.
+	    var isComplete = new RegExp('^(?=.*[1]{1,}.*)(?=.*[2]{1,}.*)(?=.*[3]{1,}.*).*$');
+	    //if the set images are already complete then tag it as complete instead.
+	    if((isComplete.test(valresult)) && ($('[name^=applicationStatus]').val()=='With Pending Documents') ){
+	    	
+		    $('#completeInsteadModal').modal({ backdrop: 'static', keyboard: false })
 	        .one('click', '#confirm', function (e) {
-	            $form.trigger('submit');
+	        	$('button[name="complete"]').click();
 	        });
+	    	
+	    }else{
+		    $('#confirmModal').modal({ backdrop: 'static', keyboard: false })
+		        .one('click', '#confirm', function (e) {
+		            $form.trigger('submit');
+		        });
+	    
+	    }
+	    
+	});
+	
+	$('button[name="completeSubmission"]').on('click', function(e){
+	    var $form=$(this).closest('form');
+	    e.preventDefault();
+	    
+	    var valresult = '';
+	    var existingImages = '';
+	    
+	    //get the existing image and express as string, concatenanted imageType
+	    $('[id^=existingImages][id$=imageType]').each(function(){
+	    	existingImages+=$(this).val();
+    	});
+	    
+	    //do some validation check if one of each is existing:
+    	$('[id^=inputImageType_]').each(function(){
+    		valresult+=$(this).val();
+    		console.log(valresult);
+    	});
+	    //combine the existing to newly added image types.
+	    valresult+=existingImages;
+	    //status should match atleast one of each image types 1234.
+	    var isComplete = new RegExp('^(?=.*[1]{1,}.*)(?=.*[2]{1,}.*)(?=.*[3]{1,}.*).*$');
+	    
+	    if(isComplete.test(valresult)){
+	    	$('#confirmModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirm', function (e) {
+	            //$form.trigger('submit');
+	            //instead of submitting the form use the different path to update the regstatus into 'complete'.
+	            $('button[name="complete"]').click();
+	        });
+	    }else{
+	    	$('#messageModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirm', function (e) {
+	            return;
+	        });
+	    }
+	    
+	    
 	});
 	
 	$('button[name="view_images"]').on('click', function(e){
@@ -198,7 +278,7 @@ $(document).ready(function(){
 	    $("#additionalImage #row-image_"+ id).remove();
 	});
 });
-
+//]]>
 </script>
 </body>
 </html>

@@ -22,6 +22,8 @@ public class ApplicationDetailDTO {
 	private String applicationStatus;
 	private String seqNo;
 	private String remarks;
+	private String pendingRemarks;
+	
 	private List<ExistingImageDTO> existingImages;
 	
 	@Valid
@@ -97,5 +99,14 @@ public class ApplicationDetailDTO {
 	public void addMoreImages(HpsUploadFileDTO image){
 		this.additionalImages.add(image);
 	}
+
+	public String getPendingRemarks() {
+		return pendingRemarks;
+	}
+
+	public void setPendingRemarks(String pendingRemarks) {
+		this.pendingRemarks = pendingRemarks;
+	}
+	
 	
 }
