@@ -20,10 +20,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.acss.core.account.OsaUserDetailsService;
+import com.acss.core.application.ApplicationDetailDTO;
+import com.acss.core.followup.FollowupDetailDTO;
 import com.acss.core.model.application.ApplicationSeqNo;
 import com.acss.core.model.image.ApplicationImage;
 import com.acss.core.model.image.ImageBuilder;
-import com.acss.core.search.ApplicationDetailDTO;
 
 
 /**
@@ -65,7 +66,7 @@ public class RSFileUpload implements FileUploadService {
 	 * @param file - the uploaded file from the client.
 	 * @return boolean
 	 */
-	private boolean saveFile(String groupFolder,MultipartFile file,ApplicationImage appImage) {
+	private boolean saveFile(MultipartFile file,ApplicationImage appImage) {
 		String saveDirectory = env.getProperty(UPLOAD_DIRECTORY_KEY);
 		String fileName = file.getOriginalFilename();
 		String fileExtension = FilenameUtils.getExtension(fileName);
@@ -75,7 +76,7 @@ public class RSFileUpload implements FileUploadService {
 			// Handle file content - multipartFile.getInputStream()
 			try {
 				File newDirectory = new File(saveDirectory + File.separator
-						+ groupFolder);
+						+ appImage.getGroupId());
 				// creates new directory using the application number
 				if (!newDirectory.exists())
 					newDirectory.mkdirs();
@@ -85,7 +86,7 @@ public class RSFileUpload implements FileUploadService {
 				
 				appImage.setImageCode(imageCode);
 				appImage.setImageFilename(imageCode+"."+fileExtension);
-				appImage.setImagePath(newDirectory.getAbsolutePath()+ File.separator + imageCode+".jpg");
+				appImage.setImagePath(newDirectory.getAbsolutePath()+ File.separator + imageCode+"."+fileExtension);
 				return true;
 			} catch (IllegalStateException | IOException e) {
 				return false;
@@ -146,7 +147,7 @@ public class RSFileUpload implements FileUploadService {
 	 */
 	private boolean doPostInRsImageUpload(String appNo,List<HpsUploadFileDTO> hpsFiles,boolean isForPendingSubmission,String pendingRemarks){
 		//get a sequence number first.
-		String usingThisGroup = generateRequestedNumType(GROUPID_NUMTYPE_ENTRY);
+		String groupId = generateRequestedNumType(GROUPID_NUMTYPE_ENTRY);
 		RestTemplate rt = new RestTemplate();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String storeCd = userService.getStorecdByUsername(auth.getName());
@@ -160,7 +161,7 @@ public class RSFileUpload implements FileUploadService {
 						new ImageBuilder().withDefaultValues().build();
 				withThisDTO.setStoreCd(storeCd);
 				withThisDTO.setDataCd(appNo);
-				withThisDTO.setGroupId(usingThisGroup);
+				withThisDTO.setGroupId(groupId);
 				withThisDTO.setImageType(new BigDecimal(hpsFile.getImageType()));
 				withThisDTO.setComments(pendingRemarks);
 				//set the regStatus into 3 - meaning this application is pending.
@@ -168,13 +169,13 @@ public class RSFileUpload implements FileUploadService {
 					withThisDTO.setRegStatus(PENDING_STATUS_IN_OSA);
 				}
 				
-				if(!saveFile(usingThisGroup,withThisFile,withThisDTO)) return false;
+				if(!saveFile(withThisFile,withThisDTO)) return false;
 
 					//do a post on rs-images restful end point.
 					try {
 						String imagesRestFulEndpoint = env.getProperty(RS_IMAGES_URL_KEY);
 						rt.postForEntity(imagesRestFulEndpoint,withThisDTO,ApplicationImage.class);
-					//need to create an elegant way to implement exception handling
+					//TODO do a proper exception handling here.
 					} catch (Exception e) {
 						return false;
 					}
@@ -197,7 +198,7 @@ public class RSFileUpload implements FileUploadService {
 		return res.getBody();
 	}
 
-	@Override
+	
 	public boolean updateApplicationStatusAsComplete(String applicationCd) {
 		RestTemplate rt = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -209,5 +210,36 @@ public class RSFileUpload implements FileUploadService {
 			return false;
 		 }
 		 	return HttpStatus.OK.equals(response.getStatusCode());
+	}
+
+	
+	public boolean uploadFollowUpImage(FollowupDetailDTO followupappDetailsForm) {
+		//get a sequence number first.
+		String groupId = generateRequestedNumType(GROUPID_NUMTYPE_ENTRY);
+		RestTemplate rt = new RestTemplate();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String storeCd = userService.getStorecdByUsername(auth.getName());
+		
+		MultipartFile withThisFile = followupappDetailsForm.getFollowupImage();
+		//creates a new instance of application image dto to persist
+		ApplicationImage withThisDTO = 
+				new ImageBuilder().withDefaultValues().build();
+		withThisDTO.setStoreCd(storeCd);
+		withThisDTO.setDataCd(followupappDetailsForm.getAppNo());
+		withThisDTO.setGroupId(groupId);
+		withThisDTO.setImageType(new BigDecimal("1"));
+		withThisDTO.setComments("FOLLOWUP TEST REMARKS");
+		
+		if(!saveFile(withThisFile,withThisDTO)) return false;
+
+		//do a post on rs-images restful end point.
+		try {
+			String imagesRestFulEndpoint = env.getProperty(RS_IMAGES_URL_KEY);
+			rt.postForEntity(imagesRestFulEndpoint,withThisDTO,ApplicationImage.class);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
 	}
 }

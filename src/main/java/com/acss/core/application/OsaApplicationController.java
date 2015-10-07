@@ -1,4 +1,4 @@
-package com.acss.core.search;
+package com.acss.core.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

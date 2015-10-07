@@ -1,4 +1,4 @@
-package com.acss.core.search;
+package com.acss.core.application;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

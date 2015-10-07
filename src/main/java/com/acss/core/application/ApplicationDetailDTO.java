@@ -1,4 +1,4 @@
-package com.acss.core.search;
+package com.acss.core.application;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +98,10 @@ public class ApplicationDetailDTO {
 	
 	public void addMoreImages(HpsUploadFileDTO image){
 		this.additionalImages.add(image);
+	}
+	
+	public void addMoreImages(List<HpsUploadFileDTO> images){
+		this.additionalImages.addAll(images);
 	}
 
 	public String getPendingRemarks() {

@@ -1,6 +1,7 @@
 package com.acss.core.merchantupload;
 
-import com.acss.core.search.ApplicationDetailDTO;
+import com.acss.core.application.ApplicationDetailDTO;
+import com.acss.core.followup.FollowupDetailDTO;
 
 
 public interface FileUploadService {
@@ -15,6 +16,11 @@ public interface FileUploadService {
 	 * Adds more files to an existing application.
 	 */
 	public boolean uploadMoreImages(ApplicationDetailDTO additionalUpload);
+	
+	/**
+	 * Upload follow up image and saves in our image repository.
+	 */
+	public boolean uploadFollowUpImage(FollowupDetailDTO followupappDetailsForm);
 	
 	/**
 	 * Updates the whole application related images as complete submission so that
