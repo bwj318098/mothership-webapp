@@ -3,6 +3,8 @@ package com.acss.core.followup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +18,12 @@ import com.acss.core.application.HpsApplicationService;
 import com.acss.core.merchantupload.FileUploadService;
 import com.acss.core.merchantupload.HpsImageType;
 import com.acss.core.merchantupload.HpsUploadFileDTO;
+import com.acss.core.merchantupload.validator.FollowupDocumentData;
 import com.acss.core.support.web.MessageHelper;
 
 @Controller
 public class OsaFollowUpApplicationController {
-	
+	private static final String BINDING_RESULT_KEY = "org.springframework.validation.BindingResult.";
 	private static final String APPSEARCH_MODEL_ATTRIB_KEY = "followUpSearchForm";
 	private static final String APPSEARCH_MODEL_APPSTATUS_KEY = "listAppStatus";
 	private static final String APPDETAIL_MODEL_ATTRIB_KEY = "followupappDetailsForm";
@@ -101,10 +104,17 @@ public class OsaFollowUpApplicationController {
 	 */
 	@RequestMapping(value = "followup/{appNo}",method = RequestMethod.POST)
 	public String uploadRequestedFile(@PathVariable String appNo,
-			RedirectAttributes ra,@ModelAttribute FollowupDetailDTO followupappDetailsForm){
+			@Validated(FollowupDocumentData.class) @ModelAttribute FollowupDetailDTO followupappDetailsForm,
+			BindingResult errors,RedirectAttributes ra){
 		
-		if(rsFileUpload.uploadFollowUpImage(followupappDetailsForm)){
-			
+		if (errors.hasErrors()) {
+			//This is to preserve the validation results in case of redirection.
+			ra.addFlashAttribute(APPDETAIL_MODEL_ATTRIB_KEY, followupappDetailsForm);
+			ra.addFlashAttribute(BINDING_RESULT_KEY+APPDETAIL_MODEL_ATTRIB_KEY, errors);
+			return "redirect:/followup/"+appNo;
+		}
+		
+		if(rsFileUpload.uploadFollowUpImage(rsApplicationService.updateRequestedDocuments(followupappDetailsForm))){
 			MessageHelper.addSuccessAttribute(ra, "upload.success",followupappDetailsForm.getAppNo());
 		}else
 			MessageHelper.addErrorAttribute(ra, "upload.error");

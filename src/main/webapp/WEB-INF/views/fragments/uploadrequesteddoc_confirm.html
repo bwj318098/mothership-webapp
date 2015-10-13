@@ -16,8 +16,10 @@
       </div>
       <div class="modal-body">
         <p>Are you sure you want to submit these Documents for Follow up?</p>
+        <!-- Upload File -->
         <label for="inputRequestedFile" class="input-group" id="requestedDoc-addon">Please provide the image.</label>
       	<input type="file" th:field="*{__${followupImage}__}" class="form-control" id="inputRequestedFile" name="followupImage"/>
+      	
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirm">Submit</button>

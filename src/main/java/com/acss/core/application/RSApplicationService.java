@@ -8,6 +8,11 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -88,7 +93,6 @@ public class RSApplicationService implements HpsApplicationService{
 		//prepare the requested document listings.
 		for(RequestedDocument document:application.getRequestedDocuments()){
 			RequestedDocumentDTO documentDTO = mapper.map(document, RequestedDocumentDTO.class);
-			documentDTO.getUploadStatus();
 			documentsDTO.add(documentDTO);
 		}
 		appDetail.setRequestedDocuments(documentsDTO);
@@ -97,9 +101,34 @@ public class RSApplicationService implements HpsApplicationService{
 	}
 
 	
-	public boolean updateRequestedDocuments(FollowupDetailDTO followupappDetailsForm) {
+	public FollowupDetailDTO updateRequestedDocuments(FollowupDetailDTO followupappDetailsForm) {
+
+		RestTemplate rt = new RestTemplate();
 		
-		return false;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String storeCd = userService.getStorecdByUsername(auth.getName());
+
+		//Application Model object from repository.
+		String uri = MessageFormat.format(env.getProperty(RS_APPLICATIONFOLLOWUPS_URL_KEY), storeCd);
+		
+		HpsApplication application = rt.getForObject(uri+"/"+followupappDetailsForm.getAppNo(), HpsApplication.class);
+		application.updateRequestedDocIntoUploaded(followupappDetailsForm.getReqDocumentForUpdate().getSeqId());
+		
+		ModelMapper mapper = new ModelMapper();
+		RequestedDocumentDTO documentDTO = mapper.map(application.getRequestedDocumentForUpdate(), RequestedDocumentDTO.class);
+		followupappDetailsForm.setReqDocumentForUpdate(documentDTO);
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-Type", "application/json");
+	    headers.add("Accept", "*/*");
+		HttpEntity<HpsApplication> requestEntity = new HttpEntity<HpsApplication>(application,headers);
+		
+		ResponseEntity<HpsApplication> response = rt.exchange(uri+"/"+followupappDetailsForm.getAppNo()+"/"+followupappDetailsForm.getReqDocumentForUpdate().getSeqId(),
+				HttpMethod.PUT,requestEntity, HpsApplication.class);
+		if (HttpStatus.OK.equals(response.getStatusCode())) {
+			return followupappDetailsForm;
+		 }
+		 	return null;
 	}
 	
 	

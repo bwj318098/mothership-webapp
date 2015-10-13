@@ -12,8 +12,12 @@ public class RequestedDocumentDTO {
 	private BigDecimal uploadStatus;
 	private String remarks;
 	
-	public BigDecimal getSeqNo() {
+	
+	public BigDecimal getSeqId() {
 		return seqId;
+	}
+	public void setSeqId(BigDecimal seqId) {
+		this.seqId = seqId;
 	}
 	
 	public String getUploadStatus() {
@@ -25,11 +29,13 @@ public class RequestedDocumentDTO {
 		this.uploadStatus = uploadStatus;
 	}
 	
-	public void setSeqNo(BigDecimal seqNo) {
-		this.seqId = seqNo;
+	public BigDecimal getImageTypeAsCode(){
+		return imageType;
 	}
+	
 	public String getImageType() {
-		return HpsImageType.BootstrapSingleton.lookupByCode.get(imageType).getValue();
+		return HpsImageType.BootstrapSingleton.lookupByCode.get(imageType)!=null ?
+				HpsImageType.BootstrapSingleton.lookupByCode.get(imageType).getValue() : "";
 	}
 	public void setImageType(BigDecimal imageType) {
 		this.imageType = imageType;

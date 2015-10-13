@@ -40,19 +40,23 @@
     <div>
     		<h4>Existing Images</h4>
 		    <!-- Existing Application Images Table-->
-			<table id="table-pagination" class="table table-striped " data-toggle="table" data-pagination="true">
+			<table id="table-pagination" class="table table-striped " data-toggle="table" data-pagination="true" data-page-size="5">
 			   <thead>
 			       <tr >
 			           <th class="col-md-1" data-sortable="true">Seq No</th>
-			           <th class="col-md-5" data-sortable="true">Image Type</th>
+			           <th class="col-md-4" data-sortable="true">Image Type</th>
 			           <th class="col-md-6" data-sortable="true">Filename</th>
+			           <th class="col-md-1" data-sortable="true"></th>
 			       </tr>
 			   </thead>
 			   <tbody>
 				   	<tr th:each="mItem, rowStat : *{existingImages}">
 				   		<td class="col-md-1" th:text="${rowStat.count}"></td>
-				   		<td class="col-md-5" th:text="#{${mItem.imageTypeDesc}}"></td>
-				   		<td class="col-md-6" th:text="${mItem.imageFilename}"></td>	
+				   		<td class="col-md-4" th:text="#{${mItem.imageTypeDesc}}"></td>
+				   		<td class="col-md-6" th:text="${mItem.imageFilename}"></td>
+				   		<td class="col-md-1 btn-group-xs text-center">
+				   			<button type="button" class="btn btn-primary" th:name="${'existingImages_'+rowStat.index}" >View</button>
+				   		</td>	
 				   	</tr>
 			   </tbody>
 			</table>
@@ -61,7 +65,7 @@
     
 	<div id="additionalImage" class="additionalImage">
 		<div class="has-error">
-			<span class="help-block" th:if="${#fields.hasErrors('additionalImages')}" th:errors="*{additionalImages}">At least one image is required.</span>
+			<span class="help-block" th:if="${#fields.hasErrors('additionalImages')}" th:errors="*{additionalImages}">Sample file error message here </span>
 		</div>
 		
 		<div th:each="image, rowStat : *{additionalImages}">
@@ -128,6 +132,9 @@
     <div>
 		<!-- Images requested by operator-->
 		    <h4>Requested Images</h4>
+		    <div class="has-error">
+		    	<span class="help-block" th:if="${#fields.hasErrors('followupImage')}">Please upload requested image.</span>
+			</div>
 			<table id="table-pagination" class="table table-striped " data-toggle="table" data-pagination="true">
 			   <thead>
 			       <tr >
@@ -142,21 +149,29 @@
 			   </thead>
 			   <tbody>
 				   	<tr th:each="mItem, rowStat : *{requestedDocuments}">
-				   		<td class="col-md-1" th:text="${rowStat.count}"></td>
+				   		<td class="col-md-1" th:text="${rowStat.count}">SeqNo</td>
 				   		<td class="col-md-2" th:text="#{${mItem.imageType}}">Sample Type</td>
 				   		<td class="col-md-3" th:text="${mItem.requestedBy}">Gail Vargas</td>
 				   		<td class="col-md-2" th:text="${mItem.requestedDate}">2015-03-01 17:20:00</td>
 				   		<td class="col-md-1" th:text="#{${mItem.uploadStatus}}">Not Yet Uploaded</td>
 				   		<td class="col-md-3" th:text="${mItem.remarks}">Please provide this image.</td>
 				   		<td class="col-md-1">
-				   			<div class="btn-group btn-group-xs" role="group">
-				   				<button type="button" name="uploadRequestedDoc" class="btn btn-primary">Upload</button>
+				   			<div class="text-center btn-group-xs" role="group">
+				   				<input type="hidden" th:field="*{requestedDocuments[__${rowStat.index}__].seqId}" />
+				   				<button th:if="${mItem.uploadStatus == 'fuuploadstatus.no'}" type="button" th:name="${'uploadRequestedDoc_'+rowStat.index}" class="btn btn-primary">Upload</button>
+				   				<span th:if="${mItem.uploadStatus == 'fuuploadstatus.yes'}" class="glyphicon glyphicon-check green"></span>
 				   			</div>
 				   		</td>
 				   	</tr>
+				   	
 			   </tbody>
+			   
 			</table>
-	
+			
+	</div>
+    <!-- Temp space for the seqNo of the selected Item for update-->
+	<div id="requestedDocument">
+		<input type="hidden" th:field="*{reqDocumentForUpdate.seqId}"/>
 	</div>
     
     <!-- Modal For Submission-->
@@ -170,20 +185,21 @@
     
     <!-- Modal For Completing instead-->
 	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='completeInsteadModal',modal_title='Submit as Complete', modal_msg='Minimum requirement was met.Submit the Application as Complete instead?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+    
     <!-- Modal For Requested Document Submission -->
-    <div th:replace="fragments/uploadrequesteddoc_confirm :: uploadrequesteddoc_confirm(followupImage='followupImage')"></div>
+    <div th:replace="fragments/uploadrequesteddoc_confirm :: uploadrequesteddoc_confirm(followupImage='followupImage',followupImageRemarks='reqDocumentForUpdate.remarks')"></div>
     
     </form>
 </div>
 <div id="links" style="visibility : hidden">
-	<ul th:each="mItem : ${followupappDetailsForm.existingImages}">
+	<ul th:each="mItem,rowStat : ${followupappDetailsForm.existingImages}">
 		<li>
-	    	<a href="../../../resources/images/w.macalino_af.jpg" th:href="@{#{image.url}} + ${mItem.imageCode} + '/view'" th:title="#{${mItem.imageTypeDesc}}" title="Application Form" data-gallery="samplegallery"></a>
+	    	<a th:name="${'image_'+rowStat.count}" href="../../../resources/images/w.macalino_af.jpg" th:href="@{#{image.url}} + ${mItem.imageCode} + '/view'" th:title="#{${mItem.imageTypeDesc}}" title="Application Form" data-gallery="samplegallery"></a>
 	    </li>
 	</ul>
 </div>
 	
-<div id="blueimp-gallery" class="blueimp-gallery">
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" >
 	    <!-- The container for the modal slides -->
 	    <div class="slides"></div>
 	    <!-- Controls for the borderless lightbox -->
@@ -270,9 +286,16 @@ $(document).ready(function(){
 	    
 	});
 	
-	$('button[name="uploadRequestedDoc"]').on('click',function(e){
+	
+	$('button[name^="uploadRequestedDoc"]').on('click',function(e){
 		e.preventDefault();
 		var $form=$(this).closest('form');
+		//seq No needed for update
+		var $seqId = $(this).prev().val();
+		//remove the existing first
+		$('#requestedDocument').children().val("");
+		//set into selected seqId
+		$('#requestedDocument').children().val($seqId);
 		$('#uploadrequesteddoc').modal({ backdrop: 'static', keyboard: false })
         .one('click', '#confirm', function (e) {
             $form.trigger('submit');
@@ -326,6 +349,13 @@ $(document).ready(function(){
 	    $("#additionalImage #row-image_"+ id).remove();
 	});
 });
+//global binding for dynamic elements
+$( document ).on( "click", '[name^="existingImages"]', function() {
+		var imageIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+		var int_imageIndex = parseInt(imageIndex, 10) + 1;
+		$('#links [name="image_'+int_imageIndex+'"]').click();
+});
+	
 //]]>
 </script>
 </body>

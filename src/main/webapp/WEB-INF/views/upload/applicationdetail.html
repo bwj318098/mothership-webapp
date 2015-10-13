@@ -37,22 +37,50 @@
    	 
     <h3>&nbsp;</h3>
     
-	<!-- Existing Application Images -->
-	<div th:each="mItem, rowStat : *{existingImages}">
-	   	<div class="row">	   		
-			<div class="col-md-12">
-		    	<div class="input-group svX3">
-					<label for="appImage" class="input-group-addon imagetype-width" id="appImage-addon" th:text="#{${mItem.imageTypeDesc}}">ImageName:</label>
+	
+<!-- 	<div th:each="mItem, rowStat : *{existingImages}"> -->
+<!-- 	   	<div class="row">	   		 -->
+<!-- 			<div class="col-md-12"> -->
+<!-- 		    	<div class="input-group svX3"> -->
+<!-- 					<label for="appImage" class="input-group-addon imagetype-width" id="appImage-addon" th:text="#{${mItem.imageTypeDesc}}">ImageName:</label> -->
 					
-					<input type="text" th:field="*{existingImages[__${rowStat.index}__].imageFilename}" class="form-control" id="appImage" name="appImage" aria-describedby="appImage-addon" readonly="readonly" th:value="${mItem.imageFilename}" />
-					<!-- This is for preserving the values for viewing images -->
-					<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageCode}" class="form-control"/>
-					<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageType}" class="form-control"/>
-				</div>
-			</div>
-	    </div>
-	    <h4></h4>
-    </div>
+<!-- 					<input type="text" th:field="*{existingImages[__${rowStat.index}__].imageFilename}" class="form-control" id="appImage" name="appImage" aria-describedby="appImage-addon" readonly="readonly" th:value="${mItem.imageFilename}" /> -->
+<!-- 					This is for preserving the values for viewing images -->
+<!-- 					<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageCode}" class="form-control"/> -->
+<!-- 					<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageType}" class="form-control"/> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 	    </div> -->
+<!-- 	    <h4></h4> -->
+<!--     </div> -->
+    
+    <div>
+    		<h4>Existing Images</h4>
+		    <!-- Existing Application Images Table-->
+			<table id="table-pagination" class="table table-striped " data-toggle="table" data-pagination="true" data-page-size="5">
+			   <thead>
+			       <tr >
+			           <th class="col-md-1" data-sortable="true">Seq No</th>
+			           <th class="col-md-4" data-sortable="true">Image Type</th>
+			           <th class="col-md-6" data-sortable="true">Filename</th>
+			           <th class="col-md-1" data-sortable="true"></th>
+			       </tr>
+			   </thead>
+			   <tbody>
+				   	<tr th:each="mItem, rowStat : *{existingImages}">
+				   		<td class="col-md-1" th:text="${rowStat.count}"></td>
+				   		<td class="col-md-4" th:text="#{${mItem.imageTypeDesc}}"></td>
+				   		<td class="col-md-6" th:text="${mItem.imageFilename}"></td>
+				   		<td class="col-md-1 btn-group-xs text-center">
+				   			<button type="button" class="btn btn-primary" th:name="${'existingImages_'+rowStat.index}">View</button>
+					   		<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageFilename}"/>
+							<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageCode}"/>
+							<input type="hidden" th:field="*{existingImages[__${rowStat.index}__].imageType}"/>
+			   			</td>
+				   	</tr>
+			   </tbody>
+			</table>
+	</div>
     
 	<div id="additionalImage" class="additionalImage">
 		<div class="has-error">
@@ -144,7 +172,7 @@
 	</ul>
 </div>
 	
-<div id="blueimp-gallery" class="blueimp-gallery">
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
 	    <!-- The container for the modal slides -->
 	    <div class="slides"></div>
 	    <!-- Controls for the borderless lightbox -->
@@ -274,20 +302,20 @@ $(document).ready(function(){
 		$('#links li:first a').click();
 	});
 	
-	//show image pop-up upon clicking the image
-	$('[name^="existingImages"]').on('click', function(e){
-		var imageIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		var int_imageIndex = parseInt(imageIndex, 10) + 1;
-		$('#links [name="image_'+int_imageIndex+'"]').click();
-		
-	});
-	
 	/*!I Summon the modal screen! */
 	$("#removeLink").click(function () {
 		var id = ($('.additionalImage .row').length).toString();
 	    $("#additionalImage #row-image_"+ id).remove();
 	});
 });
+
+//global binding for dynamic elements
+$( document ).on( "click", '[name^="existingImages"]', function() {
+		var imageIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+		var int_imageIndex = parseInt(imageIndex, 10) + 1;
+		$('#links [name="image_'+int_imageIndex+'"]').click();
+});
+
 //]]>
 </script>
 </body>

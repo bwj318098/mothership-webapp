@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.acss.core.account.OsaUserDetailsService;
 import com.acss.core.application.ApplicationDetailDTO;
 import com.acss.core.followup.FollowupDetailDTO;
+import com.acss.core.followup.RequestedDocumentDTO;
 import com.acss.core.model.application.ApplicationSeqNo;
 import com.acss.core.model.image.ApplicationImage;
 import com.acss.core.model.image.ImageBuilder;
@@ -214,32 +215,36 @@ public class RSFileUpload implements FileUploadService {
 
 	
 	public boolean uploadFollowUpImage(FollowupDetailDTO followupappDetailsForm) {
-		//get a sequence number first.
-		String groupId = generateRequestedNumType(GROUPID_NUMTYPE_ENTRY);
-		RestTemplate rt = new RestTemplate();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String storeCd = userService.getStorecdByUsername(auth.getName());
-		
-		MultipartFile withThisFile = followupappDetailsForm.getFollowupImage();
-		//creates a new instance of application image dto to persist
-		ApplicationImage withThisDTO = 
-				new ImageBuilder().withDefaultValues().build();
-		withThisDTO.setStoreCd(storeCd);
-		withThisDTO.setDataCd(followupappDetailsForm.getAppNo());
-		withThisDTO.setGroupId(groupId);
-		withThisDTO.setImageType(new BigDecimal("1"));
-		withThisDTO.setComments("FOLLOWUP TEST REMARKS");
-		
-		if(!saveFile(withThisFile,withThisDTO)) return false;
-
-		//do a post on rs-images restful end point.
-		try {
-			String imagesRestFulEndpoint = env.getProperty(RS_IMAGES_URL_KEY);
-			rt.postForEntity(imagesRestFulEndpoint,withThisDTO,ApplicationImage.class);
-		} catch (Exception e) {
+		if(followupappDetailsForm!=null){
+			//get a sequence number first.
+			String groupId = generateRequestedNumType(GROUPID_NUMTYPE_ENTRY);
+			RestTemplate rt = new RestTemplate();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String storeCd = userService.getStorecdByUsername(auth.getName());
+			
+			MultipartFile withThisFile = followupappDetailsForm.getFollowupImage();
+			RequestedDocumentDTO document = followupappDetailsForm.getReqDocumentForUpdate();
+			//creates a new instance of application image dto to persist
+			ApplicationImage withThisDTO = 
+					new ImageBuilder().withDefaultValues().build();
+			withThisDTO.setStoreCd(storeCd);
+			withThisDTO.setDataCd(followupappDetailsForm.getAppNo());
+			withThisDTO.setGroupId(groupId);
+			withThisDTO.setImageType(document.getImageTypeAsCode());
+			withThisDTO.setReqSeqId(document.getSeqId());
+			
+			if(!saveFile(withThisFile,withThisDTO)) return false;
+	
+			//do a post on rs-images restful end point.
+			try {
+				String imagesRestFulEndpoint = env.getProperty(RS_IMAGES_URL_KEY);
+				rt.postForEntity(imagesRestFulEndpoint,withThisDTO,ApplicationImage.class);
+			} catch (Exception e) {
+				return false;
+			}
+			return true;
+		}else
 			return false;
-		}
 		
-		return true;
 	}
 }

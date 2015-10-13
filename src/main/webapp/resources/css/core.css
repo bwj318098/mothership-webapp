@@ -87,3 +87,7 @@ body.loading {
     /* If max-width does not work, try using width instead */
     width: 175px; 
 }
+
+.green {
+    color: green;
+}
