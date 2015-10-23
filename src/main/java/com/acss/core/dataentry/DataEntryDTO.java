@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.acss.core.dataentry.common.AddressField;
 import com.acss.core.dataentry.common.IdField;
+import com.acss.core.dataentry.common.InstallmentDetail;
 import com.acss.core.dataentry.common.NameField;
 import com.acss.core.dataentry.common.PhoneField;
 import com.acss.core.dataentry.common.ReferenceData;
@@ -82,6 +83,11 @@ public class DataEntryDTO {
 	//* * * * * * * * * * * * * * * *Reference Information Starts Here * * * * * * * * * * * * * *
 	private ReferenceData referenceData;
 	//* * * * * * * * * * * * * * * *Reference Information Ends Here * * * * * * * * * * * * * * *
+	
+	//* * * * * * * * * * * * * * * *Installment Information Starts Here * * * * * * * * * * * * * *
+	private InstallmentDetail installment;
+	//* * * * * * * * * * * * * * * *Installment Information Ends Here * * * * * * * * * * * * * * *
+	
 	public NameField getApplicantName() {
 		return applicantName;
 	}
@@ -322,6 +328,13 @@ public class DataEntryDTO {
 	public void setReferenceData(ReferenceData referenceData) {
 		this.referenceData = referenceData;
 	}
+	public InstallmentDetail getInstallment() {
+		return installment;
+	}
+	public void setInstallment(InstallmentDetail installment) {
+		this.installment = installment;
+	}
+	
 	
 	
 }

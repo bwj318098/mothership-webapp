@@ -18,7 +18,9 @@ import com.acss.core.dataentry.common.constants.EmploymentStatus;
 import com.acss.core.dataentry.common.constants.Gender;
 import com.acss.core.dataentry.common.constants.MailTo;
 import com.acss.core.dataentry.common.constants.NatureOfBusiness;
+import com.acss.core.dataentry.common.constants.ProcessingFeePayType;
 import com.acss.core.dataentry.common.constants.RefRelationship;
+import com.acss.core.dataentry.common.constants.Term;
 import com.acss.core.dataentry.common.constants.TypeOfEmployment;
 import com.acss.core.dataentry.common.constants.TypeOfId;
 import com.acss.core.dataentry.common.constants.TypeOfResidence;
@@ -70,5 +72,7 @@ public class HomeController {
 		model.addAttribute(DaysOfMonth.MODEL_ATTRIB_KEY,DaysOfMonth.values());
 		model.addAttribute(BankAccountType.MODEL_ATTRIB_KEY,BankAccountType.values());
 		model.addAttribute(RefRelationship.MODEL_ATTRIB_KEY,RefRelationship.values());
+		model.addAttribute(Term.MODEL_ATTRIB_KEY,Term.values());
+		model.addAttribute(ProcessingFeePayType.MODEL_ATTRIB_KEY,ProcessingFeePayType.values());
 	}
 }

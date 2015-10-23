@@ -3,6 +3,7 @@ package com.acss.core.dataentry.common;
 import com.acss.core.dataentry.common.constants.RefRelationship;
 
 public class ReferenceData {
+	
 	private NameField refName;
 	private AddressField refAddress;
 	private RefRelationship relationship;

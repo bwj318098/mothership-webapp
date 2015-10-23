@@ -27,12 +27,12 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input name="category_1" type="text" class="form-control size_30_mandatory" id="category_1" placeholder="Category I" maxlength="30"/></div>
-						<div class="col-md-3"><input name="description_1" type="text" class="form-control size_70_mandatory" id="description_1" placeholder="Description I" maxlength="70"/></div>
-					  	<div class="col-md-2"><input name="brand_1" type="text" class="form-control size_30_mandatory" id="brand_1" placeholder="Brand I" maxlength="30"/></div>
-					  	<div class="col-md-2"><input name="model_1" type="text" class="form-control size_30_mandatory" id="model_1" placeholder="Model I" maxlength="30"/></div>
-					  	<div class="col-md-2"><input name="price_1" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="price_1" placeholder="Price I" maxlength="11"/></div>
-					  	<div class="col-md-1"><input name="downpayment_1" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="downpayment_1" placeholder="DP I" maxlength="11"/></div>
+						<div class="col-md-2"><input th:field="*{installment.firstProduct.category}" name="category_1" type="text" class="form-control name_30_req" id="category_1" placeholder="Category I" maxlength="30"/></div>
+						<div class="col-md-3"><input th:field="*{installment.firstProduct.description}" name="description_1" type="text" class="form-control any_70_req" id="description_1" placeholder="Description I" maxlength="70"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.brand}" name="brand_1" type="text" class="form-control name_30_req" id="brand_1" placeholder="Brand I" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.modelNo}" name="model_1" type="text" class="form-control name_30_req" id="model_1" placeholder="Model I" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.price}" name="price_1" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_1" placeholder="Price I" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.firstProduct.downPayment}" name="downpayment_1" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_1" placeholder="DP I" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -42,12 +42,12 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input name="category_2" type="text" class="form-control size_30_mandatory" id="category_2" placeholder="Category II" maxlength="30"/></div>
-						<div class="col-md-3"><input name="description_2" type="text" class="form-control size_70_mandatory" id="description_2" placeholder="Description II" maxlength="70"/></div>
-					  	<div class="col-md-2"><input name="brand_2" type="text" class="form-control size_30_mandatory" id="brand_2" placeholder="Brand II" maxlength="30"/></div>
-					  	<div class="col-md-2"><input name="model_2" type="text" class="form-control size_30_mandatory" id="model_2" placeholder="Model II" maxlength="30"/></div>
-					  	<div class="col-md-2"><input name="price_2" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="price_2" placeholder="Price II" maxlength="11"/></div>
-					  	<div class="col-md-1"><input name="downpayment_2" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="downpayment_2" placeholder="DP II" maxlength="11"/></div>
+						<div class="col-md-2"><input th:field="*{installment.secondProduct.category}" name="category_2" type="text" class="form-control name_30_req" id="category_2" placeholder="Category II" maxlength="30"/></div>
+						<div class="col-md-3"><input th:field="*{installment.secondProduct.description}"  name="description_2" type="text" class="form-control any_70_req" id="description_2" placeholder="Description II" maxlength="70"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.brand}" name="brand_2" type="text" class="form-control name_30_req" id="brand_2" placeholder="Brand II" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.modelNo}" name="model_2" type="text" class="form-control name_30_req" id="model_2" placeholder="Model II" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.price}" name="price_2" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_2" placeholder="Price II" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.secondProduct.downPayment}" name="downpayment_2" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_2" placeholder="DP II" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -57,12 +57,12 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input name="category_3" type="text" class="form-control size_30_mandatory" id="category_3" placeholder="Category III" maxlength="30"/></div>
-						<div class="col-md-3"><input name="description_3" type="text" class="form-control size_70_mandatory" id="description_3" placeholder="Description III" maxlength="70"/></div>
-					  	<div class="col-md-2"><input name="brand_3" type="text" class="form-control size_30_mandatory" id="brand_3" placeholder="Brand III" maxlength="30"/></div>
-					  	<div class="col-md-2"><input name="model_3" type="text" class="form-control size_30_mandatory" id="model_3" placeholder="Model III" maxlength="30"/></div>
-					  	<div class="col-md-2"><input name="price_3" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="price_3" placeholder="Price III" maxlength="11"/></div>
-					  	<div class="col-md-1"><input name="downpayment_3" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="downpayment_3" placeholder="DP III" maxlength="11"/></div>
+						<div class="col-md-2"><input th:field="*{installment.thirdProduct.category}" name="category_3" type="text" class="form-control name_30_req" id="category_3" placeholder="Category III" maxlength="30"/></div>
+						<div class="col-md-3"><input th:field="*{installment.thirdProduct.description}" name="description_3" type="text" class="form-control any_70_req" id="description_3" placeholder="Description III" maxlength="70"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.brand}" name="brand_3" type="text" class="form-control name_30_req" id="brand_3" placeholder="Brand III" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.modelNo}" name="model_3" type="text" class="form-control name_30_req" id="model_3" placeholder="Model III" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.price}" name="price_3" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_3" placeholder="Price III" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.thirdProduct.downPayment}" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_3" placeholder="DP III" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -74,15 +74,12 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Monthly Interest Rate</label></div>
-						<div class="col-md-1"><input name="interest" type="text" class="form-control size_5_mandatory numeric-decimal" id="interest" placeholder="%" maxlength="5"/></div>
+						<div class="col-md-1"><input  th:field="*{installment.rate}" name="interest" type="text" class="form-control size_5_mandatory numeric-decimal" id="interest" placeholder="%" maxlength="5"/></div>
 						<div class="col-md-2"><label class="control-label" for="category_1">Installment Term</label></div>
 					  	<div class="col-md-1">
-					  		<select name="accountType" class="form-control selectField" id="accountType">
-					  			<option></option>					
-								<option>6</option>
-								<option>12</option>
-								<option>18</option>
-								<option>24</option>
+					  		<select th:field="*{installment.term}" name="accountType" class="form-control selectField" id="accountType">
+					  			<option value=""></option>					
+								<option th:each="item : ${termList}" th:value="${item}" th:text="#{${item.value}}"></option>
 							</select>
 					  	</div>
 					  	<div class="col-md-1"><label class="control-label" for="category_1">months</label></div>
@@ -98,7 +95,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Promotion Code</label></div>
-						<div class="col-md-2"><input type="text" class="form-control" id="category_3" placeholder="Promotion Code" maxlength="6"/></div>
+						<div class="col-md-2"><input th:field="*{installment.promotionCode}" type="text" class="form-control" id="promoCode" placeholder="Promotion Code" maxlength="6"/></div>
 						<div class="col-md-2 col-md-offset-3"><label class="control-label" for="category_1" >Down Payment(a)</label></div>
 						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Down Payment" readonly="readonly" maxlength="11"/></div>
 				  	</div>
@@ -108,16 +105,16 @@
 						<div class="col-md-2"><label class="control-label" for="category_1">Processing Fee Type</label></div>
 						
 						<div class="col-md-1">
-							<label class="control-label"><input class="control-label" type="radio" name="optradio" />Normal</label>
+							<label class="control-label"><input th:field="*{installment.processingFeePayType}" th:value="${processingFeePayTypeList[0]}" th:text="#{${processingFeePayTypeList[0].value}}" class="control-label" type="radio"  name="optradio" /></label>
 						</div>
 						<div class="col-md-2">
-							<label class="control-label"><input class="control-label" type="radio" name="optradio" />Add PF to Finance Price</label>
+							<label class="control-label"><input th:field="*{installment.processingFeePayType}" th:value="${processingFeePayTypeList[1]}" th:text="#{${processingFeePayTypeList[1].value}}" class="control-label" type="radio"  name="optradio" /></label>
 						</div>
 						<div class="col-md-2">
-							<label class="control-label"><input class="control-label" type="radio" name="optradio" />Add PF to 1st Installment</label>
+							<label class="control-label"><input th:field="*{installment.processingFeePayType}" th:value="${processingFeePayTypeList[2]}" th:text="#{${processingFeePayTypeList[2].value}}" class="control-label" type="radio"  name="optradio" /></label>
 						</div>
 						<div class="col-md-2"><label class="control-label" for="category_1">Promo Voucher</label></div>
-						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Promo Voucher" maxlength="11"/></div>
+						<div class="col-md-3"><input th:field="*{installment.promoVoucher}" type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Promo Voucher" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -173,7 +170,7 @@
 						<div class="col-md-2"><label class="control-label" for="category_1">Promoter Screening</label></div>
 						<div class="col-md-3">
 							<select class="form-control" id="promoterScreening">
-					  			<option></option>					
+					  			<option value=""></option>					
 								<option>A</option>
 								<option>B</option>
 								<option>C</option>
