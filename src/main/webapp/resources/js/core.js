@@ -9,7 +9,6 @@ String.prototype.format = String.prototype.f = function() {
     return s;
 };
 
-
 function addImageFunction(){
 	/*! Customed function for dynamic addition of image with image type */
 	$("#addLink").click(function () {
@@ -42,6 +41,12 @@ function addImageFunction(){
 /* Prevents user to input character on fields marked with class numeric.*/
 function enableNumericOnlyForNumericClass(){
 	$(".numeric").numeric({ decimal: false, negative: false }, function() {this.value = ""; this.focus(); });
+}
+
+/* Prevents user to input character on fields marked with class numeric.*/
+function enableDecimalOnlyForNumericClass(){
+	//$(".numeric-decimal").numeric({ decimal: ".", negative: false ,scale: 3}, function() {this.value = ""; this.focus(); });
+	$(".numeric-decimal").numeric({ decimal : ".",  negative : false, scale: 2 });
 }
 
 /* Show loading screen for every form submit only*/
@@ -84,4 +89,11 @@ function enableTooltipForSignup(){
 	$('[for="username"]').tooltip({title: "Any existing username will result into validation error.", animation: true,placement: "auto"});
 	$('[for="email"]').tooltip({title: "Token for reset password will be sent to this email. Please put a valid email.", animation: true,placement: "auto"});
 	$('[type="submit"]').tooltip({title: "Register a new user with ROLE_USER privileges under the store code entered.", animation: true,placement: "auto"});
+}
+
+function convertTextInputToUpperCase(){
+	$('input[type=text]').val (function () {
+	    return this.value.toUpperCase();
+	});
+	
 }

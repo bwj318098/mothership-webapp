@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Bank Information</title>
+</head>
+<body>
+	<div th:fragment="prodDetail" id="prodDetail" class="tab-pane fade">
+	  	<p></p>
+	  	<!-- Header for common fields -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Category</label></div>
+						<div class="col-md-3"><label class="control-label" for="description_1">Description</label></div>
+					  	<div class="col-md-2"><label class="control-label" for="brand_1">Brand</label></div>
+					  	<div class="col-md-2"><label class="control-label" for="model_1">Model No.</label></div>
+					  	<div class="col-md-2"><label class="control-label" for="price_1">Cash Price</label></div>
+					  	<div class="col-md-1"><label class="control-label" for="downpayment_1">DownPayment</label></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		<!-- Product I -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><input name="category_1" type="text" class="form-control size_30_mandatory" id="category_1" placeholder="Category I" maxlength="30"/></div>
+						<div class="col-md-3"><input name="description_1" type="text" class="form-control size_70_mandatory" id="description_1" placeholder="Description I" maxlength="70"/></div>
+					  	<div class="col-md-2"><input name="brand_1" type="text" class="form-control size_30_mandatory" id="brand_1" placeholder="Brand I" maxlength="30"/></div>
+					  	<div class="col-md-2"><input name="model_1" type="text" class="form-control size_30_mandatory" id="model_1" placeholder="Model I" maxlength="30"/></div>
+					  	<div class="col-md-2"><input name="price_1" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="price_1" placeholder="Price I" maxlength="11"/></div>
+					  	<div class="col-md-1"><input name="downpayment_1" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="downpayment_1" placeholder="DP I" maxlength="11"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		<!-- Product II -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><input name="category_2" type="text" class="form-control size_30_mandatory" id="category_2" placeholder="Category II" maxlength="30"/></div>
+						<div class="col-md-3"><input name="description_2" type="text" class="form-control size_70_mandatory" id="description_2" placeholder="Description II" maxlength="70"/></div>
+					  	<div class="col-md-2"><input name="brand_2" type="text" class="form-control size_30_mandatory" id="brand_2" placeholder="Brand II" maxlength="30"/></div>
+					  	<div class="col-md-2"><input name="model_2" type="text" class="form-control size_30_mandatory" id="model_2" placeholder="Model II" maxlength="30"/></div>
+					  	<div class="col-md-2"><input name="price_2" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="price_2" placeholder="Price II" maxlength="11"/></div>
+					  	<div class="col-md-1"><input name="downpayment_2" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="downpayment_2" placeholder="DP II" maxlength="11"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		<!-- Product III -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><input name="category_3" type="text" class="form-control size_30_mandatory" id="category_3" placeholder="Category III" maxlength="30"/></div>
+						<div class="col-md-3"><input name="description_3" type="text" class="form-control size_70_mandatory" id="description_3" placeholder="Description III" maxlength="70"/></div>
+					  	<div class="col-md-2"><input name="brand_3" type="text" class="form-control size_30_mandatory" id="brand_3" placeholder="Brand III" maxlength="30"/></div>
+					  	<div class="col-md-2"><input name="model_3" type="text" class="form-control size_30_mandatory" id="model_3" placeholder="Model III" maxlength="30"/></div>
+					  	<div class="col-md-2"><input name="price_3" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="price_3" placeholder="Price III" maxlength="11"/></div>
+					  	<div class="col-md-1"><input name="downpayment_3" type="text" class="form-control numeric-decimal text-right size_11_mandatory" id="downpayment_3" placeholder="DP III" maxlength="11"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Installment Detail -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Monthly Interest Rate</label></div>
+						<div class="col-md-1"><input name="interest" type="text" class="form-control size_5_mandatory numeric-decimal" id="interest" placeholder="%" maxlength="5"/></div>
+						<div class="col-md-2"><label class="control-label" for="category_1">Installment Term</label></div>
+					  	<div class="col-md-1">
+					  		<select name="accountType" class="form-control selectField" id="accountType">
+					  			<option></option>					
+								<option>6</option>
+								<option>12</option>
+								<option>18</option>
+								<option>24</option>
+							</select>
+					  	</div>
+					  	<div class="col-md-1"><label class="control-label" for="category_1">months</label></div>
+						<div class="col-md-2"><label class="control-label" for="category_1">Total Product Price</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Total" readonly="readonly" maxlength="11"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		<!-- Product Computations -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Promotion Code</label></div>
+						<div class="col-md-2"><input type="text" class="form-control" id="category_3" placeholder="Promotion Code" maxlength="6"/></div>
+						<div class="col-md-2 col-md-offset-3"><label class="control-label" for="category_1" >Down Payment(a)</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Down Payment" readonly="readonly" maxlength="11"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Processing Fee Type</label></div>
+						
+						<div class="col-md-1">
+							<label class="control-label"><input class="control-label" type="radio" name="optradio" />Normal</label>
+						</div>
+						<div class="col-md-2">
+							<label class="control-label"><input class="control-label" type="radio" name="optradio" />Add PF to Finance Price</label>
+						</div>
+						<div class="col-md-2">
+							<label class="control-label"><input class="control-label" type="radio" name="optradio" />Add PF to 1st Installment</label>
+						</div>
+						<div class="col-md-2"><label class="control-label" for="category_1">Promo Voucher</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Promo Voucher" maxlength="11"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Store Code</label></div>
+						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Store Code" readonly="readonly"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Finance Amount</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Finance Amount" readonly="readonly" maxlength="11"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Store Name</label></div>
+						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Store Name" readonly="readonly"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Interest Amount</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Interest Amount" readonly="readonly" maxlength="11"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Store Phone No.</label></div>
+						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Store Phone No." readonly="readonly"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Total Installment Amount</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric text-right" id="category_3" placeholder="Total Installment Amount" readonly="readonly" maxlength="11"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Merchant Staff Name</label></div>
+						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Staff Name" readonly="readonly"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Monthly Installment</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric text-right" id="category_3" placeholder="Monthly Installment" readonly="readonly" maxlength="11"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">AEON Staff</label></div>
+						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Staff Name" readonly="readonly"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Processing Fee(b)</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric text-right" id="category_3" placeholder="Processing Fee" readonly="readonly" maxlength="11"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">AEON Staff Date Received</label></div>
+						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="Staff Date Received" readonly="readonly"/></div>					
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Initial Cash Outlay(a+b)</label></div>
+						<div class="col-md-3"><input type="text" class="form-control numeric text-right" id="category_3" placeholder="Initial Cashout" readonly="readonly" maxlength="11"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Promoter Screening</label></div>
+						<div class="col-md-3">
+							<select class="form-control" id="promoterScreening">
+					  			<option></option>					
+								<option>A</option>
+								<option>B</option>
+								<option>C</option>
+							</select>
+						</div>						
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">First Payment Date</label></div>
+						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="category_1">Comment</label></div>
+						<div class="col-md-5"><textarea class="form-control"></textarea></div>
+						<div class="col-md-2"><label class="control-label" for="category_1">Final Payment Date</label></div>
+						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
+				  	</div>
+				</div>																										
+			</div>
+		</div>			
+	</div>
+</body>
+</html>

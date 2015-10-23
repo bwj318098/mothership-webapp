@@ -72,7 +72,6 @@ public class RSFileUpload implements FileUploadService {
 		String fileName = file.getOriginalFilename();
 		String fileExtension = FilenameUtils.getExtension(fileName);
 		String imageCode = generateRequestedNumType(IMAGECODE_NUMTYPE_ENTRY);
-		
 		if (!"".equalsIgnoreCase(fileName)) {
 			// Handle file content - multipartFile.getInputStream()
 			try {

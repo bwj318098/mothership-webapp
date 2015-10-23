@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Employment Information Fragment</title>
+</head>
+<body>
+	<div th:fragment="employmentInfo" id="empInfo" class="tab-pane fade">
+	  	<p></p>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="employmentType">Employment Type </label></div>
+					  	<div class="col-md-2">
+					  		<select th:field="*{employmentType}" name="employmentType" class="form-control selectField" id="employmentType">
+					  			<option value=""></option>					
+								<option th:each="item : ${employmentTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
+							</select> 
+					  	</div>
+					  	<div class="col-md-2"><label class="control-label" for="employmentType">Monthly Net Income</label></div>
+					  	<div class="col-md-2"><input th:field="*{monthlyNetIncome}" name="monthlyIncome" type="text" class="form-control numeric-decimal currency_10_req" id="monthlyIncome" maxlength="10"/></div>
+					  	<div class="col-md-2"><label class="control-label" for="otherIncome">Other Income(if any)</label></div>
+					  	<div class="col-md-2"><input th:field="*{otherIncome}" name="otherIncome" type="text" class="form-control numeric-decimal currency_10_req" id="otherIncome" maxlength="10"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="companyName">Company Name</label></div>
+					  	<div class="col-md-6"><input th:field="*{companyName}" name="companyName" type="text" class="form-control any_70_req" id="companyName" placeholder="Company Name" maxlength="70"/></div>
+					  	<div class="col-md-2"><label class="control-label" for="sourceOfOtherIncome">Source of Other Income</label></div>
+					  	<div class="col-md-2"><input th:field="*{sourceOfIncome}" name="sourceOfOtherIncome" type="text" class="form-control any_50_req" id="sourceOfOtherIncome" maxlength="50"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		<!--Start Copy Address Detail II: you can copy paste from here but make sure id are modified and labels are updated. -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="corpAddress">Company Address</label></div>
+						<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="input-group">
+										<input th:field="*{corpAddress.zipCode}" name="corpZipCode" type="text" class="form-control numeric any_6_req" id="corpZipCode" placeholder="Zip Code" maxlength="6"/>								
+										<div class="input-group-btn">
+												<button type="button" class="btn btn-primary">Auto</button>
+												<button type="button" class="btn btn-primary">?</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<input th:field="*{corpAddress.unitNo}" name="corpUnitNo" type="text" class="form-control any_6_req" id="corpUnitNo" placeholder="Unit No" maxlength="6"/>  
+								</div>
+								<div class="col-md-6">
+									<input th:field="*{corpAddress.street}" name="corpStreet" type="text" class="form-control any_70_req" id="corpStreet" placeholder="Street" maxlength="70"/>
+								</div> 
+							</div>
+						</div>
+						
+						<div class="col-md-4">
+							<input th:field="*{corpAddress.baranggay}" type="text" name="corpVillage" class="form-control any_70_req" id="corpVillage" placeholder="Baranggay/Village" maxlength="70"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-3 col-md-offset-5">
+							<input th:field="*{corpAddress.city}" name="corpCity" type="text" class="form-control" id="corpCity" placeholder="City" maxlength="100" readonly="readonly"/>
+						</div> 
+						<div class="col-md-4">
+							<input th:field="*{corpAddress.landMark}" name="corpLandmark" type="text" class="form-control" id="corpLandmark" placeholder="Landmark" maxlength="100"/>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Copy Address Detail II: you can copy paste from here but make sure id are modified and labels are updated. -->
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+					  	<div class="col-md-2"><label class="control-label" for="corpPhone">Company Phone</label></div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<div class="col-xs-5">
+									<input th:field="*{corpPhone.region}" name="corpPhoneReg" type="text" class="form-control numeric" id="corpPhoneReg" placeholder="_ _ _" maxlength="4"/> 
+								</div>
+								<div class="col-xs-7">
+									<input th:field="*{corpPhone.phoneNo}" name="corpPhoneNo" type="text" class="form-control numeric" id="corpPhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
+								</div> 
+							</div>
+						</div>
+					  	
+						<div class="col-md-1"><input th:field="*{corpPhone.local}" name="corpLocal" class="form-control numeric" id="corpLocal" placeholder="Loc" maxlength="5"/></div>
+					  	
+					  	<div class="col-md-1"><label class="control-label" for="salaryDate">Salary Date</label></div>
+						<div class="col-md-1">
+<!-- 							<input th:field="*{salaryDate}" name="salaryDate" type="text" class="form-control" id="salaryDate" placeholder="S.Date" maxlength="2"/> -->
+							<select th:field="*{salaryDate}" name="employmentStatus" class="form-control selectField" id="salaryDate">
+					  			<option value=""></option>					
+								<option th:each="item : ${daysOfMonthList}" th:value="${item}" th:text="#{${item.value}}"></option>
+							</select>
+						</div>
+						
+						<div class="col-md-2"><label class="control-label" for="employmentStatus">Employment Status</label></div>
+						<div class="col-md-2">
+							<select th:field="*{employmentStatus}" name="employmentStatus" class="form-control selectField text-right" id="employmentStatus">
+					  			<option value=""></option>					
+								<option th:each="item : ${employmentStatusList}" th:value="${item}" th:text="#{${item.value}}"></option>
+							</select>
+						</div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="yearsOfService">Years of Service</label></div>
+						<div class="col-md-1"><input th:field="*{yosYears}" name="yosYears" type="text" class="form-control any_2_req numeric" id="yosYears" placeholder="Years" maxlength="2"/></div>
+						<div class="col-md-1"><input th:field="*{yosMonths}" name="yosMonths" type="text" class="form-control any_2_req numeric" id="yosMonths" placeholder="Months" maxlength="2" /></div>
+						<div class="col-md-2"><label class="control-label" for="natureOfBusiness">Nature of Business</label></div>
+					  	<div class="col-md-2">
+					  		<select th:field="*{natureOfBusiness}" name="natureOfBusiness" class="form-control selectField" id="natureOfBusiness">
+					  			<option value=""></option>					
+								<option th:each="item : ${natureOfBusinessList}" th:value="${item}" th:text="#{${item.value}}"></option>
+							</select> 	
+					  	</div>
+					  	
+					  	<div class="col-md-2"><label class="control-label" for="occupation">Occupation</label></div>
+						<div class="col-md-2"><input th:field="*{occupation}" name="occupation" class="form-control any_50_req" id="occupation" placeholder="Occupation" maxlength="50"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>						
+	</div>
+</body>
+</html>

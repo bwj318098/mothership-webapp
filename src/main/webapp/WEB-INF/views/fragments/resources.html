@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:fragment="resources">
+
+
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,9 +20,6 @@
 <link href="../../../resources/css/blueimp-gallery.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/blueimp-gallery.min.css}" />
 <link href="../../../resources/css/bootstrap-image-gallery.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-image-gallery.min.css}" />
 
-
-<script src="../../../resources/js/core.js" th:src="@{/resources/js/core.js}"></script>
-
 <script src="../../../resources/js/moment.js" th:src="@{/resources/js/moment.js}"></script>
 <script src="../../../resources/js/jquery-2.1.4.min.js" th:src="@{/resources/js/jquery-2.1.4.min.js}"></script>
 <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
@@ -27,7 +27,6 @@
 <script src="../../../resources/js/bootstrap-table.min.js" th:src="@{/resources/js/bootstrap-table.min.js}"></script>
 <!-- Validation java scripts -->
 <script src="../../../resources/js/jquery.validate.min.js" th:src="@{/resources/js/jquery.validate.min.js}"></script>
-<script src="../../../resources/js/additional-methods.min.js" th:src="@{/resources/js/additional-methods.min.js}"></script>
 <script src="../../../resources/js/classRules.js" th:src="@{/resources/js/classRules.js}"></script>
 <!-- Gallery view java scripts -->
 <script src="../../../resources/js/jquery.blueimp-gallery.min.js" th:src="@{/resources/js/jquery.blueimp-gallery.min.js}"></script>
@@ -35,11 +34,16 @@
 <script src="../../../resources/js/bootstrap-image-gallery.min.js" th:src="@{/resources/js/bootstrap-image-gallery.min.js}"></script>
 <!-- Numeric Js-->
 <script src="../../../resources/js/jquery.numeric.min.js" th:src="@{/resources/js/jquery.numeric.min.js}"></script>
+<!-- Core JS for ACSS OSA-PH -->
+<script src="../../../resources/js/core.js" th:src="@{/resources/js/core.js}"></script>
+
 <script type="text/javascript">
 $(window).load(function() {
 	// hide the loading screen.
 	$(".se-pre-con").hide();
 });
+
 </script>
+
 </head>
 </html>

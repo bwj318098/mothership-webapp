@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Applicant Information Fragment</title>
+</head>
+<body>
+	<div th:fragment="applicantInfo" id="appInfo" class="tab-pane fade in active">
+			  	<p></p>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="applicantName">Applicant Name </label></div>
+							  	<div class="col-md-3">
+							  		<input type="text" th:field="*{applicantName.firstName}" name="firstName" class="form-control name_30_req" id="firstName" placeholder="First Name" maxlength="30"/> 
+							  	</div>
+							  	<div class="col-md-3">
+							  		<input type="text" th:field="*{applicantName.middleName}" name="middleName" class="form-control name_30" id="middleName" placeholder="Middle Name" maxlength="30" /> 
+							  	</div>
+							  	<div class="col-md-3">
+							  		<input type="text" th:field="*{applicantName.surName}" name="surName" class="form-control name_30_req" id="surName" placeholder="Surname" maxlength="30"/>
+							  	</div>
+						  	</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+						<div class="row">
+							<div class="col-md-5 col-md-offset-1"><label class="control-label" for="dateOfBirth">Date of Birth </label></div>
+							  <div class="col-md-6">
+								<div class="input-group date" id='dateOfBirthPicker'> 
+									<input type='text' th:field="*{dateOfBirth}" class="form-control any_10_req" name="dateOfBirth" maxlength="10"/>
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							  	</div>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="idType">Type of ID </label></div>
+								<div class="col-md-3">
+									
+									<select th:field="*{applicantId.idType}" name="idType" class="form-control selectField" id="idType">
+										<option value=""></option>
+							  			<option th:each="item : ${idTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select>
+								</div>
+								<div class="col-md-3"><input th:field="*{applicantId.idCardNo}" name="idNo" type="text" class="form-control any_20_req" id="idNo" placeholder="ID No." maxlength="20" /> </div>
+								<div class="col-md-3"></div>
+							</div>
+						</div>
+
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+							  <div class="col-md-5 col-md-offset-1"><label class="control-label" for="gender">Gender</label></div>
+							  <div class="col-md-6">
+							  		<select th:field="*{gender}" name="gender" class="form-control selectField" id="gender">
+							  			<option value=""></option>					
+										<option th:each="item : ${genderList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="otherIdType">Other ID </label></div>
+								<div class="col-md-3">
+									<select th:field="*{otherId.idType}" name="otherIdType" class="form-control selectField" id="otherIdType">
+							  			<option value=""></option>					
+										<option th:each="item : ${idTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select> 
+								
+								</div>
+								<div class="col-md-3"><input th:field="*{otherId.idCardNo}" name="otherIdNo" type="text" class="form-control any_20_req" id="otherIdNo" placeholder="ID No." maxlength="20" /> </div>
+								<div class="col-md-3"></div>
+							</div>
+						</div>
+
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+							  <div class="col-md-5 col-md-offset-1"><label class="control-label" for="citizenship">Citizenship</label></div>
+							  <div class="col-md-6">
+							  		<select th:field="*{citizenship}" name="citizenship" class="form-control selectField" id="citizenship">
+							  			<option value=""></option>					
+										<option th:each="item : ${citizenshipList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--Start Copy Address Detail: you can copy paste from here but make sure id are modified and labels are updated. -->
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="homeAddress">Home Address</label></div>
+								<div class="col-md-9">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="input-group">
+												<input th:field="*{address.zipCode}" name="homeZipCode" type="text" class="form-control numeric any_6_req" id="homeZipCode" placeholder="Zip Code" maxlength="6"/>								
+												<div class="input-group-btn">
+														<button type="button" class="btn btn-primary">Auto</button>
+														<button type="button" class="btn btn-primary">?</button>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<input th:field="*{address.unitNo}" name="homeUnitNo" type="text" class="form-control any_6_req"	id="homeUnitNo" placeholder="Unit No" maxlength="6"/>  
+										</div>
+										<div class="col-md-6">
+											<input th:field="*{address.street}" name="homeStreet" type="text" class="form-control any_70_req" id="homeStreet" placeholder="Street" maxlength="70"/>
+										</div> 
+									</div>
+								</div>
+								
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-11 col-md-offset-1">
+									<input th:field="*{address.baranggay}" name="homeVillage" type="text" class="form-control any_70_req" id="homeVillage" placeholder="Baranggay/Village" maxlength="70"/>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6"></div>
+								<div class="col-md-6">
+									<input th:field="*{address.city}" name="homeCity" type="text" class="form-control" id="homeCity" placeholder="City" maxlength="70" readonly="readonly"/>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-11 col-md-offset-1">
+									<input th:field="*{address.landMark}" name="homeLandmark" type="text" class="form-control" id="homeLandmark" placeholder="Landmark" maxlength="70"/>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+				<!-- End Copy Address Detail: you can copy paste from here but make sure id are modified and labels are updated. -->
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"></div>
+								<div class="col-md-3"></div>
+								<div class="col-md-3"><label class="control-label" for="mailTo">Mail to</label></div>
+								<div class="col-md-3">
+									<select th:field="*{mailTo}" name="mailTo" class="form-control selectField" id="mailTo">
+							  			<option value=""></option>					
+										<option th:each="item : ${mailToList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select> 
+								</div>
+							</div>
+						</div>
+
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+							  <div class="col-md-5 col-md-offset-1"><label class="control-label" for="residenceType">Residence Type</label></div>
+							  <div class="col-md-6">
+							  		<select th:field="*{residence}" name="residenceType" class="form-control selectField" id="residenceType">
+							  			<option value=""></option>					
+										<option th:each="item : ${typeOfResidenceList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="homePhone">Home Phone</label></div>
+								
+								<div class="col-md-3">
+									<div class="form-group">
+										<div class="col-xs-5">
+											<input th:field="*{homePhone.region}" name="homePhoneReg" type="text" class="form-control numeric" id="homePhoneReg" placeholder="_ _ _" maxlength="4"/> 
+										</div>
+										<div class="col-xs-7">
+											<input th:field="*{homePhone.phoneNo}" name="homePhoneNo" type="text" class="form-control numeric" id="homePhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
+										</div> 
+									</div>
+								</div>
+								
+								<div class="col-md-3"><label class="control-label" for="homeMobileNo">Cell Phone</label></div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<div class="col-xs-5">
+											<input th:field="*{homeMobile.region}" name="homeMobileReg" type="text" class="form-control numeric" id="homeMobileReg" placeholder="_ _ _" maxlength="4"/> 
+										</div>
+										<div class="col-xs-7">
+											<input th:field="*{homeMobile.phoneNo}" name="homeMobileNo" type="text" class="form-control numeric" id="homeMobileNo" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+							  <div class="col-md-5 col-md-offset-1"><label class="control-label" for="homeotherNumber">Other Number</label></div>
+							  <div class="col-md-6">
+							  		<div class="form-group">
+										<div class="col-xs-5">
+											<input th:field="*{otherPhone.region}" name="homeotherNumberReg" type="text" class="form-control numeric"	id="homeotherNumberReg" placeholder="_ _ _" maxlength="4"/> 
+										</div>
+										<div class="col-xs-7">
+											<input th:field="*{otherPhone.phoneNo}" name="homeotherNumberNo" type="text" class="form-control numeric" id="homeotherNumber" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
+										</div> 
+									</div>
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="yearsOfStay">Years of Stay</label></div>
+								<div class="col-md-3"><input th:field="*{yearsOfStay}" name="yearsOfStay" type="text" class="form-control size_2_mandatory numeric" id="yearsOfStay" placeholder="Years of Stay" maxlength="2"/></div>
+								<div class="col-md-3"><label class="control-label" for="noOfDependents">No. of Dependents</label></div>
+								<div class="col-md-3"><input  th:field="*{noOfDependents}" name="noOfDependents" type="text" class="form-control size_2_mandatory numeric" id="noOfDependents" placeholder="No. of Dependents" maxlength="2"/></div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+							  <div class="col-md-6 col-md-offset-1"><label class="control-label" for="educationalAttainment">Educational Attainment</label></div>
+							  <div class="col-md-5">
+							  		<select th:field="*{educationalAttainment}" name="educationalAttainment" class="form-control selectField" id="educationalAttainment">
+							  			<option value=""></option>					
+										<option th:each="item : ${educationAttainmentList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select> 
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="civilStatus">Civil Status</label></div>
+								<div class="col-md-3">
+									<select th:field="*{civilStatus}" name="civilStatus" class="form-control selectField" id="civilStatus">
+							  			<option value=""></option>					
+										<option th:each="item : ${civilStatusList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select> 
+								</div>
+									<div class="col-md-3"><label class="control-label" for="emailAddress">E-mail Address</label></div>
+									<div class="col-md-3"><input th:field="*{email}" name="emailAddress" type="text" class="form-control email_nonMandatory" id="emailAddress" placeholder="E-mail Address" maxlength="50"/></div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+							  <div class="col-md-6 col-md-offset-1"></div>
+							  <div class="col-md-5"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="spouseName">Spouse Name</label></div>
+							  	<div class="col-md-3"><input th:field="*{spouseName.firstName}" name="spouseFirstName" type="text" class="form-control name_30_req" id="spouseFirstName" placeholder="First Name" maxlength="30" /> </div>
+							  	<div class="col-md-3"><input th:field="*{spouseName.middleName}" name="spouseMiddleName" type="text" class="form-control name_30" id="spouseMiddleName" placeholder="Middle Name" maxlength="30"/> </div>
+							  	<div class="col-md-3"><input th:field="*{spouseName.surName}" name="spouseSurName" type="text" class="form-control name_30_req" id="spouseSurName" placeholder="Surname" maxlength="30"/> </div>
+						  	</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+						<div class="row">
+						  <div class="col-md-5 col-md-offset-1"></div>
+						  <div class="col-md-6"></div>
+						</div>
+						</div>
+					</div>
+				</div>
+				<!--Start Copy Address Detail: you can copy paste from here but make sure id are modified and labels are updated. -->
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="homePermAddress">Permanent Address</label></div>
+								<div class="col-md-9">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="input-group">
+												<input th:field="*{permanentAddress.zipCode}" name="homePermZipCode" type="text" class="form-control numeric any_6_req" id="homePermZipCode" placeholder="Zip Code" maxlength="6"/>								
+												<div class="input-group-btn">
+														<button type="button" class="btn btn-primary">Auto</button>
+														<button type="button" class="btn btn-primary">?</button>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<input th:field="*{permanentAddress.unitNo}" name="homePermUnitNo" type="text" class="form-control any_6_req" id="homePermUnitNo" placeholder="Unit No" maxlength="6"/> 
+										</div>
+										<div class="col-md-6">
+											<input th:field="*{permanentAddress.street}" name="homePermStreet" type="text" class="form-control any_70_req" id="homePermStreet" placeholder="Street" maxlength="70"/>
+										</div> 
+									</div>
+								</div>
+								
+							</div>
+						</div>
+				
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-11 col-md-offset-1">
+									<input th:field="*{permanentAddress.baranggay}" name="homePermVillage" type="text" class="form-control any_70_req" id="homePermVillage" placeholder="Baranggay/Village" maxlength="70"/>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6"></div>
+								<div class="col-md-6">
+									<input th:field="*{permanentAddress.city}" name="homePermCity" type="text" class="form-control" id="homePermCity" placeholder="City" maxlength="70" readonly="readonly"/>
+								</div>
+								
+							</div>
+						</div>
+				
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-11 col-md-offset-1">
+									<input th:field="*{permanentAddress.landMark}" name="homePermLandmark" type="text" class="form-control" id="homePermLandmark" placeholder="Landmark" maxlength="70"/>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+				<!-- End Copy Address Detail: you can copy paste from here but make sure id are modified and labels are updated. -->
+				
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="motherMaidenName">Mother's Maiden Name</label></div>
+							  	<div class="col-md-3"><input th:field="*{motherMaidenName.firstName}" name="motherMaidenFirstName" type="text" class="form-control name_30" id="motherMaidenFirstName" placeholder="First Name" maxlength="30"/> </div>
+							  	<div class="col-md-3"><input th:field="*{motherMaidenName.middleName}" name="motherMaidenMiddleName" type="text" class="form-control name_30" id="motherMaidenMiddleName" placeholder="Middle Name" maxlength="30" /> </div>
+							  	<div class="col-md-3"><input th:field="*{motherMaidenName.surName}" name="motherMaidenSurName" type="text" class="form-control name_30" id="motherMaidenSurName" placeholder="Surname" maxlength="30"/> </div>
+						  	</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+						<div class="row">
+						  <div class="col-md-5 col-md-offset-1"></div>
+						  <div class="col-md-6"></div>
+						</div>
+						</div>
+					</div>
+				</div>								
+			  </div>
+</body>
+</html>

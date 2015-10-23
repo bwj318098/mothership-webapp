@@ -19,6 +19,7 @@ import com.acss.core.merchantupload.FileUploadService;
 import com.acss.core.merchantupload.HpsImageType;
 import com.acss.core.merchantupload.HpsUploadFileDTO;
 import com.acss.core.merchantupload.validator.FollowupDocumentData;
+import com.acss.core.merchantupload.validator.UploadInformationData;
 import com.acss.core.support.web.MessageHelper;
 
 @Controller
@@ -93,6 +94,26 @@ public class OsaFollowUpApplicationController {
 		return "followup/followupapplicationdetail";
 	}
 	
+	@RequestMapping(value = "followup/{appNo}",method = RequestMethod.POST,params = {"uploadAdditionalImages"})
+	public String uploadMore(@PathVariable String appNo,RedirectAttributes ra,
+				@ModelAttribute @Validated(UploadInformationData.class) FollowupDetailDTO followupappDetailsForm,
+				BindingResult errors){
+		
+		if (errors.hasErrors()) {
+			//This is to preserve the validation results in case of redirection.
+			ra.addFlashAttribute(APPDETAIL_MODEL_ATTRIB_KEY, followupappDetailsForm);
+			ra.addFlashAttribute(BINDING_RESULT_KEY+APPDETAIL_MODEL_ATTRIB_KEY, errors);
+			return "redirect:/followup/"+appNo;
+		}
+		
+		if(rsFileUpload.uploadMoreImages(followupappDetailsForm)){
+        	MessageHelper.addSuccessAttribute(ra, "upload.success",followupappDetailsForm.getAppNo());
+        }else{
+        	MessageHelper.addErrorAttribute(ra, "upload.error");
+        }
+		
+		return "redirect:/followup/"+appNo;
+	}
 	
 	/**
 	 * Adds more images/upload field/s for user to upload.

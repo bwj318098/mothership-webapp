@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Bank Information</title>
+</head>
+<body>
+	<div th:fragment="bankInfo" id="bankInfo" class="tab-pane fade">
+	  	<p></p>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="bankName">Bank/Branch</label></div>
+					  	<div class="col-md-4"><input th:field="*{bankName}" type="text" class="form-control any_50" id="bankName" maxlength="50"/></div>
+					  	
+					  	<div class="col-md-2"><label class="control-label" for="accountType">Type of Account</label></div>
+					  	<div class="col-md-4">
+					  		<select th:field="*{accountType}" class="form-control" id="accountType">
+					  			<option value=""></option>
+					  			<option th:each="item : ${bankAccountTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
+							</select> 
+					  	</div>
+				  	</div>
+				  	
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="accountNo">Account No.</label></div>
+					  	<div class="col-md-4"><input th:field="*{accountNo}" type="text" class="form-control" id="accountNo" maxlength="50"/></div>
+					  	<div class="col-md-2"><label class="control-label" for="accountName">Account's Holder Name</label></div>
+					  	<div class="col-md-4"><input th:field="*{accountName}" type="text" class="form-control" id="accountName" maxlength="100"/></div>	
+				  	</div>
+				  	
+				</div>
+			</div>
+		</div>					
+	</div>
+</body>
+</html>

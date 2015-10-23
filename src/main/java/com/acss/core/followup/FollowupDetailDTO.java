@@ -7,13 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.acss.core.application.ApplicationDetailDTO;
 import com.acss.core.merchantupload.validator.FollowupDocumentData;
 import com.acss.core.merchantupload.validator.NotInValidImageFile;
-import com.acss.core.merchantupload.validator.UploadInformationData;
 
 public class FollowupDetailDTO extends ApplicationDetailDTO{
 	
 	private List<RequestedDocumentDTO> requestedDocuments;
 	
-	@NotInValidImageFile(message="upload.followup.error",groups = {UploadInformationData.class,FollowupDocumentData.class})
+	@NotInValidImageFile(message="upload.followup.error",groups = {FollowupDocumentData.class})
 	private MultipartFile followupImage;
 	
 	private RequestedDocumentDTO reqDocumentForUpdate;

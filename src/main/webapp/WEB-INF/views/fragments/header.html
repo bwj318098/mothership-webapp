@@ -4,7 +4,7 @@
    	<meta charset="UTF-8"/>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" th:fragment="header" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" th:fragment="header" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
@@ -19,6 +19,8 @@
                 <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#" th:href="@{/}" id="merchantUpload"><span class="glyphicon glyphicon-home"></span>    Merchant Upload</a></li>
                 <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#about" th:href="@{/search}"><span class="glyphicon glyphicon-search"></span>    Search Application</a></li>
                 <li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#contact" th:href="@{/followup}"><span class="glyphicon glyphicon-folder-open"></span>     Document Follow up</a></li>
+            	<li th:if="${#authorization.expression('hasAnyRole(''ROLE_USER'')')}"><a href="#contact" th:href="@{/dataentry}"><span class="glyphicon glyphicon-folder-open"></span>     Data Entry</a></li>
+            	
             	<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="#settings" th:href="@{/signup}"><span class="glyphicon glyphicon-user"></span>         Account Registration</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

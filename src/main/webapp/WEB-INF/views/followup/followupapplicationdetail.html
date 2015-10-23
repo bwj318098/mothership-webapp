@@ -120,6 +120,7 @@
 						<input type="hidden" th:field="*{applicationStatus}" name="applicationStatus"/>
 						<button th:if="${followupappDetailsForm.applicationStatus=='With Pending Documents'}"  name="completeSubmission" type="button" class="btn btn-primary">Submit</button>
 						<button name="complete" type="submit" class="btn btn-primary" style="display: none;">doCompleteApplication</button>
+						<button name="uploadAdditionalImages" type="submit" class="btn btn-primary" style="display: none;">upload Additional Images to existing application</button>
 						
 						<button name="attach_images" type="button" class="btn btn-primary">Attach Image/s</button>
 						<button name="view_images" type="button" class="btn btn-primary" >View Image/s</button>
@@ -279,7 +280,8 @@ $(document).ready(function(){
 	    }else{
 		    $('#confirmModal').modal({ backdrop: 'static', keyboard: false })
 		        .one('click', '#confirm', function (e) {
-		            $form.trigger('submit');
+		            //$form.trigger('submit');
+		            $('button[name="uploadAdditionalImages"]').click();
 		        });
 	    
 	    }

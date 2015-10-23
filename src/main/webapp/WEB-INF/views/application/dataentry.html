@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: resources(title=#{view.dataEntry.title})"></head>
+<body>
+<!-- Loading gif -->
+<div class="se-pre-con"></div>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="container-fluid">
+    <!-- /* Handle the flash message */-->
+    <th:block th:if="${message != null}">
+        <!-- /* The message code is returned from the @Controller */ -->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
+    </th:block>
+<form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/}" method="post">
+  <div class="form-group">
+	  <div class="row">
+	  	<div class="col-xs-2"><strong><label class="control-label">Application Data Entry</label></strong></div>
+	  	<div class="col-lg-5 col-lg-offset-5 col-md-5 col-md-offset-5 col-xs-10" >
+	  		<div class="input-group">
+		  		<div class="row">
+		  	 		<div class="col-xs-4 col-xs-offset-8">
+		  	 		<p></p>
+		  	 			<div class="input-group-btn">
+		  	 				<button type="submit" class="btn btn-primary">Submit</button>
+		  	 			</div>
+		  	 			<div class="input-group-btn">
+		  	 				<button type="reset" class="btn btn-primary">Clear</button>
+		  	 			</div>
+		  	 		<p></p>
+		  	 		</div>
+		  	 	</div>
+	  	 	</div>
+	  	</div>
+	  </div>
+  </div>
+  <p></p>
+  <ul id="dataEntrySegments" class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#appInfo"><strong>Applicant Information</strong></a></li>
+    <li><a data-toggle="tab" href="#empInfo"><strong>Employment Information</strong></a></li>
+    <li><a data-toggle="tab" href="#bankInfo"><strong>Bank Account Information</strong></a></li>
+    <li><a data-toggle="tab" href="#refInfo"><strong>Reference I (Relative)</strong></a></li>
+    <li><a data-toggle="tab" href="#refInfoMore"><strong>Reference II (Relative)</strong></a></li>
+    <li><a data-toggle="tab" href="#prodDetail"><strong>Product and Installment Detail</strong></a></li>
+  </ul>
+<div class="container-fluid">
+	<div class="tab-content">
+		<!-- Applicant Information -->
+		<div th:replace="fragments/dataentry/_applicantInfo :: applicantInfo">This will be replaced by applicant fragment.</div>
+		<!-- Employment Information -->
+		<div th:replace="fragments/dataentry/_employmentInfo :: employmentInfo">This will be replaced by employment fragment.</div>
+		<!-- Bank Information -->
+		<div th:replace="fragments/dataentry/_bankInfo :: bankInfo">This will be replaced by employment fragment.</div>
+		<!-- Reference Information -->
+		<div th:replace="fragments/dataentry/_refInfo :: refInfo">This will be replaced by employment fragment.</div>
+		<!-- More Reference Information -->
+		<div th:replace="fragments/dataentry/_refInfoMore :: refInfoMore">This will be replaced by employment fragment.</div>
+		<!-- Product Information -->
+		<div th:replace="fragments/dataentry/_prodDetail :: prodDetail">This will be replaced by employment fragment.</div>
+	</div>
+</div>
+</form>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function(e){
+	
+    $('#dateOfBirthPicker').datetimepicker({
+    	//format: "YYYY-MM-DD HH:mm:ss"
+    	format: "YYYY-MM-DD"
+    });
+	/* Prevents user to input character on fields marked with class numeric.*/
+	enableNumericOnlyForNumericClass();
+	enableDecimalOnlyForNumericClass();
+	// Convert into Upper Case
+	convertTextInputToUpperCase();
+	
+	$('#dataEntryForm').validate({
+		highlight: function (element) {
+            $(element).closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
+        },
+        success: function (element) {
+            element.addClass('valid').closest("*[class^='col-']").removeClass('has-error').addClass('has-success');
+        }
+    });
+});      
+
+</script>
+</body>
+</html>
