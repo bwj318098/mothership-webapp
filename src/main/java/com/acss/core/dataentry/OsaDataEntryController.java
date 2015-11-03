@@ -2,48 +2,51 @@ package com.acss.core.dataentry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.acss.core.dataentry.common.constants.BankAccountType;
-import com.acss.core.dataentry.common.constants.Citizenship;
-import com.acss.core.dataentry.common.constants.CivilStatus;
-import com.acss.core.dataentry.common.constants.DaysOfMonth;
-import com.acss.core.dataentry.common.constants.EducationalAttainment;
-import com.acss.core.dataentry.common.constants.EmploymentStatus;
-import com.acss.core.dataentry.common.constants.Gender;
-import com.acss.core.dataentry.common.constants.MailTo;
-import com.acss.core.dataentry.common.constants.NatureOfBusiness;
-import com.acss.core.dataentry.common.constants.ProcessingFeePayType;
-import com.acss.core.dataentry.common.constants.PromoterScreening;
-import com.acss.core.dataentry.common.constants.RefRelationship;
-import com.acss.core.dataentry.common.constants.Term;
-import com.acss.core.dataentry.common.constants.TypeOfEmployment;
-import com.acss.core.dataentry.common.constants.TypeOfId;
-import com.acss.core.dataentry.common.constants.TypeOfResidence;
+import com.acss.core.model.dataentry.common.constants.BankAccountType;
+import com.acss.core.model.dataentry.common.constants.Citizenship;
+import com.acss.core.model.dataentry.common.constants.CivilStatus;
+import com.acss.core.model.dataentry.common.constants.DaysOfMonth;
+import com.acss.core.model.dataentry.common.constants.EducationalAttainment;
+import com.acss.core.model.dataentry.common.constants.EmploymentStatus;
+import com.acss.core.model.dataentry.common.constants.Gender;
+import com.acss.core.model.dataentry.common.constants.MailTo;
+import com.acss.core.model.dataentry.common.constants.NatureOfBusiness;
+import com.acss.core.model.dataentry.common.constants.ProcessingFeePayType;
+import com.acss.core.model.dataentry.common.constants.PromoterScreening;
+import com.acss.core.model.dataentry.common.constants.RefRelationship;
+import com.acss.core.model.dataentry.common.constants.Term;
+import com.acss.core.model.dataentry.common.constants.TypeOfEmployment;
+import com.acss.core.model.dataentry.common.constants.TypeOfId;
+import com.acss.core.model.dataentry.common.constants.TypeOfResidence;
 
 @Controller
 public class OsaDataEntryController {
 	
 	private static final String DATAENTRY_MODEL_ATTRIB_KEY = "dataEntryForm";
+	@Autowired
+	private DataEntryService dataEntryService;
 	
 	@RequestMapping(value = "dataentry", method = RequestMethod.GET)
 	public String index(HttpServletRequest request,Model model) {
 		bindAllEnumToModel(model);
-		model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY, new DataEntryDTO());
+		model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY, new com.acss.core.model.dataentry.DataEntryDTO());
 		
 		return "application/dataentry";
 	}
 	
 	@RequestMapping(value = "dataentry", method = RequestMethod.POST)
-	public String dataEntry(@ModelAttribute DataEntryDTO dataEntry,Model model) {
+	public String dataEntry(@ModelAttribute com.acss.core.model.dataentry.DataEntryDTO dataEntry,Model model) {
 		bindAllEnumToModel(model);
 		model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY, dataEntry);
-		
-		return "application/dataentry";
+		dataEntryService.save(dataEntry);
+		return "redirect:/dataentry";
 	}
 	
 	private void bindAllEnumToModel(Model model) {

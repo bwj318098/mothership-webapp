@@ -11,7 +11,7 @@
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
     </th:block>
-<form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/}" method="post">
+<form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/dataentry}" method="post" enctype="multipart/form-data" >
   <div class="form-group">
 	  <div class="row">
 	  	<div class="col-xs-2"><strong><label class="control-label">Application Data Entry</label></strong></div>
