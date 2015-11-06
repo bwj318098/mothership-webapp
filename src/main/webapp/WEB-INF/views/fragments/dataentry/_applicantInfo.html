@@ -267,11 +267,11 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<div class="row">
-							  <div class="col-md-6 col-md-offset-1"><label class="control-label" for="educationalAttainment">Educational Attainment</label></div>
+							  <div class="col-md-6 col-md-offset-1"><label class="control-label" for="livingWith">Living With</label></div>
 							  <div class="col-md-5">
-							  		<select th:field="*{educationalAttainment}" name="educationalAttainment" class="form-control selectField" id="educationalAttainment">
+							  		<select th:field="*{livingWith}" name="livingWith" class="form-control selectField" id="livingWith">
 							  			<option value=""></option>					
-										<option th:each="item : ${educationAttainmentList}" th:value="${item}" th:text="#{${item.value}}"></option>
+										<option th:each="item : ${livePersonList}" th:value="${item}" th:text="#{${item.value}}"></option>
 									</select> 
 							  </div>
 							</div>
@@ -298,8 +298,13 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<div class="row">
-							  <div class="col-md-6 col-md-offset-1"></div>
-							  <div class="col-md-5"></div>
+							  <div class="col-md-6 col-md-offset-1"><label class="control-label" for="educationalAttainment">Educational Attainment</label></div>
+							  <div class="col-md-5">
+							  		<select th:field="*{educationalAttainment}" name="educationalAttainment" class="form-control selectField" id="educationalAttainment">
+							  			<option value=""></option>					
+										<option th:each="item : ${educationAttainmentList}" th:value="${item}" th:text="#{${item.value}}"></option>
+									</select> 
+							  </div>
 							</div>
 						</div>
 					</div>

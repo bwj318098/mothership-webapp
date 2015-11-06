@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.acss.core.support.web.MessageHelper;
 import com.google.common.base.Throwables;
 
 @Controller
@@ -19,7 +21,7 @@ class CustomErrorController {
 	 * Display an error page, as defined in web.xml <code>custom-error</code> element.
 	 */
 	@RequestMapping("generalError")	
-	public String generalError(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String generalError(HttpServletRequest request, HttpServletResponse response, Model model,RedirectAttributes ra) {
 		// retrieve some useful information from the request
 		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 		Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
@@ -42,12 +44,17 @@ class CustomErrorController {
 			return "redirect:/";
 		}
 		
-		
+		MessageHelper.addErrorAttribute(ra,message);
 		model.addAttribute("errorMessage", message);
         
+		return "redirect:/error";
+	}
+	
+	@RequestMapping("error")
+	public String showErrorPage(){
 		return "error/general";
 	}
-
+	
 	private String getExceptionMessage(Throwable throwable, Integer statusCode) {
 		if (throwable != null) {
 			return Throwables.getRootCause(throwable).getMessage();

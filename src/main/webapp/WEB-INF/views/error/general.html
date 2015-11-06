@@ -10,7 +10,7 @@
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" th:fragment="header" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" th:fragment="header" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
@@ -18,7 +18,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">HPS Online Submission</a>
+            <a class="navbar-brand" href="#" th:href="@{/}"><strong>HPS-OSA</strong></a>
         </div>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             
@@ -34,8 +34,13 @@
 </nav>
 <!--  <div th:replace="fragments/header :: header">Header</div> -->
 <div class="container">
-    <div th:replace="fragments/alert :: alert (type='danger', message=${errorMessage})">Error: Error</div>     
-	
+    <!--<div th:replace="fragments/alert :: alert (type='danger', message=${errorMessage})">Error: Error</div>-->  
+	    <!-- /* Handle the flash message */-->
+    <th:block th:if="${message != null}">
+        <!-- /* The message code is returned from the @Controller */ -->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0])})">&nbsp;</div>
+    </th:block>
+    
 	<div class="panel-group" id="accordion" th:if="${detailedErrorMsg!=null}">
 	  <div class="panel panel-danger" id="panel1">
 	    <div class="panel-heading">

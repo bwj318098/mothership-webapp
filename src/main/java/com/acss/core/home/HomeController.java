@@ -23,7 +23,7 @@ public class HomeController {
 		}
 		// this is the default role for the user in the system.
 		//return request.isUserInRole("ROLE_USER") ? "home/merchantupload" : "home/index";
-		return request.isUserInRole("ROLE_USER") ? "home/merchantupload" : "/";
+		return request.isUserInRole("ROLE_USER") ? "home/merchantupload" : "home/index";
 	}
 	
 	/*
