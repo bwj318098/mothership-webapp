@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+</head>
+<body>
+
+<!-- Modal -->
+<div class="modal fade" th:id="${modal_id}" th:fragment="modal_category">
+	<div class="modal-dialog">
+	<script type="text/javascript">	
+	
+		function buttonFormatter_category(value){
+			var $str = value;
+			var $detail_url = '<button id="btnCategory_'+$str+'" type="button" data-dismiss="modal" name="btnCategory" value="'+$str+'" data-formatter="selectDescription">Select</button>';
+			return $detail_url;
+		}
+		
+		function categoryCode_formatter(value){
+			var $str = value;
+			var $detail_url = '<b><p>'+$str+'</p></b>';
+			return $detail_url;
+		}
+		
+		function categoryDesc_formatter(value){
+			var $str = value;
+			var $detail_url = '<b><p><label class="control-label" id="lblCategory_'+$str+'" value="'+$str+'">'+$str+'</label></p></b>';
+			return $detail_url;
+			
+		}
+		
+		$(document).on( "click", 'button[name^="btnCategory"]', function(element) {
+			//this contains the data.  
+			$desc = $(this).parent().parent().find("label").text();
+			//this contains the code
+			$('#categoryCode_'+$('#selectedCategory').val()).val($(this).val());
+			//this contains the desc.
+			$('#category_'+$('#selectedCategory').val()).val($desc);
+		});
+		
+	</script>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        <h4 class="modal-title" th:text="${modal_title}">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+		  <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{/resources/json/productcategory.json}" data-cache="false" data-height="400" data-search="true" data-pagination="true">
+    		<thead class="row">
+    		
+    		<tr>
+    		<th data-sortable="true" data-formatter="buttonFormatter_category" data-field="categoryCode"></th>
+    		<th data-sortable="true" data-formatter="categoryCode_formatter" data-field="categoryCode" width="95" height="20" rowspan="1" colspan="1">Category Code</th>
+    		<th data-sortable="true" data-formatter="categoryDesc_formatter" data-field="category" width="105" height="20" rowspan="1" colspan="1">Category</th>
+    		</tr>
+    		</thead>
+    	</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+[
+{"prodDescCode":"AIC","productDesc":"AICHI"},
+{"prodDescCode":"BRI","productDesc":"BRIGDESTONE"},
+{"prodDescCode":"CON","productDesc":"CONTINENTAL"},
+{"prodDescCode":"DUN","productDesc":"DUNLOP"},
+{"prodDescCode":"FAL","productDesc":"FALKEN GR"},
+{"prodDescCode":"FED","productDesc":"FEDERAL"},
+{"prodDescCode":"GAJ","productDesc":"GAJAH TUNGGAL"},
+{"prodDescCode":"GOO","productDesc":"GOODYEAR"},
+{"prodDescCode":"HAN","productDesc":"HANKOOK"},
+{"prodDescCode":"MEG","productDesc":"MEGATIRES"},
+{"prodDescCode":"MIL","productDesc":"MICHELIN"},
+{"prodDescCode":"PIR","productDesc":"PIRELLI"},
+{"prodDescCode":"TOY","productDesc":"TOYOTIRE"},
+{"prodDescCode":"VRE","productDesc":"VREDESTEIN"},
+{"prodDescCode":"YOK","productDesc":"YOKOHAMA"},
+{"prodDescCode":"CAO","productDesc":"OTHER"}
+]

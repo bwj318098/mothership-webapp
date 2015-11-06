@@ -11,7 +11,7 @@
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
     </th:block>
-<form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/}" method="post">
+<form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/dataentry}" method="post" enctype="multipart/form-data" >
   <div class="form-group">
 	  <div class="row">
 	  	<div class="col-xs-2"><strong><label class="control-label">Application Data Entry</label></strong></div>
@@ -58,6 +58,10 @@
 		<div th:replace="fragments/dataentry/_prodDetail :: prodDetail">This will be replaced by employment fragment.</div>
 	</div>
 </div>
+<div>
+   <input type="hidden" id="selectedZipcode"/>
+</div>
+<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 </form>
 </div>
 
@@ -88,6 +92,49 @@ $(document).ready(function(e){
             element.addClass('valid').closest("*[class^='col-']").removeClass('has-error').addClass('has-success');
         }
     });
+	
+	 $('button[name^="btn_description"]').on('click', function(e){
+		    e.preventDefault();
+		    var $descIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+		    $('#selectedDesc').val($descIndex);
+		    
+		    $category = $('#categoryCode_'+$descIndex).val();
+		    $('#descriptionModal_'+$category).modal({ backdrop: 'static', keyboard: false })
+		        .one('click', '#close', function (e) {
+		            return;
+		    });
+	}); 
+	 
+	 $('button[name^="btn_category"]').on('click', function(e){
+		    e.preventDefault();
+		    var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+		    $('#selectedCategory').val($categoryIndex);
+		    $('#categoryModal').modal({ backdrop: 'static', keyboard: false })
+		        .one('click', '#close', function (e) {
+		            return;
+		    });
+	 });
+	 
+	 $('button[name^="btn_brand"]').on('click', function(e){
+		    e.preventDefault();
+		    var $brandIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+		    $('#selectedBrand').val($brandIndex);
+		    $category = $('#categoryCode_'+$brandIndex).val();
+		    $('#brandModal_'+$category).modal({ backdrop: 'static', keyboard: false })
+		        .one('click', '#close', function (e) {
+		            return;
+		    });
+	 }); 
+	 
+	 $('button[name^="btn_zipcode"]').on('click', function(e){
+		    e.preventDefault();
+		    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+		    $('#selectedZipcode').val($zipCodeIndex);
+		    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
+		        .one('click', '#close', function (e) {
+		            return;
+		    });
+	 });
 });      
 
 </script>

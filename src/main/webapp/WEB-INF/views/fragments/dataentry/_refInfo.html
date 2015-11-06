@@ -44,10 +44,9 @@
 							<div class="row">
 								<div class="col-md-4">
 									<div class="input-group">
-										<input th:field="*{referenceData.refAddress.zipCode}" name="refZipCode" type="text" class="form-control numeric any_6_req" id="refZipCode" placeholder="Zip Code" maxlength="6"/>								
+										<input th:field="*{referenceData.refAddress.zipCode}" name="zipcode_4" type="text" class="form-control numeric any_6_req" id="zipcode_4" placeholder="Zip Code" maxlength="6" readonly="readonly"/>								
 										<div class="input-group-btn">
-												<button type="button" class="btn btn-primary">Auto</button>
-												<button type="button" class="btn btn-primary">?</button>
+												<button value="btn_zipcode_4" name="btn_zipcode_4" type="button" class="btn btn-primary">?</button>
 										</div>
 									</div>
 								</div>
@@ -68,7 +67,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-11 col-md-offset-1">
-							<input th:field="*{referenceData.refAddress.baranggay}" name="refVillage" type="text" class="form-control any_70_req" id="refVillage" placeholder="Baranggay/Village" maxlength="70"/>
+							<input th:field="*{referenceData.refAddress.baranggay}" name="area_4" type="text" class="form-control any_70_req" id="area_4" placeholder="Baranggay/Village" maxlength="70"/>
 						</div>
 					</div>
 				</div>	
@@ -81,7 +80,7 @@
 					<div class="row">
 						<div class="col-md-6"></div>
 						<div class="col-md-6">
-							<input th:field="*{referenceData.refAddress.city}" name="refCity" type="text" class="form-control" id="refCity" placeholder="City" maxlength="70" readonly="readonly"/>
+							<input th:field="*{referenceData.refAddress.city}" name="city_4" type="text" class="form-control" id="city_4" placeholder="City" maxlength="70" readonly="readonly"/>
 						</div>
 						
 					</div>

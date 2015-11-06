@@ -1,0 +1,22 @@
+[
+{"prodDescCode" : "AIRC","productDesc" : "AIR CONDITIONER"},
+{"prodDescCode" : "COOL","productDesc" : "AIR COOLER"},
+{"prodDescCode" : "AIRF","productDesc" : "AIR FILTER"},
+{"prodDescCode" : "AMPL","productDesc" : "AMPLIFIER"},
+{"prodDescCode" : "DISH","productDesc" : "DISH WASHER"},
+{"prodDescCode" : "DRYR","productDesc" : "DRYER"},
+{"prodDescCode" : "DVDP","productDesc" : "DVD PLAYER"},
+{"prodDescCode" : "EFAN","productDesc" : "ELECTRIC FAN"},
+{"prodDescCode" : "FREE","productDesc" : "FREEZER"},
+{"prodDescCode" : "GASR","productDesc" : "GAS RANGE"},
+{"prodDescCode" : "HOME","productDesc" : "HOME THEATHER SET"},
+{"prodDescCode" : "MCRW","productDesc" : "MICROWAVE"},
+{"prodDescCode" : "RICE","productDesc" : "RICE COOKER"},
+{"prodDescCode" : "REFR","productDesc" : "REFRIGERATOR"},
+{"prodDescCode" : "SPKS","productDesc" : "SPEAKER"},
+{"prodDescCode" : "TVVV","productDesc" : "TV"},
+{"prodDescCode" : "VIDE","productDesc" : "VIDEOKE SET"},
+{"prodDescCode" : "WSHM","productDesc" : "WASHING MACHINE"},
+{"prodDescCode" : "WDIS","productDesc" : "WATER DISPENSER"},
+{"prodDescCode" : "OTHER","productDesc" : "OTHER"}
+]

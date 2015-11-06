@@ -1,0 +1,14 @@
+[
+{"categoryCode" : "EL", "category" : "ELECTRICAL APPLIANCES"},
+{"categoryCode" : "CM", "category" : "CAMERA"},
+{"categoryCode" : "PC", "category" : "COMPUTER"},
+{"categoryCode" : "CO", "category" : "COMMUNICATION"},
+{"categoryCode" : "FU", "category" : "FURNITURE"},
+{"categoryCode" : "CA", "category" : "CAR ACCESSORIES"},
+{"categoryCode" : "SP", "category" : "SPORTS ACCESSORIES"},
+{"categoryCode" : "MU", "category" : "MUSIC INSTRUMENT"},
+{"categoryCode" : "BI", "category" : "BICYCLE & EBIKE STORE"},
+{"categoryCode" : "HW", "category" : "HARDWARE STORE"},
+{"categoryCode" : "HL", "category" : "HEALTH EQUIPMENT"},
+{"categoryCode" : "OT", "category" : "OTHER"}
+]

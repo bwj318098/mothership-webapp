@@ -49,10 +49,9 @@
 							<div class="row">
 								<div class="col-md-4">
 									<div class="input-group">
-										<input th:field="*{corpAddress.zipCode}" name="corpZipCode" type="text" class="form-control numeric any_6_req" id="corpZipCode" placeholder="Zip Code" maxlength="6"/>								
+										<input th:field="*{corpAddress.zipCode}" name="zipcode_3" type="text" class="form-control numeric any_6_req" id="zipcode_3" placeholder="Zip Code" maxlength="6" readonly="readonly"/>								
 										<div class="input-group-btn">
-												<button type="button" class="btn btn-primary">Auto</button>
-												<button type="button" class="btn btn-primary">?</button>
+												<button value="btn_zipcode_3" name="btn_zipcode_3" type="button" class="btn btn-primary">?</button>
 										</div>
 									</div>
 								</div>
@@ -66,7 +65,7 @@
 						</div>
 						
 						<div class="col-md-4">
-							<input th:field="*{corpAddress.baranggay}" type="text" name="corpVillage" class="form-control any_70_req" id="corpVillage" placeholder="Baranggay/Village" maxlength="70"/>
+							<input th:field="*{corpAddress.baranggay}" type="text" name="area_3" class="form-control any_70_req" id="area_3" placeholder="Baranggay/Village" maxlength="70"/>
 						</div>
 					</div>
 				</div>
@@ -78,7 +77,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-3 col-md-offset-5">
-							<input th:field="*{corpAddress.city}" name="corpCity" type="text" class="form-control" id="corpCity" placeholder="City" maxlength="100" readonly="readonly"/>
+							<input th:field="*{corpAddress.city}" name="city_3" type="text" class="form-control" id="city_3" placeholder="City" maxlength="100" readonly="readonly"/>
 						</div> 
 						<div class="col-md-4">
 							<input th:field="*{corpAddress.landMark}" name="corpLandmark" type="text" class="form-control" id="corpLandmark" placeholder="Landmark" maxlength="100"/>

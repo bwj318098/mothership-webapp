@@ -1,0 +1,13 @@
+[
+{"prodDescCode":"CAN","productDesc":"CANON"},
+{"prodDescCode":"HEP","productDesc":"HEWLETT PACKARD"},
+{"prodDescCode":"JVC","productDesc":"JVC"},
+{"prodDescCode":"MIN","productDesc":"MINOLTA"},
+{"prodDescCode":"NKK","productDesc":"NIKKON"},
+{"prodDescCode":"OLY","productDesc":"OLYMPUS"},
+{"prodDescCode":"PAN","productDesc":"PANASONIC"},
+{"prodDescCode":"PEN","productDesc":"PENTAX"},
+{"prodDescCode":"SAM","productDesc":"SAMSUNG"},
+{"prodDescCode":"SON","productDesc":"SONY"},
+{"prodDescCode":"CAO","productDesc":"OTHER"}
+]

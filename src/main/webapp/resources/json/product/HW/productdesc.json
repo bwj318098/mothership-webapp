@@ -1,0 +1,20 @@
+[
+{"prodDescCode":"PTOL","productDesc":"POWER TOOLS"},
+{"prodDescCode":"HTOL","productDesc":"HAND TOOLS"},
+{"prodDescCode":"MTOL","productDesc":"MEASURING TOOLS"},
+{"prodDescCode":"TOLO","productDesc":"TOOL ORGANIZERS"},
+{"prodDescCode":"FAUC","productDesc":"FAUCETS"},
+{"prodDescCode":"SHOW","productDesc":"SHOWERS & BIDETS"},
+{"prodDescCode":"WATE","productDesc":"WATER FILTRATION"},
+{"prodDescCode":"WHEAT","productDesc":"WATER HEATERS"},
+{"prodDescCode":"WAPU","productDesc":"WATER PUMPS"},
+{"prodDescCode":"WACL","productDesc":"WATER CLOSET"},
+{"prodDescCode":"LAVA","productDesc":"LAVATORY"},
+{"prodDescCode":"LIGH","productDesc":"LIGHTS"},
+{"prodDescCode":"GENE","productDesc":"GENERATOR"},
+{"prodDescCode":"LIFI","productDesc":"LIGHTINGS FIXTURES"},
+{"prodDescCode":"LAP","productDesc":"LOCKSET AND PADLOCKS"},
+{"prodDescCode":"URC","productDesc":"UTILITY ROCKS AND CARTS"},
+{"prodDescCode":"WMS","productDesc":"WALL MOUNTS AND SHELVING"},
+{"prodDescCode":"OTHER","productDesc":"OTHER"}
+]

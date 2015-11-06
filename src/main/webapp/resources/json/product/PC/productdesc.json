@@ -1,0 +1,12 @@
+[
+{"prodDescCode":"DTPC","productDesc":"DESKTOP PC"},
+{"prodDescCode":"GAME","productDesc":"GAME CONSOLE"},
+{"prodDescCode":"HARD","productDesc":"HARD DISK"},
+{"prodDescCode":"LTPC","productDesc":"LAPTOP PC"},
+{"prodDescCode":"NETB","productDesc":"NETBOOK"},
+{"prodDescCode":"PRIN","productDesc":"PRINTER"},
+{"prodDescCode":"PROJ","productDesc":"PROJECTOR"},
+{"prodDescCode":"SCAN","productDesc":"SCANNER"},
+{"prodDescCode":"TABL","productDesc":"TABLET"},
+{"prodDescCode":"OTHER","productDesc":"OTHER"}
+]

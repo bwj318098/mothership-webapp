@@ -16,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 import com.acss.core.account.OsaUserDetailsService;
 import com.acss.core.application.ApplicationSearchCriteriaDTO;
 import com.acss.core.model.application.HpsApplication;
+import com.acss.core.model.application.ZipCode;
+import com.acss.core.application.ZipCodeSearchCriteriaDTO;
 
 
 @RestController
@@ -25,6 +27,7 @@ public class ApplicationSearchRestController {
 	
 	private static final String APPLICATIONS_URL_KEY = "rs.search.applications.url";
 	private static final String FOLLOWUP_URL_KEY = "rs.search.followup.url";
+	private static final String ZIPCODE_URL_KEY = "rs.util.zipcode.url";
 	
 	@Autowired
 	private OsaUserDetailsService userService;
@@ -76,5 +79,23 @@ public class ApplicationSearchRestController {
 
 		return Arrays.asList(applications);
 	}
-
+	
+	@RequestMapping(value="zipcode", method = RequestMethod.GET)
+	public List<ZipCode> zipCode(@RequestParam(value="postCode", required=false) String postCode,
+			@RequestParam(value="areaName", required=false) String areaName,
+			@RequestParam(value="cityNm", required=false) String cityNm,
+			@RequestParam(value="region", required=false) String region,
+			@RequestParam(value="postId", required=false) String postId){
+			
+		String uri = MessageFormat.format(env.getProperty(ZIPCODE_URL_KEY),"");
+		uri = uri + "/?";
+		
+		ZipCodeSearchCriteriaDTO zipCodeSearchCriteria = new ZipCodeSearchCriteriaDTO(postCode,areaName,cityNm,region,postId);
+		uri = zipCodeSearchCriteria.appendParameters(uri);
+		
+		RestTemplate template = new RestTemplate();
+		
+		ZipCode[] zipCodes = template.getForObject(uri, ZipCode[].class);
+		return Arrays.asList(zipCodes);	
+	}
 }

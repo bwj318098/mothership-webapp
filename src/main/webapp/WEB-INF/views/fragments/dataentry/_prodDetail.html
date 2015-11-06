@@ -27,12 +27,35 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input th:field="*{installment.firstProduct.category}" name="category_1" type="text" class="form-control any_30_req productGroup_1" id="category_1" placeholder="Category I" maxlength="30"/></div>
-						<div class="col-md-3"><input th:field="*{installment.firstProduct.description}" name="description_1" type="text" class="form-control any_70_req productGroup_1" id="description_1" placeholder="Description I" maxlength="70"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.brand}" name="brand_1" type="text" class="form-control any_30_req productGroup_1" id="brand_1" placeholder="Brand I" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.modelNo}" name="model_1" type="text" class="form-control any_30_req productGroup_1" id="model_1" placeholder="Model I" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.price}" name="price_1" type="text" class="form-control numeric-decimal text-right currency_10_req productGroup_1" id="price_1" placeholder="Price I" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:field="*{installment.firstProduct.downPayment}" name="downpayment_1" type="text" class="form-control numeric-decimal text-right currency_10_req productGroup_1" id="downpayment_1" placeholder="DP I" maxlength="11"/></div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input th:field="*{installment.firstProduct.category}" name="category_1" type="text" class="form-control name_30_req" id="category_1" placeholder="Category I" maxlength="30" readonly="readonly"/>
+								<input id="categoryCode_1" type="hidden" />
+								<div class="input-group-btn">
+									<button type="button" value="btn_category_1" name="btn_category_1" class="btn btn-primary">?</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+						<div class="input-group">
+							<input th:field="*{installment.firstProduct.description}" name="description_1" type="text" class="form-control any_70_req" id="description_1" placeholder="Description I" maxlength="70" readonly="readonly"/>
+							<input id="descriptionCode_1" type="hidden" />
+							<div class="input-group-btn">
+									<button type="button" value="btn_description_1" name="btn_description_1" class="btn btn-primary" >?</button>
+							</div>
+						</div>
+						</div>
+					  	<div class="col-md-2">
+					  	<div class="input-group">
+					  	<input th:field="*{installment.firstProduct.brand}" name="brand_2" type="text" class="form-control name_30_req" id="brand_1" placeholder="Brand I" maxlength="30" readonly="readonly"/>
+					  	<div class="input-group-btn">
+							<button type="button" value="btn_brand_1" name="btn_brand_1" class="btn btn-primary">?</button>
+						</div>
+					  	</div>
+					  	</div>
+					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.modelNo}" name="model_1" type="text" class="form-control name_30_req" id="model_1" placeholder="Model I" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.firstProduct.price}" name="price_1" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_1" placeholder="Price I" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.firstProduct.downPayment}" name="downpayment_1" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_1" placeholder="DP I" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -42,12 +65,35 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input th:field="*{installment.secondProduct.category}" name="category_2" type="text" class="form-control any_30 productGroup_2" id="category_2" placeholder="Category II" maxlength="30"/></div>
-						<div class="col-md-3"><input th:field="*{installment.secondProduct.description}"  name="description_2" type="text" class="form-control any_70 productGroup_2" id="description_2" placeholder="Description II" maxlength="70"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.brand}" name="brand_2" type="text" class="form-control any_30 productGroup_2" id="brand_2" placeholder="Brand II" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.modelNo}" name="model_2" type="text" class="form-control any_30 productGroup_2" id="model_2" placeholder="Model II" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.price}" name="price_2" type="text" class="form-control numeric-decimal text-right currency_10 productGroup_2" id="price_2" placeholder="Price II" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:field="*{installment.secondProduct.downPayment}" name="downpayment_2" type="text" class="form-control numeric-decimal text-right currency_10 productGroup_2" id="downpayment_2" placeholder="DP II" maxlength="11"/></div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input th:field="*{installment.secondProduct.category}" name="category_2" type="text" class="form-control name_30_req" id="category_2" placeholder="Category II" maxlength="30" readonly="readonly"/>
+								<input id="categoryCode_2" type="hidden" />
+								<div class="input-group-btn">
+									<button type="button" value="btn_category_2" name="btn_category_2" class="btn btn-primary">?</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+						<div class="input-group">
+							<input th:field="*{installment.secondProduct.description}" name="description_2" type="text" class="form-control any_70_req" id="description_2" placeholder="Description II" maxlength="70" readonly="readonly"/>
+							<input id="descriptionCode_2" type="hidden" />
+							<div class="input-group-btn">
+									<button type="button" value="btn_description_2" name="btn_description_2" class="btn btn-primary">?</button>
+							</div>
+						</div>
+						</div>
+					  	<div class="col-md-2">
+					  	<div class="input-group">
+					  	<input th:field="*{installment.secondProduct.brand}" name="brand_2" type="text" class="form-control name_30_req" id="brand_2" placeholder="Brand II" maxlength="30" readonly="readonly"/>
+					  	<div class="input-group-btn">
+									<button type="button" value="btn_brand_2" name="btn_brand_2" class="btn btn-primary">?</button>
+							</div>
+					  	</div>
+					  	</div>
+					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.modelNo}" name="model_2" type="text" class="form-control name_30_req" id="model_2" placeholder="Model II" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.secondProduct.price}" name="price_2" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_2" placeholder="Price II" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.secondProduct.downPayment}" name="downpayment_2" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_2" placeholder="DP II" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -57,12 +103,36 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><input th:field="*{installment.thirdProduct.category}" name="category_3" type="text" class="form-control any_30 productGroup_3" id="category_3" placeholder="Category III" maxlength="30"/></div>
-						<div class="col-md-3"><input th:field="*{installment.thirdProduct.description}" name="description_3" type="text" class="form-control any_70 productGroup_3" id="description_3" placeholder="Description III" maxlength="70"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.brand}" name="brand_3" type="text" class="form-control any_30 productGroup_3" id="brand_3" placeholder="Brand III" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.modelNo}" name="model_3" type="text" class="form-control any_30 productGroup_3" id="model_3" placeholder="Model III" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.price}" name="price_3" type="text" class="form-control numeric-decimal text-right currency_10 productGroup_3" id="price_3" placeholder="Price III" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:field="*{installment.thirdProduct.downPayment}" type="text" class="form-control numeric-decimal text-right currency_10 productGroup_3" id="downpayment_3" placeholder="DP III" maxlength="11"/></div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input th:field="*{installment.thirdProduct.category}" name="category_3" type="text" class="form-control name_30_req" id="category_3" placeholder="Category III" maxlength="30" readonly="readonly"/>
+								<input id="categoryCode_3" type="hidden" />
+								<div class="input-group-btn">
+									<button type="button" value="btn_category_3" name="btn_category_3" class="btn btn-primary">?</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+						<div class="input-group">
+							<input th:field="*{installment.thirdProduct.description}" name="description_3" type="text" class="form-control any_70_req" id="description_3" placeholder="Description III" maxlength="70" readonly="readonly"/>
+							<input id="descriptionCode_3" type="hidden" />
+							<div class="input-group-btn">
+									<button type="button" value="btn_description_3" name="btn_description_3" class="btn btn-primary" >?</button>
+							</div>
+						</div>
+						</div>
+					  	<div class="col-md-2">
+					  	<div class="input-group">
+					  	<input th:field="*{installment.thirdProduct.brand}" name="brand_3" type="text" class="form-control name_30_req" id="brand_3" placeholder="Brand III" maxlength="30" readonly="readonly"/>
+					  	<input id="brandCode_3" type="hidden" />
+					  	<div class="input-group-btn">
+							<button type="button" value="btn_brand_3" name="btn_brand_3" class="btn btn-primary">?</button>
+						</div>
+					  	</div>
+					  	</div>
+					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.modelNo}" name="model_3" type="text" class="form-control name_30_req" id="model_3" placeholder="Model III" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:field="*{installment.thirdProduct.price}" name="price_3" type="text" class="form-control numeric-decimal text-right currency_10_req" id="price_3" placeholder="Price III" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:field="*{installment.thirdProduct.downPayment}" type="text" class="form-control numeric-decimal text-right currency_10_req" id="downpayment_3" placeholder="DP III" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -201,7 +271,44 @@
 				  	</div>
 				</div>																										
 			</div>
-		</div>			
-	</div>
+		</div>
+<div>
+        <input type="hidden" id="selectedDesc"/>
+        <input type="hidden" id="selectedCategory"/>
+        <input type="hidden" id="selectedBrand" />
+</div>
+
+<!-- Modal For Description-->
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_EL',modal_title='Product Description',categoryCd='EL')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_CM',modal_title='Product Description',categoryCd='CM')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_BI',modal_title='Product Description',categoryCd='BI')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_CA',modal_title='Product Description',categoryCd='CA')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_CO',modal_title='Product Description',categoryCd='CO')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_FU',modal_title='Product Description',categoryCd='FU')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_HW',modal_title='Product Description',categoryCd='HW')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_MU',modal_title='Product Description',categoryCd='MU')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_OT',modal_title='Product Description',categoryCd='OT')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_PC',modal_title='Product Description',categoryCd='PC')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_SP',modal_title='Product Description',categoryCd='SP')">&nbsp;</div>
+<div th:replace="fragments/product/modal_product :: modal_product(modal_id='descriptionModal_HL',modal_title='Product Description',categoryCd='HL')">&nbsp;</div>
+
+<!-- Modal for Category -->
+<div th:replace="fragments/product/modal_category :: modal_category(modal_id='categoryModal',modal_title='Product Category',categoryCd='EL')">&nbsp;</div>
+
+<!-- Modal Brand -->
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_BI',modal_title='Product Brand',categoryCd='BI')">&nbsp;</div>
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_CA',modal_title='Product Brand',categoryCd='CA')">&nbsp;</div>
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_CM',modal_title='Product Brand',categoryCd='CM')">&nbsp;</div>
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_CO',modal_title='Product Brand',categoryCd='CO')">&nbsp;</div>
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_EL',modal_title='Product Brand',categoryCd='EL')">&nbsp;</div> 
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_FU',modal_title='Product Brand',categoryCd='FU')">&nbsp;</div> 
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_HW',modal_title='Product Brand',categoryCd='HW')">&nbsp;</div> 
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_MU',modal_title='Product Brand',categoryCd='MU')">&nbsp;</div>
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_OT',modal_title='Product Brand',categoryCd='OT')">&nbsp;</div>
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_PC',modal_title='Product Brand',categoryCd='PC')">&nbsp;</div>
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_SP',modal_title='Product Brand',categoryCd='SP')">&nbsp;</div>
+<div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_HL',modal_title='Product Brand',categoryCd='HL')">&nbsp;</div>		
+
+</div>
 </body>
 </html>

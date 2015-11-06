@@ -1,0 +1,11 @@
+[
+{"prodDescCode":"AMPL","productDesc":"AMPLIFIER"},
+{"prodDescCode":"DRUM","productDesc":"DRUM"},
+{"prodDescCode":"ORGA","productDesc":"ORGAN"},
+{"prodDescCode":"GUIT","productDesc":"GUITAR"},
+{"prodDescCode":"KEYB","productDesc":"KEYBOARD"},
+{"prodDescCode":"PIAN","productDesc":"PIANO"},
+{"prodDescCode":"PERC","productDesc":"PERCUSSION INSTRUMENT"},
+{"prodDescCode":"WIND","productDesc":"WIND INSTRUMENT"},
+{"prodDescCode":"OTHER","productDesc":"OTHER"}
+]
