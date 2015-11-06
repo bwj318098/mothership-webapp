@@ -86,14 +86,14 @@
             <th class="col-md-2" data-sortable="true" data-field="applicationDate">Application Date</th>
             <th class="col-md-2" data-sortable="true" data-field="applicationStatus">Application Status</th>
             <th class="col-md-1" data-sortable="true" data-field="seqNo">SeqNo</th>
-            <th class="col-md-3" data-sortable="true" data-field="remarks">Remarks</th>
+            <th class="col-md-3" data-sortable="true" data-field="remarks" data-formatter="remarksFormatter">Remarks</th>
         </tr>
     </thead>
 	</table>
     </div>    
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 $(document).ready(function () {
 	showLoadingGifOnFormSubmit();
 	enableToolTipForHeader();
@@ -113,9 +113,17 @@ $(document).ready(function () {
     }); 
 });
 
-
 function appFormatter(value){
 	var $detail_url = '<a href="detail" th:href="@{/detail/{0}}">{1}</a>'.format(value,value);
+	return $detail_url;
+}
+
+function remarksFormatter(value, row){
+	var $params = row.withPassword ? "?withPassword=true" : "";
+	var $reportsUrl =  /*[[${reportsUrl}]]*/;
+	var $detail_url = row.applicationStatus ===	"Approved" ?
+			('<a href="{0}/{1}' + $params + '" target="_blank">Letter of Notifaction</a>').format($reportsUrl, row.sysAppCd)
+			: value;
 	return $detail_url;
 }
 </script>
