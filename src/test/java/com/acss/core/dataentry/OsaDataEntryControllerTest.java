@@ -134,4 +134,29 @@ public class OsaDataEntryControllerTest {
 			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));	
 		}
 	}
+		
+	@Test
+	public void testDataEntry_NameField_InnerLevelFields() throws Exception {
+		String[] fieldsWithNull = {
+				"companyName",
+				"sourceOfIncome",
+				"occupation"
+		};
+		
+		MvcResult mvcResult = mockMvc
+				.perform(
+						post("/dataentry") //.param("applicantName.firstName", "test")
+						).andReturn();
+		
+		
+		assertThat(mvcResult.getResolvedException(), is(instanceOf(BindException.class)));
+
+		BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
+
+		for(String propertyName : fieldsWithNull){
+			FieldError fieldError = bindingResult.getFieldError(propertyName); 
+			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
+			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));	
+		}
+	}
 }
