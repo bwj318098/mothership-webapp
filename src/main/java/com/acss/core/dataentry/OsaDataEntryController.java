@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +32,10 @@ public class OsaDataEntryController {
 	}
 	
 	@RequestMapping(value = "dataentry", method = RequestMethod.POST)
-	public String dataEntry(@ModelAttribute DataEntryDTO dataEntry,Model model,RedirectAttributes ra) {
+	public String dataEntry(@ModelAttribute @Validated DataEntryDTO dataEntry,
+							Model model,
+							BindingResult bindingResult,
+							RedirectAttributes ra) {
 		//binds all the enum to model
 		dataEntryService.bindAllEnumsToModel(model);
 		

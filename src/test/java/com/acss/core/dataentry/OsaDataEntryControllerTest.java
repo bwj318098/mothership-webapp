@@ -63,31 +63,75 @@ public class OsaDataEntryControllerTest {
 	}
 
 	@Test
-	public void testDataEntry_EmptyTopLevelFields() {
-		try {
+	public void testDataEntry_Null_TopLevelFields() throws Exception {
+		String[] fieldsWithNull = {
+				"applicantName",
+				"dateOfBirth",
+				"applicantId",
+				"otherId",
+				"gender",
+				"citizenship",
+				"address",
+				"residence",
+				"homePhone",
+				"homeMobile",
+				"otherPhone",
+				"livingWith",
+				"educationalAttainment",
+				"civilStatus",
+				"permanentAddress",
+				"mailTo",
+				"employmentType",
+				"monthlyNetIncome",
+				"corpAddress",
+				"corpPhone",
+				"salaryDate",
+				"yosYears",
+				"yosMonths",
+				"employmentStatus",
+				"natureOfBusiness",
+				"referenceData"
+		};
+		
+		MvcResult mvcResult = mockMvc
+				.perform(
+						post("/dataentry") //.param("applicantName.firstName", "test")
+						).andReturn();
+		
+		
+		assertThat(mvcResult.getResolvedException(), is(instanceOf(BindException.class)));
 
-			MvcResult mvcResult = mockMvc
-					.perform(
-							post("/dataentry") //.param("applicantName.firstName", "test")
-							).andReturn();
-			
-			
-			assertThat(mvcResult.getResolvedException(), is(instanceOf(BindException.class)));
+		BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
 
-			BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
-
-			assertThat(bindingResult.getFieldError("applicantName"), nullValue());
-
-			for (FieldError error : bindingResult.getFieldErrors()) {
-				System.out.println(error.getField());
-			}
-
-			assertThat(bindingResult.getFieldError("applicantName.lastName"), notNullValue());
-			assertThat(bindingResult.getFieldError("applicantName.lastName").getDefaultMessage(), is("may not be null"));
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		for(String propertyName : fieldsWithNull){
+			FieldError fieldError = bindingResult.getFieldError(propertyName); 
+			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
+			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be null"));	
 		}
+	}
+	
+	@Test
+	public void testDataEntry_Empty_TopLevelFields() throws Exception {
+		String[] fieldsWithNull = {
+				"companyName",
+				"sourceOfIncome",
+				"occupation"
+		};
+		
+		MvcResult mvcResult = mockMvc
+				.perform(
+						post("/dataentry") //.param("applicantName.firstName", "test")
+						).andReturn();
+		
+		
+		assertThat(mvcResult.getResolvedException(), is(instanceOf(BindException.class)));
 
+		BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
+
+		for(String propertyName : fieldsWithNull){
+			FieldError fieldError = bindingResult.getFieldError(propertyName); 
+			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
+			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));	
+		}
 	}
 }
