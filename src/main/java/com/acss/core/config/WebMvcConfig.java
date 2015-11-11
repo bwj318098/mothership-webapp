@@ -28,7 +28,7 @@ import com.acss.core.Application;
 @Configuration
 @ComponentScan(basePackageClasses = Application.class, includeFilters = @Filter(Controller.class), useDefaultFilters = false)
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-class WebMvcConfig extends WebMvcConfigurationSupport {
+public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private static final String MESSAGE_SOURCE = "/WEB-INF/i18n/messages";
     private static final String ENUMS_MESSAGE_SOURCE = "/WEB-INF/i18n/enums";

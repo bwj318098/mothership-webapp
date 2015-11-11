@@ -16,7 +16,7 @@ import com.acss.core.account.UserService;
 
 @Configuration
 @EnableWebMvcSecurity
-class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
     @Bean
     public UserService userService() {
