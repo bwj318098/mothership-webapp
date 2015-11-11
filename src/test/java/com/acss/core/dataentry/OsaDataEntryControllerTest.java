@@ -1,5 +1,7 @@
 package com.acss.core.dataentry;
 
+import java.nio.charset.Charset;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,8 +28,11 @@ import com.acss.core.config.ApplicationConfig;
 import com.acss.core.config.SecurityConfig;
 import com.acss.core.config.WebAppInitializer;
 import com.acss.core.config.WebMvcConfig;
+import com.acss.core.model.builder.DataEntryDTOBuilder;
+import com.acss.core.model.builder.NameFieldBuilder;
 import com.acss.core.model.dataentry.DataEntryDTO;
 import com.acss.kaizen.jooq.poc.configuration.PersistenceContext;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -55,6 +60,10 @@ public class OsaDataEntryControllerTest {
 	@Mock
 	View mockView;
 
+	static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+	
+	ObjectMapper mapper = new ObjectMapper(); 
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -64,7 +73,7 @@ public class OsaDataEntryControllerTest {
 
 	@Test
 	public void testDataEntry_Null_TopLevelFields() throws Exception {
-		String[] fieldsWithNull = {
+		String[] fieldsToCheck = {
 				"applicantName",
 				"dateOfBirth",
 				"applicantId",
@@ -103,7 +112,7 @@ public class OsaDataEntryControllerTest {
 
 		BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
 
-		for(String propertyName : fieldsWithNull){
+		for(String propertyName : fieldsToCheck){
 			FieldError fieldError = bindingResult.getFieldError(propertyName); 
 			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
 			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be null"));	
@@ -112,7 +121,7 @@ public class OsaDataEntryControllerTest {
 	
 	@Test
 	public void testDataEntry_Empty_TopLevelFields() throws Exception {
-		String[] fieldsWithNull = {
+		String[] fieldsToCheck = {
 				"companyName",
 				"sourceOfIncome",
 				"occupation"
@@ -128,7 +137,7 @@ public class OsaDataEntryControllerTest {
 
 		BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
 
-		for(String propertyName : fieldsWithNull){
+		for(String propertyName : fieldsToCheck){
 			FieldError fieldError = bindingResult.getFieldError(propertyName); 
 			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
 			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));	
@@ -137,23 +146,26 @@ public class OsaDataEntryControllerTest {
 		
 	@Test
 	public void testDataEntry_NameField_InnerLevelFields() throws Exception {
-		String[] fieldsWithNull = {
-				"companyName",
-				"sourceOfIncome",
-				"occupation"
+		String[] fieldsToCheck = {
+				"applicantName",
 		};
 		
+		DataEntryDTO input = DataEntryDTOBuilder.create()
+								.setApplicantName(NameFieldBuilder.create().get())
+								.get();
+				
 		MvcResult mvcResult = mockMvc
-				.perform(
-						post("/dataentry") //.param("applicantName.firstName", "test")
-						).andReturn();
+				.perform(post("/dataentry")
+						.contentType(APPLICATION_JSON_UTF8)
+						.content(mapper.writeValueAsBytes(input)))
+				.andReturn();
 		
 		
 		assertThat(mvcResult.getResolvedException(), is(instanceOf(BindException.class)));
 
 		BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
 
-		for(String propertyName : fieldsWithNull){
+		for(String propertyName : fieldsToCheck){
 			FieldError fieldError = bindingResult.getFieldError(propertyName); 
 			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
 			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));	
