@@ -140,8 +140,10 @@
 			<div class="input-group">
 				<div class="text-right input-group-btn" >
 						<input type="hidden" th:field="*{applicationStatus}" name="applicationStatus"/>
+						<p>
 						<button th:if="${appDetailsForm.applicationStatus=='With Pending Documents'}"  name="completeSubmission" type="button" class="btn btn-primary">Submit</button>
 						<button name="complete" type="submit" class="btn btn-primary" style="display: none;">doCompleteApplication</button>
+						</p>
 						<div class="row">
 							<div class="col-md-8 col-md-offset-2 col-xs-4 col-xs-offset-2">
 								<button name="attach_images" type="button" class="btn btn-primary">Attach Image/s</button>

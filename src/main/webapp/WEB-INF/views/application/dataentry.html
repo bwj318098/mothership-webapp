@@ -26,6 +26,9 @@
 		  	 			<div class="input-group-btn">
 		  	 				<button type="reset" class="btn btn-primary">Clear</button>
 		  	 			</div>
+<!-- 		  	 			<div class="input-group-btn"> -->
+<!-- 		  	 				<button type="button" class="btn btn-primary">Calc.</button> -->
+<!-- 		  	 			</div> -->
 		  	 		<p></p>
 		  	 		</div>
 		  	 	</div>
@@ -61,20 +64,54 @@
 <div>
    <input type="hidden" id="selectedZipcode"/>
 </div>
-<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
+
 </form>
 </div>
-
+<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 <script type="text/javascript">
+
+$( document ).on( "change", '[name^=installment]', function() {
+	doCalc();
+});
+
+
+$( document ).on( "click", 'button[name^="btn_category"]', function(e) {
+	e.preventDefault();
+    var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+    $('#selectedCategory').val($categoryIndex);
+    $('#categoryModal').modal({ backdrop: 'static', keyboard: false })
+        .one('click', '#close', function (e) {
+            return;
+    });
+});
+
+
+$( document ).on( "click", 'button[name^="btn_description"]', function(e) {
+	e.preventDefault();
+    var $descIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+    $('#selectedDesc').val($descIndex);
+    
+    $category = $('#categoryCode_'+$descIndex).val();
+    $('#descriptionModal_'+$category).modal({ backdrop: 'static', keyboard: false })
+        .one('click', '#close', function (e) {
+            return;
+    });
+});
+
+$( document ).on( "click", 'button[name^="btn_brand"]', function(e) {
+	e.preventDefault();
+    var $brandIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+    $('#selectedBrand').val($brandIndex);
+    $category = $('#categoryCode_'+$brandIndex).val();
+    $('#brandModal_'+$category).modal({ backdrop: 'static', keyboard: false })
+        .one('click', '#close', function (e) {
+            return;
+    });
+});
 
 $(document).ready(function(e){
 	
     $('#dateOfBirthPicker').datetimepicker({
-    	//format: "YYYY-MM-DD HH:mm:ss"
-    	format: "YYYY-MM-DD"
-    });
-    
-    $('#receivedDatePicker').datetimepicker({
     	//format: "YYYY-MM-DD HH:mm:ss"
     	format: "YYYY-MM-DD"
     });
@@ -93,6 +130,17 @@ $(document).ready(function(e){
         }
     });
 	
+	/* From old implementation
+	 $('button[name^="btn_category"]').on('click', function(e){
+		    e.preventDefault();
+		    var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+		    $('#selectedCategory').val($categoryIndex);
+		    $('#categoryModal').modal({ backdrop: 'static', keyboard: false })
+		        .one('click', '#close', function (e) {
+		            return;
+		    });
+	 });
+	 
 	 $('button[name^="btn_description"]').on('click', function(e){
 		    e.preventDefault();
 		    var $descIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
@@ -105,16 +153,6 @@ $(document).ready(function(e){
 		    });
 	}); 
 	 
-	 $('button[name^="btn_category"]').on('click', function(e){
-		    e.preventDefault();
-		    var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedCategory').val($categoryIndex);
-		    $('#categoryModal').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	 });
-	 
 	 $('button[name^="btn_brand"]').on('click', function(e){
 		    e.preventDefault();
 		    var $brandIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
@@ -124,7 +162,7 @@ $(document).ready(function(e){
 		        .one('click', '#close', function (e) {
 		            return;
 		    });
-	 }); 
+	 }); */
 	 
 	 $('button[name^="btn_zipcode"]').on('click', function(e){
 		    e.preventDefault();
@@ -137,6 +175,14 @@ $(document).ready(function(e){
 	 });
 });      
 
+function doCalc(){
+	var url = '';
+	//$("#prodDetail").load("dataentry/ajax");
+	$.post("dataentry/ajax",$('#dataEntryForm').serialize(),function(data){
+		console.log(data);
+		$("#prodDetail").html(data);
+	});
+}
 </script>
 </body>
 </html>

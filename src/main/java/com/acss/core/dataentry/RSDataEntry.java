@@ -53,7 +53,7 @@ public class RSDataEntry implements DataEntryService{
 	
 	
 	public boolean save(DataEntryDTO dataEntry) {
-		RestTemplate rt = new RestTemplate();
+		RestTemplate rt = new RestTemplate();	
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String storeCd = userService.getStorecdByUsername(auth.getName());
