@@ -20,7 +20,7 @@ import com.acss.core.Application;
 @PropertySources({
 	@PropertySource("classpath:osa.properties")
 })
-class ApplicationConfig {
+public class ApplicationConfig {
 	
 	@Autowired
 	Environment env;
