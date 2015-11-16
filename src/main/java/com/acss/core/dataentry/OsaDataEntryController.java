@@ -71,20 +71,17 @@ public class OsaDataEntryController {
 							Model model,
 							RedirectAttributes ra) {
 		
+		ra.addFlashAttribute(DATAENTRY_MODEL_ATTRIB_KEY, dataEntry);
+		
 		if (bindingResult.hasErrors()) {
 			//This is to preserve the validation results in case of redirection.
-			ra.addFlashAttribute(DATAENTRY_MODEL_ATTRIB_KEY, dataEntry);
 			ra.addFlashAttribute(BINDING_RESULT_KEY+DATAENTRY_MODEL_ATTRIB_KEY, bindingResult);
-			return "redirect:/";
+			return "redirect:/dataentry";
 		}
 		
 		//binds all the enum to model
 		dataEntryService.bindAllEnumsToModel(model);
-		
-		//model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY, dataEntry);
-		
-		ra.addFlashAttribute(DATAENTRY_MODEL_ATTRIB_KEY, dataEntry);
-		
+				
 		if(dataEntryService.save(dataEntry)){
         	MessageHelper.addSuccessAttribute(ra, "de.success");
         } else {
