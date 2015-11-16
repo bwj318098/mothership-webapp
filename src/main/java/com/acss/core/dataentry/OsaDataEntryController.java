@@ -20,7 +20,9 @@ import com.acss.core.support.web.MessageHelper;
 @Controller
 public class OsaDataEntryController {
 	
-	private static final String DATAENTRY_MODEL_ATTRIB_KEY = "dataEntryForm";
+	static final String BINDING_RESULT_KEY = "org.springframework.validation.BindingResult.";	
+	static final String DATAENTRY_MODEL_ATTRIB_KEY = "dataEntryForm";
+	
 	@Autowired
 	private DataEntryService dataEntryService;
 	
@@ -36,14 +38,18 @@ public class OsaDataEntryController {
 	}
 	
 	@RequestMapping(value = "dataentry/ajax", method = RequestMethod.POST)
-	public String calc(HttpServletRequest request,Model model,@ModelAttribute DataEntryDTO dataEntry,
-			RedirectAttributes ra,
-			@RequestHeader("X-Requested-With") String requestedWith) {
+	public String calc(HttpServletRequest request,
+						Model model,
+						@ModelAttribute DataEntryDTO dataEntry,
+						RedirectAttributes ra,
+						@RequestHeader("X-Requested-With") String requestedWith) {
 		
 		if(AjaxUtils.isAjaxRequest(requestedWith)){
 			
-			if(dataEntry==null)model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY
-					, new com.acss.core.model.dataentry.DataEntryDTO());
+			if(dataEntry==null) {
+				model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY, new com.acss.core.model.dataentry.DataEntryDTO());
+			}
+			
 			dataEntryService.bindAllEnumsToModel(model);
 			
 			model.addAttribute("installment",dataEntry.getInstallment());
@@ -52,6 +58,7 @@ public class OsaDataEntryController {
 			
 			return "fragments/dataentry/_prodDetail";
 		}
+		
 		dataEntryService.bindAllEnumsToModel(model);
 		model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY,dataEntry);
 		//do default
@@ -60,9 +67,17 @@ public class OsaDataEntryController {
 	
 	@RequestMapping(value = "dataentry", method = RequestMethod.POST)
 	public String dataEntry(@ModelAttribute @Validated DataEntryDTO dataEntry,
-							Model model,
 							BindingResult bindingResult,
+							Model model,
 							RedirectAttributes ra) {
+		
+		if (bindingResult.hasErrors()) {
+			//This is to preserve the validation results in case of redirection.
+			ra.addFlashAttribute(DATAENTRY_MODEL_ATTRIB_KEY, dataEntry);
+			ra.addFlashAttribute(BINDING_RESULT_KEY+DATAENTRY_MODEL_ATTRIB_KEY, bindingResult);
+			return "redirect:/";
+		}
+		
 		//binds all the enum to model
 		dataEntryService.bindAllEnumsToModel(model);
 		
@@ -72,7 +87,7 @@ public class OsaDataEntryController {
 		
 		if(dataEntryService.save(dataEntry)){
         	MessageHelper.addSuccessAttribute(ra, "de.success");
-        }else{
+        } else {
         	MessageHelper.addErrorAttribute(ra, "de.error");
         }
 		

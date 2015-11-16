@@ -32,6 +32,7 @@ import com.acss.core.model.builder.DataEntryDTOBuilder;
 import com.acss.core.model.builder.NameFieldBuilder;
 import com.acss.core.model.dataentry.DataEntryDTO;
 import com.acss.kaizen.jooq.poc.configuration.PersistenceContext;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -39,13 +40,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+import static com.acss.core.RequestParamUtils.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { ApplicationConfig.class,
+@ContextConfiguration(classes = {
+		ApplicationConfig.class,
 		SecurityConfig.class, 
 		WebMvcConfig.class, 
-		PersistenceContext.class }, loader = AnnotationConfigWebContextLoader.class)
+		PersistenceContext.class}, loader = AnnotationConfigWebContextLoader.class)
 public class OsaDataEntryControllerTest {
 
 	@InjectMocks
@@ -103,14 +106,10 @@ public class OsaDataEntryControllerTest {
 		};
 		
 		MvcResult mvcResult = mockMvc
-				.perform(
-						post("/dataentry") //.param("applicantName.firstName", "test")
-						).andReturn();
+				.perform(post("/dataentry")).andReturn();
 		
-		
-		assertThat(mvcResult.getResolvedException(), is(instanceOf(BindException.class)));
-
-		BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
+		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
+				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
 
 		for(String propertyName : fieldsToCheck){
 			FieldError fieldError = bindingResult.getFieldError(propertyName); 
@@ -160,10 +159,8 @@ public class OsaDataEntryControllerTest {
 						.content(mapper.writeValueAsBytes(input)))
 				.andReturn();
 		
-		
-		assertThat(mvcResult.getResolvedException(), is(instanceOf(BindException.class)));
-
-		BindingResult bindingResult = ((BindException) mvcResult.getResolvedException()).getBindingResult();
+		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
+				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
 
 		for(String propertyName : fieldsToCheck){
 			FieldError fieldError = bindingResult.getFieldError(propertyName); 
@@ -171,4 +168,14 @@ public class OsaDataEntryControllerTest {
 			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));	
 		}
 	}
+	
+	@Test
+	public void test() throws JsonProcessingException{
+		DataEntryDTO input = DataEntryDTOBuilder.create()
+				.setApplicantName(NameFieldBuilder.create().get())
+				.get();
+		
+		addParams(post("/dataentry"), input);
+	}
+	
 }
