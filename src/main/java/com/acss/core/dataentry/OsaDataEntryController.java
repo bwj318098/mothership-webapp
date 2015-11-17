@@ -120,6 +120,8 @@ public class OsaDataEntryController {
 		boolean success;
 				
 		Map<String, String> fieldErrors = new HashMap<String, String>();
+		
+		DataEntryDTO dataEntry;
 
 		/**
 		 * @return the success
@@ -133,6 +135,10 @@ public class OsaDataEntryController {
 		 */
 		public Map<String, String> getFieldErrors() {
 			return fieldErrors;
+		}
+		
+		public DataEntryDTO getDataEntry(){
+			return this.dataEntry;
 		}
 		
 		private void setFieldErrors(List<FieldError> fieldErrors){
