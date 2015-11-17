@@ -1,21 +1,29 @@
 package com.acss.core.dataentry;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.acss.core.model.dataentry.DataEntryDTO;
 import com.acss.core.support.web.AjaxUtils;
-import com.acss.core.support.web.MessageHelper;
 
 @Controller
 public class OsaDataEntryController {
@@ -65,29 +73,73 @@ public class OsaDataEntryController {
 		return "redirect:/dataentry";
 	}
 	
-	@RequestMapping(value = "dataentry", method = RequestMethod.POST)
-	public String dataEntry(@ModelAttribute @Validated DataEntryDTO dataEntry,
-							BindingResult bindingResult,
-							Model model,
-							RedirectAttributes ra) {
+	@RequestMapping(value = "dataentry", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public @ResponseBody DataEntryResult dataEntry(@ModelAttribute @Validated DataEntryDTO dataEntry,
+									BindingResult bindingResult,
+									Model model) {
 		
-		ra.addFlashAttribute(DATAENTRY_MODEL_ATTRIB_KEY, dataEntry);
-		
-		if (bindingResult.hasErrors()) {
-			//This is to preserve the validation results in case of redirection.
-			ra.addFlashAttribute(BINDING_RESULT_KEY+DATAENTRY_MODEL_ATTRIB_KEY, bindingResult);
-			return "redirect:/dataentry";
+		DataEntryResult result = new DataEntryResult();
+					
+		if(bindingResult.hasErrors()){
+
+			result.success = false;
+			result.setFieldErrors(bindingResult.getFieldErrors());
+			
+		} else {
+			
+			//binds all the enum to model
+			dataEntryService.bindAllEnumsToModel(model);
+
+			try {
+				result.success = dataEntryService.save(dataEntry);
+				
+				if(!result.success){
+					result.success = false;
+		        	bindingResult.addError(new ObjectError("error", "Error in saving data."));
+				}
+				
+			} catch (Exception e) {
+			
+				result.success = false;
+				bindingResult.addError(new ObjectError("error", "Error in saving data."));
+				
+			}	
+			
 		}
 		
-		//binds all the enum to model
-		dataEntryService.bindAllEnumsToModel(model);
-				
-		if(dataEntryService.save(dataEntry)){
-        	MessageHelper.addSuccessAttribute(ra, "de.success");
-        } else {
-        	MessageHelper.addErrorAttribute(ra, "de.error");
-        }
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @author fsolijon
+	 *
+	 */
+	public static class DataEntryResult {
 		
-		return "redirect:/dataentry";
+		boolean success;
+				
+		Map<String, String> fieldErrors = new HashMap<String, String>();
+
+		/**
+		 * @return the success
+		 */
+		public boolean getSuccess() {
+			return success;
+		}
+
+		/**
+		 * @return the fieldErrors
+		 */
+		public Map<String, String> getFieldErrors() {
+			return fieldErrors;
+		}
+		
+		private void setFieldErrors(List<FieldError> fieldErrors){
+			for(FieldError error : fieldErrors){
+				this.fieldErrors.put(error.getField(), error.getDefaultMessage());	
+			}
+		}
+		
 	}
 }

@@ -21,7 +21,7 @@
 		  	 		<div class="col-xs-4 col-xs-offset-8">
 		  	 		<p></p>
 		  	 			<div class="input-group-btn">
-		  	 				<button type="submit" class="btn btn-primary">Submit</button>
+		  	 				<button id="btn_submit_data_entry" type="submit" class="btn btn-primary">Submit</button>
 		  	 			</div>
 		  	 			<div class="input-group-btn">
 		  	 				<button type="reset" class="btn btn-primary">Clear</button>
@@ -69,7 +69,7 @@
 </div>
 <div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 <script type="text/javascript">
-
+//<![CDATA[
 $( document ).on( "change", '[name^=installment]', function() {
 	doCalc();
 });
@@ -169,20 +169,43 @@ $(document).ready(function(e){
 		    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
 		    $('#selectedZipcode').val($zipCodeIndex);
 		    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
+		        .one('click', '#close', function (e) {return;});
 	 });
+	
+	 $('#btn_submit_data_entry').click(function(e){
+		 e.preventDefault();
+		 if(!$('#dataEntryForm').valid()){
+			 $.ajax({
+				 url : $('#dataEntryForm').attr("action"),
+				 method: "POST",
+				 data : $('#dataEntryForm').serialize(),
+				 success : function(data){
+					 		$("*[class^='col-']").removeClass('has-error').addClass('has-success');
+					 		if(data && !data.success){
+					 			$.each(data.fieldErrors, function(i, _val){
+					 				console.log(_val);
+					 				var _elem = $("*[name='" + i + "']")
+					 				_elem.closest("*[class^='col-']")
+					 					.removeClass('has-success').addClass('has-error')
+					 					.find("label.error").text(_val);
+					 			});
+					 		}
+						},
+				 dataType : "json" 
+			 });	 
+		 }
+	});
 });      
 
 function doCalc(){
 	var url = '';
 	//$("#prodDetail").load("dataentry/ajax");
-	$.post("dataentry/ajax",$('#dataEntryForm').serialize(),function(data){
+	 $.post("dataentry/ajax", $('#dataEntryForm').serialize(),function(data){
 		console.log(data);
 		$("#prodDetail").html(data);
-	});
+	}, "json");
 }
+//]]>
 </script>
 </body>
 </html>
