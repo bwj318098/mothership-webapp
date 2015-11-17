@@ -174,20 +174,19 @@ $(document).ready(function(e){
 	
 	 $('#btn_submit_data_entry').click(function(e){
 		 e.preventDefault();
-		 if(!$('#dataEntryForm').valid()){
+		 if($('#dataEntryForm').valid()){
 			 $.ajax({
 				 url : $('#dataEntryForm').attr("action"),
 				 method: "POST",
 				 data : $('#dataEntryForm').serialize(),
 				 success : function(data){
-					 		$("*[class^='col-']").removeClass('has-error').addClass('has-success');
+					 		$("*[class^='col-']").removeClass('has-error').addClass('has-success').removeAttr('title');
 					 		if(data && !data.success){
 					 			$.each(data.fieldErrors, function(i, _val){
 					 				console.log(_val);
 					 				var _elem = $("*[name='" + i + "']")
 					 				_elem.closest("*[class^='col-']")
-					 					.removeClass('has-success').addClass('has-error')
-					 					.find("label.error").text(_val);
+					 					.removeClass('has-success').addClass('has-error').attr('title', _val);
 					 			});
 					 		}
 						},

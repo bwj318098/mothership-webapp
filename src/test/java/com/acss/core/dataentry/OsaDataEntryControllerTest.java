@@ -3,6 +3,8 @@ package com.acss.core.dataentry;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 
+import javax.annotation.Resources;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -92,10 +94,7 @@ public class OsaDataEntryControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(osaDataEntryController)
 				.setSingleView(mockView).build();
 	}
-	
-	@Test
-	public void test(){}
-	
+		
 	@Test
 	public void testDataEntry_Null_TopLevelFields() throws Exception {
 		String[] fieldsToCheck = {
@@ -128,19 +127,19 @@ public class OsaDataEntryControllerTest {
 		};
 		
 		ResultActions resultActions = mockMvc.perform(post("/dataentry"))
-										.andExpect(status().isOk())
-										.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-										.andExpect(jsonPath("$.success", is(false)));
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 				
 		for(String field : fieldsToCheck){
 			resultActions = resultActions
-					.andExpect(jsonPath("$.fieldErrors." + field, notNullValue())) 
-					.andExpect(jsonPath("$.fieldErrors." + field, is("required"))); 
+					.andExpect(jsonPath("$.fieldErrors['" + field + "']", notNullValue())) 
+					.andExpect(jsonPath("$.fieldErrors['" + field + "']", is("required"))); 
 		}
 				
 	}
 	
-/*	@Test
+	@Test
 	public void testDataEntry_Empty_TopLevelFields() throws Exception {
 		String[] fieldsToCheck = {
 				"companyName",
@@ -154,17 +153,17 @@ public class OsaDataEntryControllerTest {
 							.setOccupation("")
 							.get();
 		
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input)).andReturn();
-				
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
-		for(String propertyName : fieldsToCheck){
-			FieldError fieldError = bindingResult.getFieldError(propertyName); 
-			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));	
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
+		
+		for(String field : fieldsToCheck){
+			resultActions = resultActions
+					.andExpect(jsonPath("$.fieldErrors['" + field + "']", notNullValue())) 
+					.andExpect(jsonPath("$.fieldErrors['" + field + "']", is("required"))); 
 		}
+
 	}
 	
 	@Test
@@ -179,34 +178,33 @@ public class OsaDataEntryControllerTest {
 							.setOtherIncome(new BigDecimal("12345678901"))
 							.get();
 		
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input)).andReturn();
-				
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
-		for(String propertyName : fieldsToCheck){
-			FieldError fieldError = bindingResult.getFieldError(propertyName); 
-			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("numeric value out of bounds (<10 digits>.<2 digits> expected)"));	
-		}
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
+		for(String field : fieldsToCheck){
+			resultActions = resultActions
+					.andExpect(jsonPath("$.fieldErrors['" + field + "']", notNullValue())) 
+					.andExpect(jsonPath("$.fieldErrors['" + field + "']", is("numeric value out of bounds (<10 digits>.<2 digits> expected)"))); 
+		}
+			
 		input = DataEntryDTOBuilder.create()
 							.setMonthlyNetIncome(new BigDecimal("78.901"))
 							.setOtherIncome(new BigDecimal("78.901"))
 							.get();
 		
-		mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input)).andReturn();
-				
-		bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
+		resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 
-		for(String propertyName : fieldsToCheck){
-			FieldError fieldError = bindingResult.getFieldError(propertyName); 
-			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("numeric value out of bounds (<10 digits>.<2 digits> expected)"));	
+		for(String field : fieldsToCheck){
+			resultActions = resultActions
+					.andExpect(jsonPath("$.fieldErrors['" + field + "']", notNullValue())) 
+					.andExpect(jsonPath("$.fieldErrors['" + field + "']", is("numeric value out of bounds (<10 digits>.<2 digits> expected)"))); 
 		}
+		
 	}
 		
 	@Test
@@ -229,16 +227,16 @@ public class OsaDataEntryControllerTest {
 							.setAccountName(STRING_101_CHARS)
 							.get();
 		
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input)).andReturn();
-				
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
+		
+		
 		for(String[] propertyName : fieldsToCheck){
-			FieldError fieldError = bindingResult.getFieldError(propertyName[0]); 
-			assertThat("[" + propertyName[0] + "] expected to have an error binding but has not.", fieldError, notNullValue());
-			assertThat("[" + propertyName[0] + "] message is not as expected.", fieldError.getDefaultMessage(), is("size must be between 0 and " + (propertyName[1].length() - 1)));	
+			resultActions = resultActions
+					.andExpect(jsonPath("$.fieldErrors['" + propertyName[0] + "']", notNullValue())) 
+					.andExpect(jsonPath("$.fieldErrors['" + propertyName[0] + "']", is("size must be between 0 and " + (propertyName[1].length() - 1)))); 
 		}
 	}
 	
@@ -261,19 +259,18 @@ public class OsaDataEntryControllerTest {
 								.setMotherMaidenName(NameFieldBuilder.create().setMiddleName("").get())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
-		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("required")));			
 			}	
 		}
 	}
@@ -307,29 +304,29 @@ public class OsaDataEntryControllerTest {
 													.setSurName(STRING_31_CHARS).get())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("size must be between 0 and 30"));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("size must be between 0 and 30")));			
 			}	
 		}
+
 	}
 	
 	
 	@Test
 	public void testDataEntry_IdField_Empty_InnerLevelFields() throws Exception {
 		String[] fieldsToCheck = {
-				"applicantId",
-				"otherId",
+				//"applicantId",
+				//"otherId",
 				"additionalIds[0]",
 				"additionalIds[1]"
 		};
@@ -351,19 +348,18 @@ public class OsaDataEntryControllerTest {
 												.list())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));		
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), anyOf(is("may not be empty"), is("may not be null")));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("required")));			
 			}	
 		}
 	}
@@ -392,19 +388,18 @@ public class OsaDataEntryControllerTest {
 											.setIdCardNo(STRING_21_CHARS).list())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("size must be between 0 and 20"));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("size must be between 0 and 20")));			
 			}	
 		}
 	}
@@ -434,23 +429,21 @@ public class OsaDataEntryControllerTest {
 										.setLocal("").get())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("required")));			
 			}	
 		}
 	}
-	
 	
 	@Test
 	public void testDataEntry_PhoneNumber_WrongFormat_InnerLevelFields() throws Exception {
@@ -481,19 +474,18 @@ public class OsaDataEntryControllerTest {
 										.setPhoneNo("123456789C").get())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("does not follow the correct phone number format"));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("incorrect format")));			
 			}	
 		}
 	}
@@ -527,19 +519,18 @@ public class OsaDataEntryControllerTest {
 										.setLocal("123456").get())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), anyOf(is("size must be between 0 and 5"), is("length must not be greater than 4")));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", anyOf(is("size must be between 0 and 5"), is("length must not be greater than 4"))));			
 			}	
 		}
 	}
@@ -568,19 +559,18 @@ public class OsaDataEntryControllerTest {
 										.setLandMark("").get())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), anyOf(is("may not be null"), is("may not be empty")));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("required")));			
 			}	
 		}
 	}
@@ -626,19 +616,18 @@ public class OsaDataEntryControllerTest {
 										.setLandMark(STRING_71_CHARS).get())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), anyOf(is("numeric value out of bounds (<6 digits>.<0 digits> expected)"), is("size must be between 0 and 6"), is("size must be between 0 and 70")));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", anyOf(is("numeric value out of bounds (<6 digits>.<0 digits> expected)"), is("size must be between 0 and 6"), is("size must be between 0 and 70"))));			
 			}	
 		}
 	}
@@ -662,19 +651,18 @@ public class OsaDataEntryControllerTest {
 													.get())
 								.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be null"));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("required")));			
 			}	
 		}
 	}
@@ -698,19 +686,18 @@ public class OsaDataEntryControllerTest {
 									.get())
 				.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be null"));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("required")));			
 			}	
 		}
 	}
@@ -755,19 +742,18 @@ public class OsaDataEntryControllerTest {
 									.get())
 				.get();	
 	
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), anyOf(is("may not be null"), is("may not be empty")));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("required")));			
 			}	
 		}
 	}
@@ -790,20 +776,19 @@ public class OsaDataEntryControllerTest {
 									.get())
 				.get();
 				
-		MvcResult mvcResult = mockMvc
-				.perform(addParams(post("/dataentry"), input))
-				.andReturn();
+		ResultActions resultActions = mockMvc.perform(addParams(post("/dataentry"), input))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.success", is(false)));
 		
-		BindingResult bindingResult = (BindingResult) mvcResult.getFlashMap()
-				.get(OsaDataEntryController.BINDING_RESULT_KEY + OsaDataEntryController.DATAENTRY_MODEL_ATTRIB_KEY);
-
 		for(String fieldName : fieldsToCheck){
 			for(String prop : propsToCheck){
 				String propertyName = fieldName + "." + prop;  
-				FieldError fieldError = bindingResult.getFieldError(propertyName); 
-				assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-				assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), anyOf(is("may not be null"), is("may not be empty")));				
+				
+				resultActions = resultActions
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", notNullValue())) 
+						.andExpect(jsonPath("$.fieldErrors['" + propertyName + "']", is("required")));			
 			}	
 		}
-	}*/
+	}
 }
