@@ -1,6 +1,5 @@
 package com.acss.core.dataentry;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,13 +94,13 @@ public class OsaDataEntryController {
 				
 				if(!result.success){
 					result.success = false;
-		        	bindingResult.addError(new ObjectError("error", "Error in saving data."));
+					result.addError(new ObjectError("error", "Error in saving data."));
 				}
 				
 			} catch (Exception e) {
 			
 				result.success = false;
-				bindingResult.addError(new ObjectError("error", "Error in saving data."));
+				result.addError(new ObjectError("error", "Error in saving data."));
 				
 			}	
 			
@@ -145,6 +144,10 @@ public class OsaDataEntryController {
 			for(FieldError error : fieldErrors){
 				this.fieldErrors.put(error.getField(), error.getDefaultMessage());	
 			}
+		}
+		
+		private void addError(ObjectError error){
+			this.fieldErrors.put(error.getObjectName(), error.getDefaultMessage());
 		}
 		
 	}
