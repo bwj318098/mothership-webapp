@@ -66,6 +66,7 @@
 
 </form>
 </div>
+</div>
 	<div th:replace="fragments/footer :: footer">&nbsp;</div>
 	<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 	<div th:replace="fragments/promotion/modal_promotion :: modal_promotion(modal_id='modal_promotion',modal_title='Promotion Error')">&nbsp;</div>
@@ -204,14 +205,17 @@ $(document).ready(function(e){
 						 				var _elem = $("*[name='" + i + "']")
 						 				_elem.closest("*[class^='col-']")
 						 					.removeClass('has-success').addClass('has-error').attr('title', _val);
-						 			});	
+						 			});
 
-					 				  var _errTbl = $('#modal_promotion')
-				 				    	.modal({ backdrop: 'static', keyboard: false })
-				 				    	.find(".field-errors").bootstrapTable({
-				 				    		 data: data.dataEntryError
-				 				    		});
-					 				  	console.log(data.dataEntryError);
+					 				  
+					 				var _errTbl = $('#modal_promotion')
+				 				    	.modal({ backdrop: 'static', keyboard: false });
+					 				  
+					 				 $.each(data.dataEntryError, function(i, v){ console.log(i + "  " + v)});
+					 				$('#table-errors').bootstrapTable();
+					 				 $('#table-errors').bootstrapTable('load',data.dataEntryError);
+					 				 
+					 				  console.log(data.dataEntryError);
 					 			} else {
 					 				$.each(data.fieldErrors, function(i, _val){
 						 				console.log(_val);
