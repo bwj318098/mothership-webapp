@@ -191,6 +191,8 @@ $(document).ready(function(e){
 	 $('#btn_submit_data_entry').click(function(e){
 		 e.preventDefault();
 		 if($('#dataEntryForm').valid()){
+			 //convert every input type text into uppercase
+			 convertTextInputToUpperCase();
 			 $.ajax({
 				 url : $('#dataEntryForm').attr("action"),
 				 method: "POST",
