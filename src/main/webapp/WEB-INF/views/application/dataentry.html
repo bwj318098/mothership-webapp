@@ -23,7 +23,11 @@
 		  	 		<div class="col-xs-4 col-xs-offset-8">
 		  	 		<p></p>
 		  	 			<div class="input-group-btn">
+<<<<<<< HEAD
 		  	 				<button type="button" id="btn_submit_data_entry" class="btn btn-primary">Submit</button>
+=======
+		  	 				<button id="btn_submit_data_entry" type="submit" class="btn btn-primary">Submit</button>
+>>>>>>> branch 'master' of https://github.com/ultragaylord/mothership-webapp
 		  	 			</div>
 		  	 			<div class="input-group-btn">
 		  	 				<button type="reset" id="resetForm" class="btn btn-primary">Clear</button>
@@ -74,6 +78,14 @@
 <div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 <script type="text/javascript">
 //<![CDATA[
+<<<<<<< HEAD
+=======
+$( document ).on( "change", '[name^=installment]', function() {
+	doCalc();
+});
+
+
+>>>>>>> branch 'master' of https://github.com/ultragaylord/mothership-webapp
 $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
 	e.preventDefault();
     var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
@@ -145,10 +157,9 @@ $(document).ready(function(e){
 		    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
 		    $('#selectedZipcode').val($zipCodeIndex);
 		    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
+		        .one('click', '#close', function (e) {return;});
 	 });
+<<<<<<< HEAD
 	/*
 	$('#submitApplication').on('click',function(e){
 		e.preventDefault();
@@ -184,8 +195,45 @@ $(document).ready(function(e){
 		 }
 	});
 
+=======
+	
+	 $('#btn_submit_data_entry').click(function(e){
+		 e.preventDefault();
+		 if($('#dataEntryForm').valid()){
+			 $.ajax({
+				 url : $('#dataEntryForm').attr("action"),
+				 method: "POST",
+				 data : $('#dataEntryForm').serialize(),
+				 success : function(data){
+					 		$("*[class^='col-']").removeClass('has-error').addClass('has-success').removeAttr('title');
+					 		if(data && !data.success){
+					 			$.each(data.fieldErrors, function(i, _val){
+					 				console.log(_val);
+					 				var _elem = $("*[name='" + i + "']")
+					 				_elem.closest("*[class^='col-']")
+					 					.removeClass('has-success').addClass('has-error').attr('title', _val);
+					 			});
+					 		}
+						},
+				 dataType : "json" 
+			 });	 
+		 }
+	});
+>>>>>>> branch 'master' of https://github.com/ultragaylord/mothership-webapp
 });      
 
+<<<<<<< HEAD
+=======
+function doCalc(){
+	var url = '';
+	//$("#prodDetail").load("dataentry/ajax");
+	 $.post("dataentry/ajax", $('#dataEntryForm').serialize(),function(data){
+		console.log(data);
+		$("#prodDetail").html(data);
+	}, "json");
+}
+//]]>
+>>>>>>> branch 'master' of https://github.com/ultragaylord/mothership-webapp
 </script>
 </body>
 </html>
