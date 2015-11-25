@@ -236,15 +236,6 @@ $(document).ready(function(e){
 		 }
 	});
 });      
-
-function doCalc(){
-	var url = '';
-	//$("#prodDetail").load("dataentry/ajax");
-	 $.post("dataentry/ajax", $('#dataEntryForm').serialize(),function(data){
-		console.log(data);
-		$("#prodDetail").html(data);
-	}, "json");
-}
 //]]>
 </script>
 </body>

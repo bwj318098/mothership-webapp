@@ -9,9 +9,7 @@
 
 $(document).ready(function(e){
 	
-	$('[name^=installment]').on('change',function(){
-		doCalc();
-	});
+	$('[name^=installment]').on('change', doCalc);
 	
     $('#receivedDatePicker').datetimepicker({
     	//format: "YYYY-MM-DD HH:mm:ss"

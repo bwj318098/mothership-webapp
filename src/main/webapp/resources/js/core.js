@@ -40,13 +40,29 @@ function addImageFunction(){
 
 /* Prevents user to input character on fields marked with class numeric.*/
 function enableNumericOnlyForNumericClass(){
-	$(".numeric").numeric({ decimal: false, negative: false }, function() {this.value = ""; this.focus(); });
+	$(".numeric").each(function(){
+		var _this = $(this);
+		_this.numeric({ 
+			decimal: false, 
+			negative: false,
+			precision : _this.attr("maxlength") || 30
+		}, 
+		function() {this.value = ""; this.focus(); });
+	});
+		
 }
 
 /* Prevents user to input character on fields marked with class numeric.*/
 function enableDecimalOnlyForNumericClass(){
 	//$(".numeric-decimal").numeric({ decimal: ".", negative: false ,scale: 3}, function() {this.value = ""; this.focus(); });
-	$(".numeric-decimal").numeric({ decimal : ".",  negative : false, scale: 2 });
+	$(".numeric-decimal").each(function(){
+		var _this = $(this);
+		_this.numeric({ 
+			decimal : ".",  
+			negative : false, 
+			scale: 2,
+			precision : (_this.attr("maxlength") - 1) || 30 }); // -1 for decimal point
+	});
 }
 
 /* Show loading screen for every form submit only*/
