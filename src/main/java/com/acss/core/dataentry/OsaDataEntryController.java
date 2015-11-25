@@ -1,5 +1,6 @@
 package com.acss.core.dataentry;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.acss.core.model.application.PromotionRules;
 import com.acss.core.model.dataentry.DataEntryDTO;
 import com.acss.core.support.web.AjaxUtils;
 
@@ -29,7 +31,7 @@ public class OsaDataEntryController {
 	
 	static final String BINDING_RESULT_KEY = "org.springframework.validation.BindingResult.";	
 	static final String DATAENTRY_MODEL_ATTRIB_KEY = "dataEntryForm";
-	
+		
 	@Autowired
 	private DataEntryService dataEntryService;
 	
@@ -78,10 +80,40 @@ public class OsaDataEntryController {
 									Model model) {
 		
 		DataEntryResult result = new DataEntryResult();
+		
+		if(dataEntry.getInstallment().getPromotionCode()!=null && 
+		      !dataEntry.getInstallment().getPromotionCode().equals("")){
+			
+			ValidatePromotion validatePromo =  new ValidatePromotion();
+			
+			PromotionRules rules = dataEntryService.getPromotionDetails(dataEntry.getInstallment().getPromotionCode());
+			
+			if(!(rules.getPromotion()==null)){
+				
+				List<FieldError> promotionErrors = validatePromo.promotionErrors(dataEntry,rules);
+				
+				if(promotionErrors.size()>0){
 					
+					result.success = false;
+					result.showInModal = true;
+					result.setFieldErrors(promotionErrors);
+					result.getDataEntryError();
+					return result;
+				}
+				
+			}else{
+				
+				List<FieldError> promotionErrors = validatePromo.promotionErrors(dataEntry,rules);
+				result.success = false;
+				result.setFieldErrors(promotionErrors);
+				
+			}
+		}
+				
 		if(bindingResult.hasErrors()){
 
 			result.success = false;
+			result.showInModal = false;
 			result.setFieldErrors(bindingResult.getFieldErrors());
 			
 		} else {
@@ -105,7 +137,6 @@ public class OsaDataEntryController {
 			}	
 			
 		}
-		
 		return result;
 	}
 	
@@ -121,6 +152,8 @@ public class OsaDataEntryController {
 		Map<String, String> fieldErrors = new HashMap<String, String>();
 		
 		DataEntryDTO dataEntry;
+		
+		boolean showInModal;
 
 		/**
 		 * @return the success
@@ -149,6 +182,41 @@ public class OsaDataEntryController {
 		private void addError(ObjectError error){
 			this.fieldErrors.put(error.getObjectName(), error.getDefaultMessage());
 		}
+
+		public boolean isShowInModal() {
+			return showInModal;
+		}
+		
+		public List<DataEntryError> getDataEntryError(){
+			List<DataEntryError> error = new ArrayList<DataEntryError>();
+			
+			for(String key : fieldErrors.values()){
+				error.add(new DataEntryError(key));
+			}
+
+			return error;
+			
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @author fcortez
+	 *
+	 */
+	public static class DataEntryError {
+		
+		private String error;
+		
+		public DataEntryError(String error){
+			this.error = error;
+		}
+		
+		public String getError() {
+			return error;
+		}
+
 		
 	}
 }

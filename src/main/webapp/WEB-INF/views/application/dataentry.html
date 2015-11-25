@@ -14,7 +14,10 @@
 <form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/dataentry}" method="post" enctype="multipart/form-data" >
   <div class="form-group">
 	  <div class="row">
-	  	<div class="col-xs-2"><strong><label class="control-label">Application Data Entry</label></strong></div>
+	  	<div class="col-xs-2"><strong><label class="control-label">Application Data Entry</label></strong>
+	  	<button id="btn_promotion_error" class="btn btn-primary" style="display: none">Error</button>
+	  	</div>
+
 	  	<div class="col-lg-5 col-lg-offset-5 col-md-5 col-md-offset-5 col-xs-10" >
 	  		<div class="input-group">
 		  		<div class="row">
@@ -26,9 +29,7 @@
 		  	 			<div class="input-group-btn">
 		  	 				<button type="reset" class="btn btn-primary">Clear</button>
 		  	 			</div>
-<!-- 		  	 			<div class="input-group-btn"> -->
-<!-- 		  	 				<button type="button" class="btn btn-primary">Calc.</button> -->
-<!-- 		  	 			</div> -->
+
 		  	 		<p></p>
 		  	 		</div>
 		  	 	</div>
@@ -67,7 +68,8 @@
 
 </form>
 </div>
-<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
+	<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
+	<div th:replace="fragments/promotion/modal_promotion :: modal_promotion(modal_id='modal_promotion',modal_title='Promotion Error')">&nbsp;</div>
 <script type="text/javascript">
 //<![CDATA[
 $( document ).on( "change", '[name^=installment]', function() {
@@ -108,6 +110,8 @@ $( document ).on( "click", 'button[name^="btn_brand"]', function(e) {
             return;
     });
 });
+
+
 
 $(document).ready(function(e){
 	
@@ -182,12 +186,29 @@ $(document).ready(function(e){
 				 success : function(data){
 					 		$("*[class^='col-']").removeClass('has-error').addClass('has-success').removeAttr('title');
 					 		if(data && !data.success){
-					 			$.each(data.fieldErrors, function(i, _val){
-					 				console.log(_val);
-					 				var _elem = $("*[name='" + i + "']")
-					 				_elem.closest("*[class^='col-']")
-					 					.removeClass('has-success').addClass('has-error').attr('title', _val);
-					 			});
+					 			if(data.showInModal){
+
+					 				$.each(data.fieldErrors, function(i, _val){
+						 				console.log(_val);
+						 				var _elem = $("*[name='" + i + "']")
+						 				_elem.closest("*[class^='col-']")
+						 					.removeClass('has-success').addClass('has-error').attr('title', _val);
+						 			});	
+
+					 				  var _errTbl = $('#modal_promotion')
+				 				    	.modal({ backdrop: 'static', keyboard: false })
+				 				    	.find(".field-errors").bootstrapTable({
+				 				    		 data: data.dataEntryError
+				 				    		});
+					 				  	console.log(data.dataEntryError);
+					 			} else {
+					 				$.each(data.fieldErrors, function(i, _val){
+						 				console.log(_val);
+						 				var _elem = $("*[name='" + i + "']")
+						 				_elem.closest("*[class^='col-']")
+						 					.removeClass('has-success').addClass('has-error').attr('title', _val);
+						 			});	
+					 			}
 					 		}
 						},
 				 dataType : "json" 

@@ -112,7 +112,7 @@ public class RSApplicationService implements HpsApplicationService{
 		String uri = MessageFormat.format(env.getProperty(RS_APPLICATIONFOLLOWUPS_URL_KEY), storeCd);
 		
 		HpsApplication application = rt.getForObject(uri+"/"+followupappDetailsForm.getAppNo(), HpsApplication.class);
-		application.updateRequestedDocIntoUploaded(followupappDetailsForm.getReqDocumentForUpdate().getSeqId());
+		//application.updateRequestedDocIntoUploaded(followupappDetailsForm.getReqDocumentForUpdate().getSeqId(),"");
 		
 		ModelMapper mapper = new ModelMapper();
 		RequestedDocumentDTO documentDTO = mapper.map(application.getRequestedDocumentForUpdate(), RequestedDocumentDTO.class);

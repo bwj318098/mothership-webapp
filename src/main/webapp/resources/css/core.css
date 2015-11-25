@@ -109,3 +109,12 @@ body.loading {
 .modal-zipcode {
   width: 900px;
 }
+
+.modal_promotion {
+ 	color: #a94442;
+	text-transform:uppercase;
+	display: modal;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-weight: 600;
+}
