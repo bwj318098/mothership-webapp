@@ -8,6 +8,11 @@
 <script type="text/javascript">
 
 $(document).ready(function(e){
+	
+	$('[name^=installment]').on('change',function(){
+		doCalc();
+	});
+	
     $('#receivedDatePicker').datetimepicker({
     	//format: "YYYY-MM-DD HH:mm:ss"
     	format: "YYYY-MM-DD"
@@ -15,6 +20,15 @@ $(document).ready(function(e){
 	enableNumericOnlyForNumericClass();
 	enableDecimalOnlyForNumericClass();
 });     
+
+function doCalc(){
+	var url = '';
+	//$("#prodDetail").load("dataentry/ajax");
+	$.post("../dataentry/ajax",$('#dataEntryForm').serialize(),function(data){
+		//console.log(data);
+		$("#prodDetail").html(data);
+	});
+}
 
 </script>
 
@@ -42,33 +56,36 @@ $(document).ready(function(e){
 					<div class="row">
 						<div class="col-md-2">
 							<div class="input-group">
-								<input th:value="*{installment.firstProduct.category}" name="installment.firstProduct.category" type="text" class="form-control name_30_req" id="category_1" placeholder="Category I" maxlength="30" readonly="readonly"/>
-								<input id="categoryCode_1" type="hidden" />
+								<input th:value="*{installment.firstProduct.category}" name="installment.firstProduct.category" type="text" class="form-control alphaNum_30_req productGroup_1" id="category_1" placeholder="Category I" maxlength="30" readonly="readonly"/>
+								<input id="categoryCode_1" type="hidden" th:value="*{installment.firstProduct.categoryCd}" name="installment.firstProduct.categoryCd" />
 								<div class="input-group-btn">
 									<button type="button" value="btn_category_1" name="btn_category_1" class="btn btn-primary">?</button>
+									<button type="button" name="btn_delete_category" class="btn btn-info">x</button>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
 						<div class="input-group">
-							<input th:value="*{installment.firstProduct.description}" name="installment.firstProduct.description" type="text" class="form-control any_70_req" id="description_1" placeholder="Description I" maxlength="70" readonly="readonly"/>
-							<input id="descriptionCode_1" type="hidden" />
+							<input th:value="*{installment.firstProduct.description}" name="installment.firstProduct.description" type="text" class="form-control alphaNum_70_req productGroup_1" id="description_1" placeholder="Description I" maxlength="70" readonly="readonly"/>
+							<input id="descriptionCode_1" type="hidden" th:value="*{installment.firstProduct.descriptionCd}" name="installment.firstProduct.descriptionCd" />
 							<div class="input-group-btn">
 									<button type="button" value="btn_description_1" name="btn_description_1" class="btn btn-primary" >?</button>
+									<button type="button" name="btn_delete_desc" class="btn btn-info">x</button>
 							</div>
 						</div>
 						</div>
 					  	<div class="col-md-2">
 					  	<div class="input-group">
-					  	<input th:value="*{installment.firstProduct.brand}" name="installment.firstProduct.brand" type="text" class="form-control name_30_req" id="brand_1" placeholder="Brand I" maxlength="30" readonly="readonly"/>
+					  	<input th:value="*{installment.firstProduct.brand}" name="installment.firstProduct.brand" type="text" class="form-control alphaNum_30_req productGroup_1" id="brand_1" placeholder="Brand I" maxlength="30" readonly="readonly"/>
 					  	<div class="input-group-btn">
 							<button type="button" value="btn_brand_1" name="btn_brand_1" class="btn btn-primary">?</button>
+							<button type="button" name="btn_delete_brand" class="btn btn-info">x</button>
 						</div>
 					  	</div>
 					  	</div>
-					  	<div class="col-md-2"><input th:value="*{installment.firstProduct.modelNo}" name="installment.firstProduct.modelNo" type="text" class="form-control name_30_req" id="model_1" placeholder="Model I" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:value="*{installment.firstProduct.price}" name="installment.firstProduct.price" type="text" class="form-control numeric-decimal text-right currency_10_req" id="installment.firstProduct.price" placeholder="Price I" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:value="*{installment.firstProduct.downPayment}" name="installment.firstProduct.downPayment" type="text" class="form-control numeric-decimal text-right currency_10_req" id="installment.firstProduct.downPayment" placeholder="DP I" maxlength="11"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.firstProduct.modelNo}" name="installment.firstProduct.modelNo" type="text" class="form-control alphaNum_30_req productGroup_1" id="model_1" placeholder="Model I" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.firstProduct.price==0.00?'':installment.firstProduct.price}" name="installment.firstProduct.price" type="text" class="form-control numeric-decimal text-right firstPriceRules productGroup_1" id="installment.firstProduct.price" placeholder="Price I" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:value="*{installment.firstProduct.downPayment}" name="installment.firstProduct.downPayment" type="text" class="form-control numeric-decimal text-right currency_10" id="installment.firstProduct.downPayment" placeholder="DP I" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -80,33 +97,36 @@ $(document).ready(function(e){
 					<div class="row">
 						<div class="col-md-2">
 							<div class="input-group">
-								<input th:value="*{installment.secondProduct.category}" name="installment.secondProduct.category" type="text" class="form-control name_30_req" id="category_2" placeholder="Category II" maxlength="30" readonly="readonly"/>
-								<input id="categoryCode_2" type="hidden" />
+								<input th:value="*{installment.secondProduct.category}" name="installment.secondProduct.category" type="text" class="form-control alphaNum_30 productGroup_2" id="category_2" placeholder="Category II" maxlength="30" readonly="readonly"/>
+								<input id="categoryCode_2" type="hidden" th:value="*{installment.secondProduct.categoryCd}" name="installment.secondProduct.categoryCd"/>
 								<div class="input-group-btn">
 									<button type="button" value="btn_category_2" name="btn_category_2" class="btn btn-primary">?</button>
+									<button type="button" name="btn_delete_category" class="btn btn-info">x</button>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
 						<div class="input-group">
-							<input th:value="*{installment.secondProduct.description}" name="installment.secondProduct.description" type="text" class="form-control any_70_req" id="description_2" placeholder="Description II" maxlength="70" readonly="readonly"/>
-							<input id="descriptionCode_2" type="hidden" />
+							<input th:value="*{installment.secondProduct.description}" name="installment.secondProduct.description" type="text" class="form-control alphaNum_70 productGroup_2" id="description_2" placeholder="Description II" maxlength="70" readonly="readonly"/>
+							<input id="descriptionCode_2" type="hidden" th:value="*{installment.secondProduct.descriptionCd}" name="installment.secondProduct.descriptionCd" />
 							<div class="input-group-btn">
 									<button type="button" value="btn_description_2" name="btn_description_2" class="btn btn-primary">?</button>
+									<button type="button" name="btn_delete_desc" class="btn btn-info">x</button>
 							</div>
 						</div>
 						</div>
 					  	<div class="col-md-2">
 					  	<div class="input-group">
-					  	<input th:value="*{installment.secondProduct.brand}" name="installment.secondProduct.brand" type="text" class="form-control name_30_req" id="brand_2" placeholder="Brand II" maxlength="30" readonly="readonly"/>
+					  	<input th:value="*{installment.secondProduct.brand}" name="installment.secondProduct.brand" type="text" class="form-control alphaNum_30 productGroup_2" id="brand_2" placeholder="Brand II" maxlength="30" readonly="readonly"/>
 					  	<div class="input-group-btn">
 									<button type="button" value="btn_brand_2" name="btn_brand_2" class="btn btn-primary">?</button>
+									<button type="button" name="btn_delete_brand" class="btn btn-info">x</button>
 							</div>
 					  	</div>
 					  	</div>
-					  	<div class="col-md-2"><input th:value="*{installment.secondProduct.modelNo}" name="installment.secondProduct.modelNo" type="text" class="form-control name_30_req" id="model_2" placeholder="Model II" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:value="*{installment.secondProduct.price}" name="installment.secondProduct.price" type="text" class="form-control numeric-decimal text-right currency_10_req" id="installment.secondProduct.price" placeholder="Price II" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:value="*{installment.secondProduct.downPayment}" name="installment.secondProduct.downPayment" type="text" class="form-control numeric-decimal text-right currency_10_req" id="installment.secondProduct.downPayment" placeholder="DP II" maxlength="11"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.secondProduct.modelNo}" name="installment.secondProduct.modelNo" type="text" class="form-control alphaNum_30 productGroup_2" id="model_2" placeholder="Model II" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.secondProduct.price==0.00?'':installment.secondProduct.price}" name="installment.secondProduct.price" type="text" class="form-control numeric-decimal text-right otherPriceRules productGroup_2" id="installment.secondProduct.price" placeholder="Price II" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:value="*{installment.secondProduct.downPayment}" name="installment.secondProduct.downPayment" type="text" class="form-control numeric-decimal text-right" id="installment.secondProduct.downPayment" placeholder="DP II" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -118,34 +138,37 @@ $(document).ready(function(e){
 					<div class="row">
 						<div class="col-md-2">
 							<div class="input-group">
-								<input th:value="*{installment.thirdProduct.category}" name="installment.thirdProduct.category" type="text" class="form-control name_30_req" id="category_3" placeholder="Category III" maxlength="30" readonly="readonly"/>
-								<input id="categoryCode_3" type="hidden" />
+								<input th:value="*{installment.thirdProduct.category}" name="installment.thirdProduct.category" type="text" class="form-control alphaNum_30 productGroup_3" id="category_3" placeholder="Category III" maxlength="30" readonly="readonly"/>
+								<input id="categoryCode_3" type="hidden" th:value="*{installment.thirdProduct.categoryCd}" name="installment.thirdProduct.categoryCd"/>
 								<div class="input-group-btn">
 									<button type="button" value="btn_category_3" name="btn_category_3" class="btn btn-primary">?</button>
+									<button type="button" name="btn_delete_category" class="btn btn-info">x</button>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
 						<div class="input-group">
-							<input th:value="*{installment.thirdProduct.description}" name="installment.thirdProduct.description" type="text" class="form-control any_70_req" id="description_3" placeholder="Description III" maxlength="70" readonly="readonly"/>
-							<input id="descriptionCode_3" type="hidden" />
+							<input th:value="*{installment.thirdProduct.description}" name="installment.thirdProduct.description" type="text" class="form-control alphaNum_70 productGroup_3" id="description_3" placeholder="Description III" maxlength="70" readonly="readonly"/>
+							<input id="descriptionCode_3" type="hidden" th:value="*{installment.thirdProduct.descriptionCd}" name="installment.thirdProduct.descriptionCd" />
 							<div class="input-group-btn">
 									<button type="button" value="btn_description_3" name="btn_description_3" class="btn btn-primary" >?</button>
+									<button type="button" name="btn_delete_desc" class="btn btn-info">x</button>
 							</div>
 						</div>
 						</div>
 					  	<div class="col-md-2">
 					  	<div class="input-group">
-					  	<input th:value="*{installment.thirdProduct.brand}" name="installment.thirdProduct.brand" type="text" class="form-control name_30_req" id="brand_3" placeholder="Brand III" maxlength="30" readonly="readonly"/>
+					  	<input th:value="*{installment.thirdProduct.brand}" name="installment.thirdProduct.brand" type="text" class="form-control alphaNum_30 productGroup_3" id="brand_3" placeholder="Brand III" maxlength="30" readonly="readonly"/>
 					  	<input id="brandCode_3" type="hidden" />
 					  	<div class="input-group-btn">
 							<button type="button" value="btn_brand_3" name="btn_brand_3" class="btn btn-primary">?</button>
+							<button type="button" name="btn_delete_brand" class="btn btn-info">x</button>
 						</div>
 					  	</div>
 					  	</div>
-					  	<div class="col-md-2"><input th:value="*{installment.thirdProduct.modelNo}" name="installment.thirdProduct.modelNo" type="text" class="form-control name_30_req" id="model_3" placeholder="Model III" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:value="*{installment.thirdProduct.price}" name="installment.thirdProduct.price" type="text" class="form-control numeric-decimal text-right currency_10_req" id="installment.thirdProduct.price" placeholder="Price III" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:value="*{installment.thirdProduct.downPayment}" name="installment.thirdProduct.downPayment" type="text" class="form-control numeric-decimal text-right currency_10_req" id="installment.thirdProduct.downPayment" placeholder="DP III" maxlength="11"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.thirdProduct.modelNo}" name="installment.thirdProduct.modelNo" type="text" class="form-control alphaNum_30 productGroup_3" id="model_3" placeholder="Model III" maxlength="30"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.thirdProduct.price==0.00?'':installment.thirdProduct.price}" name="installment.thirdProduct.price" type="text" class="form-control numeric-decimal text-right otherPriceRules productGroup_3" id="installment.thirdProduct.price" placeholder="Price III" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:value="*{installment.thirdProduct.downPayment}" name="installment.thirdProduct.downPayment" type="text" class="form-control numeric-decimal text-right" id="installment.thirdProduct.downPayment" placeholder="DP III" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -157,7 +180,7 @@ $(document).ready(function(e){
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Monthly Interest Rate</label></div>
-						<div class="col-md-1"><input th:value="*{installment.rate}" name="installment.rate" type="text" class="form-control any_6_req numeric-decimal" id="installment.rate" placeholder="%" maxlength="5"/></div>
+						<div class="col-md-1"><input th:value="*{installment.rate}" name="installment.rate" type="text" class="form-control numeric-decimal" id="installment.rate" placeholder="%" maxlength="5"/></div>
 						<div class="col-md-2"><label class="control-label" for="category_1">Installment Term</label></div>
 					  	<div class="col-md-1">
 					  		<select th:value="*{installment.term}" name="installment.term" class="form-control selectField" id="term">
@@ -187,7 +210,7 @@ $(document).ready(function(e){
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="category_1">Processing Fee Type</label></div>
+						<div class="col-md-2"><label class="control-label" for="processingFeePayType">Processing Fee Type</label></div>
 						
 						<div class="col-md-1">
 							<label class="control-label"><input name="installment.processingFeePayType" 
@@ -204,13 +227,13 @@ $(document).ready(function(e){
 							th:checked="*{installment.processingFeePayType}==${processingFeePayTypeList[2]}"
 							th:value="${processingFeePayTypeList[2]}" th:text="#{${processingFeePayTypeList[2].value}}" class="control-label" type="radio" /></label>
 						</div>
-						<div class="col-md-2"><label class="control-label" for="category_1">Promo Voucher</label></div>
-						<div class="col-md-3"><input th:value="*{installment.promoVoucher}" name="installment.promoVoucher" type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Promo Voucher" maxlength="11"/></div>
+						<div class="col-md-2"><label class="control-label" for="voucher">Promo Voucher</label></div>
+						<div class="col-md-3"><input th:value="*{installment.promoVoucher}" name="installment.promoVoucher" type="text" class="form-control numeric-decimal text-right" id="voucher" placeholder="Promo Voucher" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="category_1">Store Code</label></div>
+						<div class="col-md-2"><label class="control-label" for="storeCd">Store Code</label></div>
 						<div class="col-md-3"><input th:value="*{store.storeCd}" name="store.storeCd" type="text" class="form-control" id="storeCd" placeholder="Store Code" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Finance Amount</label></div>
 						<div class="col-md-3"><input th:value="*{installment.totalFinancePrice()}" type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Finance Amount" readonly="readonly" maxlength="11"/></div>
@@ -218,7 +241,7 @@ $(document).ready(function(e){
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="category_1">Store Name</label></div>
+						<div class="col-md-2"><label class="control-label" for="store.storeName">Store Name</label></div>
 						<div class="col-md-3"><input th:value="*{store.storeName}" type="text" class="form-control" id="store.storeName" placeholder="Store Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Interest Amount</label></div>
 						<div class="col-md-3"><input th:value="*{installment.totalInterestAmount()}" type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Interest Amount" readonly="readonly" maxlength="11"/></div>
@@ -226,7 +249,7 @@ $(document).ready(function(e){
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="category_1">Store Phone No.</label></div>
+						<div class="col-md-2"><label class="control-label" for="storePhoneReg">Store Phone No.</label></div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<div class="col-xs-5">
@@ -237,13 +260,13 @@ $(document).ready(function(e){
 								</div> 
 							</div>
 						</div>
-						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Total Installment Amount</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalInstallmentAmount()}" type="text" class="form-control numeric text-right" id="category_3" placeholder="Total Installment Amount" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="totalInstallment">Total Installment Amount</label></div>
+						<div class="col-md-3"><input th:value="*{installment.totalInstallmentAmount()}" type="text" class="form-control numeric text-right" id="totalInstallment" placeholder="Total Installment Amount" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="category_1">Merchant Staff Name</label></div>
+						<div class="col-md-2"><label class="control-label" for="merchantStaffName">Merchant Staff Name</label></div>
 						<div class="col-md-3"><input th:value="*{store.merchantStaffName}" name="store.merchantStaffName" type="text" class="form-control" id="merchantStaffName" placeholder="Staff Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Monthly Installment</label></div>
 						<div class="col-md-3"><input th:value="*{installment.totalMonthlyPayment()}" type="text" class="form-control numeric text-right" id="category_3" placeholder="Monthly Installment" readonly="readonly" maxlength="11"/></div>
@@ -251,7 +274,7 @@ $(document).ready(function(e){
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="category_1">AEON Staff</label></div>
+						<div class="col-md-2"><label class="control-label" for="aeonStaff">AEON Staff</label></div>
 						<div class="col-md-3"><input th:value="*{store.aeonStaff}" name="store.aeonStaff" type="text" class="form-control" id="aeonStaff" placeholder="Staff Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Processing Fee(b)</label></div>
 						<div class="col-md-3"><input th:value="*{installment.totalProcessingFee()}" type="text" class="form-control numeric text-right" id="category_3" placeholder="Processing Fee" readonly="readonly" maxlength="11"/></div>
@@ -262,12 +285,12 @@ $(document).ready(function(e){
 						<div class="col-md-2"><label class="control-label" for="receivedDate">AEON Staff Date Received </label></div>
 						  <div class="col-md-3">
 							<div class="input-group date" id='receivedDatePicker'> 
-								<input type='text' th:value="*{store.receivedDate}" class="form-control any_10_req" name="store.receivedDate" maxlength="10"/>
+								<input type='text' th:value="*{store.receivedDate}" class="form-control dateDashedNumber_req" name="store.receivedDate" maxlength="10"/>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 						  	</div>
 						</div>
-						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Initial Cash Outlay(a+b)</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalInitialPayment()}" type="text" class="form-control numeric text-right" id="category_3" placeholder="Initial Cashout" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="cashout">Initial Cashout (a+b)</label></div>
+						<div class="col-md-3"><input th:value="*{installment.totalInitialCashout()}" type="text" class="form-control numeric text-right" id="cashout" placeholder="Initial Cashout (a+b)" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -281,16 +304,24 @@ $(document).ready(function(e){
 										th:value="${item}" th:text="#{${item.value}}"></option>
 							</select>
 						</div>						
-						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">First Payment Date</label></div>
-						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">First Installment Amount</label></div>
+						<div class="col-md-3"><input th:value="*{installment.totalInitialPayment()}" type="text" class="form-control numeric text-right" id="category_3" placeholder="Initial Cashout" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="category_1">Comment</label></div>
+						<div class="col-md-2"><label class="control-label" for="comment">Comment</label></div>
 						<div class="col-md-5"><textarea id="comment" name="comment" th:text="*{comment}" class="form-control"></textarea></div>
-						<div class="col-md-2"><label class="control-label" for="category_1">Final Payment Date</label></div>
-						<div class="col-md-3"><input type="text" class="form-control" id="category_3" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
+						<div class="col-md-2"><label class="control-label" for="firstPayment">First Payment Date</label></div>
+						<div class="col-md-3"><input name="installment.hpFirstDay" th:value="*{installment.hpFirstDayToString()}" type="text" class="form-control" id="hpFirstDay" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
+				  	</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"></div>
+						<div class="col-md-5"></div>
+						<div class="col-md-2"><label class="control-label" for="finalPayment">Final Payment Date</label></div>
+						<div class="col-md-3"><input name="installment.hpLastDay" th:value="*{installment.hpLastDayToString()}" type="text" class="form-control" id="hpLastDay" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
 				  	</div>
 				</div>																										
 			</div>
