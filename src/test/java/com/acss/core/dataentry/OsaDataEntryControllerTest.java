@@ -1,5 +1,11 @@
 package com.acss.core.dataentry;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import java.nio.charset.Charset;
 
 import org.junit.Before;
@@ -11,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -21,24 +26,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.View;
 
 import com.acss.core.config.ApplicationConfig;
 import com.acss.core.config.SecurityConfig;
-import com.acss.core.config.WebAppInitializer;
 import com.acss.core.config.WebMvcConfig;
 import com.acss.core.model.builder.DataEntryDTOBuilder;
 import com.acss.core.model.builder.NameFieldBuilder;
 import com.acss.core.model.dataentry.DataEntryDTO;
 import com.acss.kaizen.jooq.poc.configuration.PersistenceContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -168,7 +165,7 @@ public class OsaDataEntryControllerTest {
 		for(String propertyName : fieldsToCheck){
 			FieldError fieldError = bindingResult.getFieldError(propertyName); 
 			assertThat("[" + propertyName + "] expected to have an error binding but has not.", fieldError, notNullValue());
-			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be empty"));	
+			assertThat("[" + propertyName + "] message is not as expected.", fieldError.getDefaultMessage(), is("may not be null"));	
 		}
 	}
 }

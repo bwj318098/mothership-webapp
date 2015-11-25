@@ -5,30 +5,29 @@
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
+<div id="wrap">
 <div class="container-fluid">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
     </th:block>
-<form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/dataentry}" method="post" enctype="multipart/form-data" >
+<form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/dataentry/} + *{applicationNo}" method="post" enctype="multipart/form-data" >
   <div class="form-group">
 	  <div class="row">
-	  	<div class="col-xs-2"><strong><label class="control-label">Application Data Entry</label></strong></div>
-	  	<div class="col-lg-5 col-lg-offset-5 col-md-5 col-md-offset-5 col-xs-10" >
+	  	<div class="col-xs-4"><strong><label class="control-label" th:text="*{'Application Data Entry '+ applicationNo}" >Application Data Entry</label></strong></div>
+	  	<input type="hidden" th:field="*{applicationNo}" />
+	  	<div class="col-lg-5 col-lg-offset-3 col-md-5 col-md-offset-3 col-xs-8" >
 	  		<div class="input-group">
 		  		<div class="row">
 		  	 		<div class="col-xs-4 col-xs-offset-8">
 		  	 		<p></p>
 		  	 			<div class="input-group-btn">
-		  	 				<button type="submit" class="btn btn-primary">Submit</button>
+		  	 				<button type="button" id="btn_submit_data_entry" class="btn btn-primary">Submit</button>
 		  	 			</div>
 		  	 			<div class="input-group-btn">
-		  	 				<button type="reset" class="btn btn-primary">Clear</button>
+		  	 				<button type="reset" id="resetForm" class="btn btn-primary">Clear</button>
 		  	 			</div>
-<!-- 		  	 			<div class="input-group-btn"> -->
-<!-- 		  	 				<button type="button" class="btn btn-primary">Calc.</button> -->
-<!-- 		  	 			</div> -->
 		  	 		<p></p>
 		  	 		</div>
 		  	 	</div>
@@ -67,14 +66,14 @@
 
 </form>
 </div>
+<!-- end tag of wrapper -->
+</div>
+
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
 <div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 <script type="text/javascript">
-
-$( document ).on( "change", '[name^=installment]', function() {
-	doCalc();
-});
-
-
+//<![CDATA[
 $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
 	e.preventDefault();
     var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
@@ -109,8 +108,17 @@ $( document ).on( "click", 'button[name^="btn_brand"]', function(e) {
     });
 });
 
+$(document).on("click",'[name^="btn_delete_"]',function(e){
+	//clear the chosen category
+	e.preventDefault();
+	$(this).parent().parent().find('input').val('');
+});
+
+
+
+
 $(document).ready(function(e){
-	
+	// Convert into Upper Case
     $('#dateOfBirthPicker').datetimepicker({
     	//format: "YYYY-MM-DD HH:mm:ss"
     	format: "YYYY-MM-DD"
@@ -118,10 +126,12 @@ $(document).ready(function(e){
 	/* Prevents user to input character on fields marked with class numeric.*/
 	enableNumericOnlyForNumericClass();
 	enableDecimalOnlyForNumericClass();
-	// Convert into Upper Case
-	convertTextInputToUpperCase();
+
 	
 	$('#dataEntryForm').validate({
+		//validate non-present or visible fields.
+		ignore: "",
+		
 		highlight: function (element) {
             $(element).closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
         },
@@ -129,42 +139,8 @@ $(document).ready(function(e){
             element.addClass('valid').closest("*[class^='col-']").removeClass('has-error').addClass('has-success');
         }
     });
-	
-	/* From old implementation
-	 $('button[name^="btn_category"]').on('click', function(e){
-		    e.preventDefault();
-		    var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedCategory').val($categoryIndex);
-		    $('#categoryModal').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	 });
 	 
-	 $('button[name^="btn_description"]').on('click', function(e){
-		    e.preventDefault();
-		    var $descIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedDesc').val($descIndex);
-		    
-		    $category = $('#categoryCode_'+$descIndex).val();
-		    $('#descriptionModal_'+$category).modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	}); 
-	 
-	 $('button[name^="btn_brand"]').on('click', function(e){
-		    e.preventDefault();
-		    var $brandIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedBrand').val($brandIndex);
-		    $category = $('#categoryCode_'+$brandIndex).val();
-		    $('#brandModal_'+$category).modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	 }); */
-	 
-	 $('button[name^="btn_zipcode"]').on('click', function(e){
+	$('button[name^="btn_zipcode"]').on('click', function(e){
 		    e.preventDefault();
 		    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
 		    $('#selectedZipcode').val($zipCodeIndex);
@@ -173,16 +149,43 @@ $(document).ready(function(e){
 		            return;
 		    });
 	 });
+	/*
+	$('#submitApplication').on('click',function(e){
+		e.preventDefault();
+		if($('#dataEntryForm').valid()){
+			$(".se-pre-con").show();
+			//converts all known input into upper case.
+			convertTextInputToUpperCase();
+			$('#dataEntryForm').trigger('submit');
+		}//do nothing if not valid.
+	});
+	*/
+	
+	$('#btn_submit_data_entry').click(function(e){
+		 e.preventDefault();
+		 if($('#dataEntryForm').valid()){
+			 $.ajax({
+				 url : $('#dataEntryForm').attr("action"),
+				 method: "POST",
+				 data : $('#dataEntryForm').serialize(),
+				 success : function(data){
+					 		$("*[class^='col-']").removeClass('has-error').addClass('has-success').removeAttr('title');
+					 		if(data && !data.success){
+					 			$.each(data.fieldErrors, function(i, _val){
+					 				console.log(_val);
+					 				var _elem = $("*[name='" + i + "']")
+					 				_elem.closest("*[class^='col-']")
+					 					.removeClass('has-success').addClass('has-error').attr('title', _val);
+					 			});
+					 		}
+						},
+				 dataType : "json" 
+			 });	 
+		 }
+	});
+
 });      
 
-function doCalc(){
-	var url = '';
-	//$("#prodDetail").load("dataentry/ajax");
-	$.post("dataentry/ajax",$('#dataEntryForm').serialize(),function(data){
-		console.log(data);
-		$("#prodDetail").html(data);
-	});
-}
 </script>
 </body>
 </html>

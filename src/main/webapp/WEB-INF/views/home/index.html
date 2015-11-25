@@ -7,6 +7,7 @@
 
 <body>
 <div th:replace="fragments/header :: header">Header</div>
+<div id="wrap">
 <div class="container">
 	
     <div class="text-center">
@@ -25,7 +26,8 @@
             <a href="/signin" th:href="@{/signin}" class="btn btn-primary btn-lg">Sign in</a>
         </p>
     </div>
-    <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
 </div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
 </body>
 </html>

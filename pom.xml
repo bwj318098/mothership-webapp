@@ -169,9 +169,9 @@
 			<configuration>
 				<path>/</path>
 				<port>80</port>
-				<httpsPort>443</httpsPort>
-                <keystoreFile>C:\\apache-http\\osa\\tomcat7.keystore</keystoreFile>
-                <keystorePass>P@ssw0rd123</keystorePass>
+<!-- 				<httpsPort>443</httpsPort> -->
+<!--                 <keystoreFile>C:\\apache-http\\osa\\tomcat7.keystore</keystoreFile> -->
+<!--                 <keystorePass>P@ssw0rd123</keystorePass> -->
 			</configuration>
 		</plugin>
 		

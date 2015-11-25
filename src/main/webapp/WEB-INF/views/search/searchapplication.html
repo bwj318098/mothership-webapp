@@ -5,6 +5,7 @@
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="wrap">
 <div class="container-fluid">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
@@ -77,24 +78,29 @@
     </div>
     </form>
     
-    <div>
-    <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{${searchUrl}}" data-height="425" data-search="true" data-pagination="true">
-    <thead class="row">
-        <tr>
-            <th class="col-md-1" data-sortable="true" data-field="appNo" data-formatter="appFormatter">Application No</th>
-            <th class="col-md-3" data-sortable="true" data-field="customerName">Customer Name</th>
-            <th class="col-md-2" data-sortable="true" data-field="applicationDate">Application Date</th>
-            <th class="col-md-2" data-sortable="true" data-field="applicationStatus">Application Status</th>
-            <th class="col-md-1" data-sortable="true" data-field="seqNo">SeqNo</th>
-            <th class="col-md-3" data-sortable="true" data-field="remarks" data-formatter="remarksFormatter">Remarks</th>
-        </tr>
-    </thead>
-	</table>
-    </div>    
+    <div id="no-more-tables">
+	    <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{${searchUrl}}" data-height="425" data-search="true" data-pagination="true">
+	    <thead>
+	        <tr>
+	            <th data-sortable="true" data-field="appNo" data-formatter="appFormatter">Application No</th>
+	            <th data-sortable="true" data-field="customerName">Customer Name</th>
+	            <th data-sortable="true" data-field="applicationDate">Application Date</th>
+	            <th data-sortable="true" data-field="applicationStatus">Application Status</th>
+	            <th data-sortable="true" data-field="seqNo">SeqNo</th>
+	            <th data-sortable="true" data-field="remarks" data-formatter="remarksFormatter">Remarks</th>
+	        </tr>
+	    </thead>
+		</table>
+	</div>
+    
 </div>
+</div>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
 
 <script type="text/javascript" th:inline="javascript">
+
 $(document).ready(function () {
+	
 	showLoadingGifOnFormSubmit();
 	enableToolTipForHeader();
     $('#datetimepicker_from').datetimepicker({
@@ -110,7 +116,7 @@ $(document).ready(function () {
     });
     $("#datetimepicker_to").on("dp.change", function (e) {
         $('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
-    }); 
+    });
 });
 
 function appFormatter(value){
@@ -126,6 +132,7 @@ function remarksFormatter(value, row){
 			: value;
 	return $detail_url;
 }
+
 </script>
 </body>
 </html>

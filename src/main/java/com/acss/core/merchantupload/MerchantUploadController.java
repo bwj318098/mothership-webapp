@@ -51,11 +51,13 @@ public class MerchantUploadController {
 		
         if(uploadService.processUpload(uploadInformation)){
         	MessageHelper.addSuccessAttribute(ra, "upload.success",uploadInformation.getAppNo());
+        	return "redirect:/detail/"+uploadInformation.getAppNo();
         }else{
         	MessageHelper.addErrorAttribute(ra, "upload.error");
+        	return "redirect:/";
         }
         
-		return "redirect:/";
+		
 	}
 	
 	/**
@@ -120,11 +122,11 @@ public class MerchantUploadController {
 		
 		if(uploadService.processUpload(pendingUpload)){
         	MessageHelper.addSuccessAttribute(ra, "upload.success",pendingUpload.getAppNo());
+        	return "redirect:/detail/"+pendingUpload.getAppNo();
         }else{
         	MessageHelper.addErrorAttribute(ra, "upload.error");
+        	return "redirect:/";
         }
-		
-		return "redirect:/";
 	}
 	
 }

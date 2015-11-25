@@ -3,6 +3,7 @@
 <head th:replace="fragments/resources :: resources(title='User Registration')"></head>
 <body>
 <div th:replace="fragments/header :: header">Header</div>
+<div class="wrap">
 <div class="container">
 <!-- /* Handle the flash message */-->
 <th:block th:if="${message != null}">
@@ -15,6 +16,7 @@
     <th:block th:if="${#fields.hasErrors('${signupForm.*}')}">
         <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
     </th:block>
+
     <fieldset>
         <legend>Register here</legend>
         <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
@@ -84,6 +86,10 @@
     </fieldset>
 </form>
 </div>
+<!-- Wrapper end tag -->
+</div>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	validateForm('#signupForm');
