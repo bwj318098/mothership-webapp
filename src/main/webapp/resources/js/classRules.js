@@ -31,6 +31,41 @@ $.validator.addMethod("regex", function(value, element, param) {
 	  }
 });
 
+$.validator.addMethod("checkDoB",function(value,element,param){
+	var day = value.substring(8,10);
+	var month = value.substring(5,7);
+	var year = parseInt(value.substring(0,4));
+	var age = parseInt(18);
+	
+	var cutOffDate = new Date(year + age, month, day);
+	console.log(cutOffDate);
+	if (cutOffDate > Date.now()) {
+	    return false;
+	} else {
+	    return true;
+	}
+	//message in here
+},"must be 18 years old to apply");
+
+
+$.validator.addMethod("greaterThan", function (value, element, param) {
+    var $element = $(element)
+        , $min;
+
+    if (typeof(param) === "string") {
+        $min = $(param);
+    } else {
+        $min = $("#" + $element.data("min"));
+    }
+
+    if (this.settings.onfocusout) {
+        $min.off(".validate-greaterThan").on("blur.validate-greaterThan", function () {
+            $element.valid();
+        });
+    }
+    return parseInt(value) > parseInt($min.val());
+}, "Max must be greater than min");
+
 //alias the remote validator method and add the custom message.
 $.validator.addMethod("checkUserName", $.validator.methods.remote,
 "Username already exists!");
@@ -90,15 +125,15 @@ $.validator.addClassRules({
    //only product 1 is required
    productGroup_1: {
 	   required: true,
-	   skip_or_fill_minimum: [6,".productGroup_1"]
+	   skip_or_fill_minimum: [5,".productGroup_1"]
    },
    
    productGroup_2: {       
-	   skip_or_fill_minimum: [6,".productGroup_2"]
+	   skip_or_fill_minimum: [5,".productGroup_2"]
    },
    
    productGroup_3: {       
-	   skip_or_fill_minimum: [6,".productGroup_3"]
+	   skip_or_fill_minimum: [5,".productGroup_3"]
    },
    
    //name group
@@ -110,7 +145,29 @@ $.validator.addClassRules({
 	   skip_or_fill_minimum: [2,".motherMaidenName"]
    },
    
+   birthDayChecker:{
+	   required: true,
+	   maxlength: 30,
+	   regex: "^[0-9 -]*$",
+	   checkDoB :true
+		   
+   },
    
+   
+   dateDashedNumber_req:{
+	   required: true,
+	   maxlength: 30,
+	   regex: "^[0-9 -]*$"
+   },
+   
+   contactTimeGroup:{
+	   range: [0,24],
+	   skip_or_fill_minimum: [2,".contactTimeGroup"]
+   },
+   
+   greaterThan:{
+	   greaterThan: true  
+   },
    
    /**
     * <validation name>_<size>_<req or not req>
@@ -121,6 +178,40 @@ $.validator.addClassRules({
        required: true
    },
    
+   alphaNum_30_req:{
+	   required: true,
+	   maxlength: 30,
+	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+   },
+   
+   alphaNum_50_req:{
+	   required: true,
+	   maxlength: 30,
+	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+   },
+   
+   alphaNum_70_req:{
+	   required: true,
+	   maxlength: 70,
+	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+   },
+   
+   alphaNum_30:{
+	   maxlength: 30,
+	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+   },
+   
+   alphaNum_50:{
+	   maxlength: 30,
+	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+   },
+   
+   alphaNum_70:{
+	   maxlength: 70,
+	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+   },
+   
+   
    name_30: {
        maxlength: 30,
        regex: "^([ \u00c0-\u01ffa-zA-Z'\-])+$"
@@ -128,20 +219,20 @@ $.validator.addClassRules({
    
    any_2_req: {
        maxlength: 2,
-       required: true
-       //regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+"
+       required: true,
+       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
    },
    
    any_3_req: {
        maxlength: 3,
-       required: true
-       //regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+"
+       required: true,
+       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
    },
    
    any_4_req: {
        maxlength: 4,
-       required: true
-       //regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+"
+       required: true,
+       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
    },
    
    phone_reg_4: {
@@ -198,13 +289,13 @@ $.validator.addClassRules({
    },
    any_6_req: {
        maxlength: 6,
-       required: true
-       //,regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+"
+       required: true,
+       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
    },
    
    any_10_req: {
        maxlength: 10,
-       //regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+",
+       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$",
        required: true
    },
    
@@ -228,9 +319,24 @@ $.validator.addClassRules({
        required: true
    },
    
+   //product price: ranged, numeric, size 10, required
+   firstPriceRules: {
+	   range: [1000,999999],
+       maxlength: 10,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?",
+       required: true
+   },
+   
+   otherPriceRules: {
+	   range: [1000,999999],
+       maxlength: 10,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   
    any_20: {
        maxlength: 20,
-       //regex: "[\p{Alpha}\p{Digit}\p{Space}\Ñ]+",
+       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
    },
    
    any_20_req: {
@@ -266,7 +372,7 @@ $.validator.addClassRules({
 function validateForm(arg){
 	_form = arg;
 	$(_form).validate({
-
+		ignore: [],
 		highlight: function (element) {
             $(element).closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
         },

@@ -38,6 +38,25 @@ public class RSApplicationService implements HpsApplicationService{
 	private final String RS_APPLICATIONFOLLOWUPS_URL_KEY = "rs.search.followup.url";
 	
 	
+	/**
+	 * Retrieves the application status for checking is the application code is eligible for data entry.
+	 */
+	public String getApplicationStatus(String appNo){
+		RestTemplate template = new RestTemplate();
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String storeCd = userService.getStorecdByUsername(auth.getName());
+		
+		ModelMapper mapper = new ModelMapper();
+		//Application Model object from repository.
+		String uri = MessageFormat.format(env.getProperty(RS_APPLICATIONS_URL_KEY), storeCd);
+		HpsApplication application = template.getForObject(uri+"/"+appNo, HpsApplication.class);
+		//Dto object for View.
+		ApplicationDetailDTO appDetail = mapper.map(application, ApplicationDetailDTO.class);
+		
+		return appDetail.getApplicationStatus();
+	}
+	
 	public ApplicationDetailDTO getHpsApplication(String appNo) {
 		RestTemplate template = new RestTemplate();
 		
@@ -112,7 +131,7 @@ public class RSApplicationService implements HpsApplicationService{
 		String uri = MessageFormat.format(env.getProperty(RS_APPLICATIONFOLLOWUPS_URL_KEY), storeCd);
 		
 		HpsApplication application = rt.getForObject(uri+"/"+followupappDetailsForm.getAppNo(), HpsApplication.class);
-		//application.updateRequestedDocIntoUploaded(followupappDetailsForm.getReqDocumentForUpdate().getSeqId(),"");
+		application.updateRequestedDocIntoUploaded(followupappDetailsForm.getReqDocumentForUpdate().getSeqId(),auth.getName());
 		
 		ModelMapper mapper = new ModelMapper();
 		RequestedDocumentDTO documentDTO = mapper.map(application.getRequestedDocumentForUpdate(), RequestedDocumentDTO.class);

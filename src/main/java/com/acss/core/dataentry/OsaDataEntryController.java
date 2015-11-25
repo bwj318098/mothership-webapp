@@ -16,34 +16,51 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.acss.core.application.HpsApplicationService;
 import com.acss.core.model.application.PromotionRules;
 import com.acss.core.model.dataentry.DataEntryDTO;
 import com.acss.core.support.web.AjaxUtils;
 
 @Controller
 public class OsaDataEntryController {
-	
+	private static final String DOCUMENT_SUBMITTED="Documents Submitted";
 	static final String BINDING_RESULT_KEY = "org.springframework.validation.BindingResult.";	
 	static final String DATAENTRY_MODEL_ATTRIB_KEY = "dataEntryForm";
 		
 	@Autowired
 	private DataEntryService dataEntryService;
 	
-	@RequestMapping(value = "dataentry", method = RequestMethod.GET)
-	public String index(HttpServletRequest request,Model model) {
-		//binds all the enum to model
-		dataEntryService.bindAllEnumsToModel(model);
-		//if attribute is already present then do not initialize anything.	
-		if(!model.containsAttribute(DATAENTRY_MODEL_ATTRIB_KEY))
-			model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY, new com.acss.core.model.dataentry.DataEntryDTO());
+	@Autowired
+	private HpsApplicationService rsApplicationService;
+	
+	@RequestMapping(value = "dataentry/{appCd}", method = RequestMethod.GET)
+	public String index(HttpServletRequest request,Model model,@PathVariable String appCd) {
 		
-		return "application/dataentry";
+		String appStatus = rsApplicationService.getApplicationStatus(appCd);
+		//redirects to data entry case if the application is ready for entry
+		if(DOCUMENT_SUBMITTED.equalsIgnoreCase(appStatus)){
+			DataEntryDTO initialDTO = new com.acss.core.model.dataentry.DataEntryDTO();
+			initialDTO.setApplicationNo(appCd);
+			
+			//binds all the enum to model
+			dataEntryService.bindAllEnumsToModel(model);
+			//if attribute is already present then do not initialize anything.	
+			if(!model.containsAttribute(DATAENTRY_MODEL_ATTRIB_KEY))
+				model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY,initialDTO);
+			
+			return "application/dataentry";
+		}else{
+			//remain on home if not.
+			return "redirect:/";
+		}
+		
 	}
 	
 	@RequestMapping(value = "dataentry/ajax", method = RequestMethod.POST)
@@ -71,13 +88,15 @@ public class OsaDataEntryController {
 		dataEntryService.bindAllEnumsToModel(model);
 		model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY,dataEntry);
 		//do default
-		return "redirect:/dataentry";
+		return "redirect:/dataentry/"+dataEntry.getApplicationNo();
 	}
 	
-	@RequestMapping(value = "dataentry", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@RequestMapping(value = "dataentry/{appCd}", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public @ResponseBody DataEntryResult dataEntry(@ModelAttribute @Validated DataEntryDTO dataEntry,
 									BindingResult bindingResult,
-									Model model) {
+									Model model,
+									RedirectAttributes ra,
+									@PathVariable String appCd) {
 		
 		DataEntryResult result = new DataEntryResult();
 		

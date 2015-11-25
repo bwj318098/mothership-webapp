@@ -143,7 +143,23 @@
 					  	</div>
 					  	
 					  	<div class="col-md-2"><label class="control-label" for="occupation">Occupation</label></div>
-						<div class="col-md-2"><input th:field="*{occupation}" name="occupation" class="form-control any_50_req" id="occupation" placeholder="Occupation" maxlength="50"/></div>
+						<div class="col-md-2"><input th:field="*{occupation}" name="occupation" type="text" class="form-control any_50_req" id="occupation" placeholder="Occupation" maxlength="50"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="contactTimeFrom">Convinient Contact Time</label></div>
+						<div class="col-md-1"><input th:field="*{contactTimeFrom}" name="contactFrom" type="text" class="form-control any_2 numeric contactTimeGroup" id="contactFrom" placeholder="From" maxlength="2"/></div>
+						<div class="col-md-1"><input th:field="*{contactTimeTo}" name="contactTo" type="text" class="form-control any_2 numeric contactTimeGroup greaterThan"  data-min="contactFrom" id="contactTo" placeholder="To" maxlength="2" /></div>
+						<div class="col-md-2"></div>
+					  	<div class="col-md-2"></div>
+					  	<div class="col-md-2"></div>
+						<div class="col-md-2"></div>
 				  	</div>
 				</div>
 			</div>

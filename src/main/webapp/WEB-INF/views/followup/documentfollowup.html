@@ -22,6 +22,7 @@ function appFormatter(value){
 </script>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
+<div id="wrap">
 <div class="container-fluid">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
@@ -97,5 +98,8 @@ function appFormatter(value){
     </div>
 
 </div>
+</div>
+<!-- Wrapper end tag -->
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
 </body>
 </html>

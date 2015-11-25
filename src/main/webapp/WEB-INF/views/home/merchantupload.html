@@ -5,6 +5,7 @@
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
+<div id="wrap">
 <div class="container">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
@@ -172,9 +173,10 @@
 	<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='completeInsteadModal',modal_title='Submit as Complete', modal_msg='Minimum requirement was met.Submit the Application as Complete instead?',pendingRemarks='pendingRemarks')">&nbsp;</div>
     
     </form>
-
 </div>
-
+<!-- Wrapper end tag -->
+</div>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
 <!-- Scripts -->
 <script type="text/javascript">
 //<![CDATA[
