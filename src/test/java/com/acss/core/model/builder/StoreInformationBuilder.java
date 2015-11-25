@@ -6,7 +6,6 @@ package com.acss.core.model.builder;
 import org.joda.time.DateTime;
 
 import com.acss.core.model.dataentry.common.PhoneField;
-import com.acss.core.model.dataentry.common.ReferenceData;
 import com.acss.core.model.dataentry.common.StoreInformation;
 import com.acss.core.model.dataentry.common.constants.PromoterScreening;
 

@@ -61,6 +61,17 @@ public class OsaApplicationController {
 		
 		return "search/searchapplication";
 	}
+	
+	/**
+	 * Show data entry screen
+	 * @param @PathVariable String appNo
+	 * @return redirect to data entry.
+	 */
+	@RequestMapping(value="detail/{appNo}",params={"dataentry"})
+	public String dataEntry(@PathVariable String appNo){
+		return "redirect:/dataentry/"+appNo;
+	}
+	
 	/**
 	 * Re Initializes the search criteria and show the search page
 	 * @param model

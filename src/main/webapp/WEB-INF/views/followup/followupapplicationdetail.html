@@ -5,6 +5,7 @@
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
+<div id="wrap">
 <div class="container">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
@@ -230,7 +231,7 @@
 	                <div class="modal-body next">
 	                </div>
 	                <div class="modal-footer">
-	                    <button type="button" class="btn btn-default pull-left prev">
+	                    <button type="button" class="btn btn-primary pull-left prev">
 	                        <i class="glyphicon glyphicon-chevron-left"></i>
 	                        Previous
 	                    </button>
@@ -243,6 +244,10 @@
 	        </div>
 	    </div>
 	</div>
+<!-- Wrapper end tag -->
+</div>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
 
 <script type="text/javascript">
 //<![CDATA[

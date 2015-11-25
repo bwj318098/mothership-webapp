@@ -5,6 +5,7 @@
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
+<div id="wrap">
 <div class="container">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
@@ -31,6 +32,17 @@
 			<div class="input-group svX3" >
 				<label for="inputCustomerName" class="input-group-addon imagetype-width" id="customerName-addon">Customer Name :</label>
 				<input type="text" class="form-control" id="inputCustomerName" th:field="*{customerName}" name="customerName" aria-describedby="customerName-addon" maxlength="11" readonly="readonly" />
+			</div>
+		</div>
+    </div>
+    <p></p>
+    <div class="row">
+   		<div class="col-md-6"></div>
+		<div class="col-md-2 col-md-offset-4">
+			<div class="input-group svX3">
+				<button th:if="${appDetailsForm.applicationStatus=='Documents Submitted'}" name="dataentry" type="submit" class="btn btn-primary">
+					Proceed to Data Entry
+				</button>
 			</div>
 		</div>
     </div>
@@ -173,6 +185,7 @@
     
     </form>
 </div>
+
 <div id="links" style="visibility : hidden">
 	<ul th:each="mItem,rowStat : ${appDetailsForm.existingImages}">
 		<li>
@@ -202,7 +215,7 @@
 	                <div class="modal-body next">
 	                </div>
 	                <div class="modal-footer">
-	                    <button type="button" class="btn btn-default pull-left prev">
+	                    <button type="button" class="btn btn-primary pull-left prev">
 	                        <i class="glyphicon glyphicon-chevron-left"></i>
 	                        Previous
 	                    </button>
@@ -215,7 +228,9 @@
 	        </div>
 	    </div>
 	</div>
-
+<!-- Wrapper end tag -->
+</div>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
 <script type="text/javascript">
 //<![CDATA[
 function resetForm(id){

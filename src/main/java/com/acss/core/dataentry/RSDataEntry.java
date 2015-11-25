@@ -2,6 +2,7 @@ package com.acss.core.dataentry;
 
 import java.text.MessageFormat;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
 import com.acss.core.account.OsaUserDetailsService;
+import com.acss.core.model.application.PromotionRules;
 import com.acss.core.model.dataentry.DataEntryDTO;
 import com.acss.core.model.dataentry.common.constants.BankAccountType;
 import com.acss.core.model.dataentry.common.constants.Citizenship;
@@ -51,6 +53,7 @@ public class RSDataEntry implements DataEntryService{
 	 */
 	private final static String RS_DATAENTRY_URL_KEY = "rs.dataentry.url";
 	
+	private final static String RS_PROMOTION_URL_KEY = "rs.util.promotion.url";
 	
 	public boolean save(DataEntryDTO dataEntry) {
 		RestTemplate rt = new RestTemplate();	
@@ -92,6 +95,25 @@ public class RSDataEntry implements DataEntryService{
 		model.addAttribute(ProcessingFeePayType.MODEL_ATTRIB_KEY,ProcessingFeePayType.values());
 		model.addAttribute(PromoterScreening.MODEL_ATTRIB_KEY,PromoterScreening.values());
 		model.addAttribute(LivePerson.MODEL_ATTRIB_KEY,LivePerson.values());
+	}
+	/**
+	 * @author fcortez
+	 * return PromotionRules
+	 * 
+	 */
+	public PromotionRules getPromotionDetails(String promotionCd){
+		
+		RestTemplate template = new RestTemplate();
+		
+		ModelMapper mapper = new ModelMapper();
+		
+		String uri = MessageFormat.format(env.getProperty(RS_PROMOTION_URL_KEY),promotionCd);
+		
+		PromotionRules rawDetails = template.getForObject(uri, PromotionRules.class);
+		
+		PromotionRules installmentDetail = mapper.map(rawDetails, PromotionRules.class);
+		
+		return installmentDetail;	
 	}
 
 }

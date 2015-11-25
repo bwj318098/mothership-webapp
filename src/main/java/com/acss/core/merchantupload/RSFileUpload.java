@@ -164,6 +164,8 @@ public class RSFileUpload implements FileUploadService {
 				withThisDTO.setGroupId(groupId);
 				withThisDTO.setImageType(new BigDecimal(hpsFile.getImageType()));
 				withThisDTO.setComments(pendingRemarks);
+				withThisDTO.setCrePerson(auth.getName());
+				withThisDTO.setUpdPerson(auth.getName());
 				//set the regStatus into 3 - meaning this application is pending.
 				if(isForPendingSubmission){
 					withThisDTO.setRegStatus(PENDING_STATUS_IN_OSA);

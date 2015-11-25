@@ -1,6 +1,7 @@
 package com.acss.core.signup;
 
-import org.hibernate.validator.constraints.*;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.acss.kaizen.jooq.poc.account.Account;
 import com.acss.kaizen.jooq.poc.account.AccountBuilder;
