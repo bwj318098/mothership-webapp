@@ -226,7 +226,7 @@ function doCalc(){
 							th:value="${processingFeePayTypeList[2]}" class="control-label" type="radio" />
 						</div>
 						<div class="col-md-2"><label class="control-label" for="voucher">Promo Voucher</label></div>
-						<div class="col-md-3"><input th:value="*{installment.promoVoucher}" name="installment.promoVoucher" type="text" class="form-control numeric-decimal text-right" id="voucher" placeholder="Promo Voucher" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.promoVoucher==0.00?'':installment.promoVoucher}" name="installment.promoVoucher" type="text" class="form-control numeric-decimal text-right" id="voucher" placeholder="Promo Voucher" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
