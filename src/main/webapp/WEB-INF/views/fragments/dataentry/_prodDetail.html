@@ -211,19 +211,19 @@ function doCalc(){
 						<div class="col-md-2"><label class="control-label" for="processingFeePayType">Processing Fee Type</label></div>
 						
 						<div class="col-md-1">
-							<label class="control-label"><input name="installment.processingFeePayType" 
+							<label class="control-label" th:text="#{${processingFeePayTypeList[0].value}}"></label><input name="installment.processingFeePayType" 
 							th:checked="*{installment.processingFeePayType}==${processingFeePayTypeList[0]}"
-							th:value="${processingFeePayTypeList[0]}" th:text="#{${processingFeePayTypeList[0].value}}" class="control-label" type="radio" /></label>
+							th:value="${processingFeePayTypeList[0]}" class="control-label" type="radio" />
 						</div>
 						<div class="col-md-2">
-							<label class="control-label"><input name="installment.processingFeePayType" 
+							<label class="control-label" th:text="#{${processingFeePayTypeList[1].value}}"></label><input name="installment.processingFeePayType" 
 							th:checked="*{installment.processingFeePayType}==${processingFeePayTypeList[1]}"
-							th:value="${processingFeePayTypeList[1]}" th:text="#{${processingFeePayTypeList[1].value}}" class="control-label" type="radio" /></label>
+							th:value="${processingFeePayTypeList[1]}" class="control-label" type="radio" />
 						</div>
 						<div class="col-md-2">
-							<label class="control-label"><input name="installment.processingFeePayType" 
+							<label class="control-label" th:text="#{${processingFeePayTypeList[2].value}}"></label><input name="installment.processingFeePayType" 
 							th:checked="*{installment.processingFeePayType}==${processingFeePayTypeList[2]}"
-							th:value="${processingFeePayTypeList[2]}" th:text="#{${processingFeePayTypeList[2].value}}" class="control-label" type="radio" /></label>
+							th:value="${processingFeePayTypeList[2]}" class="control-label" type="radio" />
 						</div>
 						<div class="col-md-2"><label class="control-label" for="voucher">Promo Voucher</label></div>
 						<div class="col-md-3"><input th:value="*{installment.promoVoucher}" name="installment.promoVoucher" type="text" class="form-control numeric-decimal text-right" id="voucher" placeholder="Promo Voucher" maxlength="11"/></div>

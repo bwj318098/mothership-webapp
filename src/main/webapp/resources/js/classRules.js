@@ -1,7 +1,7 @@
 //replace the obnoxious error message for required.
 jQuery.extend(jQuery.validator.messages, {
-    required: " ",
-    remote: " ",
+    required: "Required field",
+    remote: "Invalid input",
     email: "Please enter a valid email address.",
     url: "Please enter a valid URL.",
     date: "Please enter a valid date.",
@@ -368,16 +368,160 @@ $.validator.addClassRules({
    
 });
 
-//defined a customized function to avoid duplication.
-function validateForm(arg){
-	_form = arg;
-	$(_form).validate({
-		ignore: [],
-		highlight: function (element) {
-            $(element).closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
-        },
-        success: function (element) {
-            element.addClass('valid').closest("*[class^='col-']").removeClass('has-error').addClass('has-success');
-        }
-    });
-}
+(function($) {
+	/**
+	 * 
+	 * usage example
+	 * $("#form_id").validateForm(
+	  	{
+	  		submitButton : "#btn_submit_data_entry", 	// jQuery selector for the button that will trigger submit
+	 		parentSelector : "*[class^='col-']", 		// jQuery selector for looking up the parent of a form field 
+	  											 		// will be used for attaching error/success css class
+	  		tabSelector : ".tab-pane", 					// jQuery selector for tabs containing form field. refer to dataentry.html for expected layout
+	  		modal : {
+	  				selector:{
+							id: "#modal_generic",					// jQuery selector for the modal fragment
+							title: ".modal-title", 					// jQuery selector for the element that will contain the title of the modal fragment
+							message: "#generic-message", 			// jQuery selector for the element that will contain the body of the modal fragment
+							errortable: "#generic-table-errors"},	// jQuery selector for the element that will contain the error table of the modal fragment
+					message:{
+							title: "Input Errors",											// Title message for the server side validation error result
+							body: "Kindly review highlighted fields for errors.",			// Body message for the server side validation error result. Set to null if N/A
+							generic_title: "Input Errors",									// Title message for the client side validation error result
+							generic_body: "Kindly review highlighted fields for errors."}	// Body message for the client side validation error result
+					},
+			beforeSubmit : function(){},				// callback function that will be called after the client validation succeeded 
+														// and before the form will be submitted to the server
+			submitSuccess : function(data){}			// callback function that will be called when server side processing is successful.
+		});
+	 */
+	$.fn.validateForm = function(config){
+		
+		config = config || {};
+		
+		var _thisForm = this;
+		
+		_thisForm.data("osa.validateForm.submitButton", config.submitButton)
+			.data("osa.validateForm.parentSelector", config.parentSelector)
+			.data("osa.validateForm.tabSelector", config.tabSelector)
+			.data("osa.validateForm.modal", config.modal 
+					|| {selector:{
+							id: "#modal_generic", 
+							title: ".modal-title", 
+							message: "#generic-message", 
+							errortable: "#generic-table-errors"},
+						message:{
+							title: "Input Errors",
+							body: "Kindly review highlighted fields for errors.",
+							generic_title: "Input Errors",
+							generic_body: "Kindly review highlighted fields for errors."
+						}})
+			.data("osa.validateForm.beforeSubmit", config.beforeSubmit || function(){})
+			.data("osa.validateForm.submitSuccess", config.submitSuccess || function(){});
+		
+		_thisForm.updateTabsErrorCount = function(){
+			$(_thisForm.data("osa.validateForm.tabSelector"))
+			 	.each(function(){
+					var _this = $(this);
+					var _errCnt = _this.find(".has-error").length;
+			        $("a[href=#" + _this.attr("id") + "]").find(".badge")
+			        	.tooltip({title: _errCnt + ' error' + (_errCnt > 1 ? 's' : '') +  ' found'})
+			        	.text(_this.find(".has-error").length ? _this.find(".has-error").length : "");
+			    });
+		}   
+
+		_thisForm.showGenericModal = function(_title, _message, _errorArr){
+			var _modalSelectors = _thisForm.data("osa.validateForm.modal").selector;
+			var _modal = $(_modalSelectors.id);
+			_modal.find(_modalSelectors.title).text(_title);
+			if(_message){
+				_modal.find(_modalSelectors.message)
+					.show()
+					.text(_message);	
+			} else {
+				_modal.find(_modalSelectors.message)
+					.hide();
+			}
+			if(_errorArr){
+				_modal.find(".bootstrap-table, " + _modalSelectors.errortable).show();
+				_modal.find(_modalSelectors.errortable).bootstrapTable('load', _errorArr);	
+			} else {
+				_modal.find(".bootstrap-table, " + _modalSelectors.errortable).hide();
+			}
+			_modal.modal({ backdrop: 'static', keyboard: false });
+		}
+		
+		_thisForm.validate({
+			//validate non-present or visible fields.
+			ignore: "",
+			errorPlacement: function(label, element) {
+			    $(element)
+			    	.tooltip({
+			    		title : $(label).text() || "Invalid input", 
+			    		animation : true, 
+			    		placement : "auto"})
+			    	.closest(_thisForm.data("osa.validateForm.parentSelector"))
+			    		.removeClass('has-success')
+			    		.addClass('has-error');
+		    	$(label).hide();
+			},
+	        success: function (label, element) {
+	        	$(element)
+	        		.tooltip('destroy')
+	        		.closest(_thisForm.data("osa.validateForm.parentSelector"))
+	        			.removeClass('has-error')
+	        			.addClass('has-success');
+	        	$(label).hide();
+	        }
+	    });
+		
+		$(_thisForm.data("osa.validateForm.submitButton")).click(function(e){
+			$(".se-pre-con").show();
+			if(_thisForm.valid()){
+				 //convert every input type text into uppercase
+				 _thisForm.data("osa.validateForm.beforeSubmit").apply(_thisForm);
+				 
+				 $.ajax({
+					 url : _thisForm.attr("action"),
+					 method: "POST",
+					 data : _thisForm.serialize(),
+					 success : function(data){
+						 		var _modalMessage = _thisForm.data("osa.validateForm.modal").message;
+						 		$('.has-error')
+					 				.children()
+				        			.tooltip('destroy')
+				        			.removeClass('has-error')
+				        			.addClass('has-success');
+						 		
+						 		if(data && !data.success){
+						 			if(data.showInModal){
+						 				_thisForm.showGenericModal(_modalMessage.title, _modalMessage.body, data.dataEntryError);
+						 			} else {
+						 				_thisForm.showGenericModal(_modalMessage.generic_title, _modalMessage.generic_body);
+						 			}
+						 			
+						 			$.each(data.dataEntryError, function(i, _val){
+						 				$("*[name='" + _val.property + "']")
+						 					.tooltip({title: _val.error || "Invalid input", animation: true, placement: "auto"})
+					 						.closest(_thisForm.data("osa.validateForm.parentSelector"))
+						 					.removeClass('has-success')
+						 					.addClass('has-error');
+						 			});
+						 			_thisForm.updateTabsErrorCount();
+						 		} else {
+						 			_thisForm.data("osa.validateForm.submitSuccess").apply(_thisForm, data);
+						 		}
+						 		$(".se-pre-con").hide();
+							},
+					 dataType : "json" 
+				 });	 
+			 } else {
+				 $(".se-pre-con").hide();
+				 _thisForm.updateTabsErrorCount();
+				 _thisForm.showGenericModal("Input Errors", "Kindly review highlighted fields for errors");
+			 }
+		});
+		
+		$(_thisForm.data("osa.validateForm.modal").selector.id).find(_thisForm.data("osa.validateForm.modal").selector.errortable).bootstrapTable();
+	} 
+})(jQuery);

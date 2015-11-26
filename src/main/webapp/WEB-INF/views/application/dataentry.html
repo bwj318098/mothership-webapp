@@ -12,6 +12,7 @@
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
     </th:block>
+    
 <form id="dataEntryForm" class="form-horizontal form-de" th:object="${dataEntryForm}" th:action="@{/dataentry/} + *{applicationNo}" method="post" enctype="multipart/form-data" >
   <div class="form-group">
 	  <div class="row">
@@ -37,12 +38,12 @@
   </div>
   <p></p>
   <ul id="dataEntrySegments" class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#appInfo"><strong>Applicant Information</strong></a></li>
-    <li><a data-toggle="tab" href="#empInfo"><strong>Employment Information</strong></a></li>
-    <li><a data-toggle="tab" href="#bankInfo"><strong>Bank Account Information</strong></a></li>
-    <li><a data-toggle="tab" href="#refInfo"><strong>Reference I (Relative)</strong></a></li>
-    <li><a data-toggle="tab" href="#refInfoMore"><strong>Reference II (Relative)</strong></a></li>
-    <li><a data-toggle="tab" href="#prodDetail"><strong>Product and Installment Detail</strong></a></li>
+    <li class="active"><a data-toggle="tab" href="#appInfo"><strong>Applicant Information</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#empInfo"><strong>Employment Information</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#bankInfo"><strong>Bank Account Information</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#refInfo"><strong>Reference I (Relative)</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#refInfoMore"><strong>Reference II (Relative)</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#prodDetail"><strong>Product and Installment Detail</strong> <span class="badge badge-danger"></span></a></li>
   </ul>
 <div class="container-fluid">
 	<div class="tab-content">
@@ -67,9 +68,12 @@
 </form>
 </div>
 </div>
-	<div th:replace="fragments/footer :: footer">&nbsp;</div>
-	<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
-	<div th:replace="fragments/promotion/modal_promotion :: modal_promotion(modal_id='modal_promotion',modal_title='Promotion Error')">&nbsp;</div>
+	
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
+<div th:replace="fragments/modal_generic :: modal_generic(modal_id='modal_generic',modal_title='Information')">&nbsp;</div>
+	
 <script type="text/javascript">
 //<![CDATA[
 $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
@@ -81,7 +85,6 @@ $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
             return;
     });
 });
-
 
 $( document ).on( "click", 'button[name^="btn_description"]', function(e) {
 	e.preventDefault();
@@ -118,124 +121,43 @@ $(document).ready(function(e){
     	//format: "YYYY-MM-DD HH:mm:ss"
     	format: "YYYY-MM-DD"
     });
+	
 	/* Prevents user to input character on fields marked with class numeric.*/
 	enableNumericOnlyForNumericClass();
 	enableDecimalOnlyForNumericClass();
 
-	
-	$('#dataEntryForm').validate({
-		//validate non-present or visible fields.
-		ignore: "",
-		
-		highlight: function (element) {
-            $(element).closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
-        },
-        success: function (element) {
-            element.addClass('valid').closest("*[class^='col-']").removeClass('has-error').addClass('has-success');
-        }
-    });
-	
-	/* From old implementation
-	 $('button[name^="btn_category"]').on('click', function(e){
-		    e.preventDefault();
-		    var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedCategory').val($categoryIndex);
-		    $('#categoryModal').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	 });
-	 
-	 $('button[name^="btn_description"]').on('click', function(e){
-		    e.preventDefault();
-		    var $descIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedDesc').val($descIndex);
-		    
-		    $category = $('#categoryCode_'+$descIndex).val();
-		    $('#descriptionModal_'+$category).modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	}); 
-	 
-	 $('button[name^="btn_brand"]').on('click', function(e){
-		    e.preventDefault();
-		    var $brandIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedBrand').val($brandIndex);
-		    $category = $('#categoryCode_'+$brandIndex).val();
-		    $('#brandModal_'+$category).modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	 }); */
-	 
 	 $('button[name^="btn_zipcode"]').on('click', function(e){
-		    e.preventDefault();
-		    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedZipcode').val($zipCodeIndex);
-		    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {return;});
+	    e.preventDefault();
+	    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+	    $('#selectedZipcode').val($zipCodeIndex);
+	    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#close', function (e) {return;});
 	 });
-	/*
-	$('#submitApplication').on('click',function(e){
-		e.preventDefault();
-		if($('#dataEntryForm').valid()){
-			$(".se-pre-con").show();
-			//converts all known input into upper case.
-			convertTextInputToUpperCase();
-			$('#dataEntryForm').trigger('submit');
-		}//do nothing if not valid.
+	 
+    // view classRules.js for documentation
+	 $("#dataEntryForm").validateForm({
+		submitButton : "#btn_submit_data_entry",
+		parentSelector : "*[class^='col-']",
+		tabSelector : ".tab-pane",
+		modal : {
+				 selector : {
+					 id: "#modal_generic",
+					 title: ".modal-title",
+					 message: "#generic-message",
+					 errortable: "#generic-table-errors"},
+				 message : {
+					 title: "Promotion Errors",
+					 body: null,
+					 generic_title: "Input Errors",
+					 generic_body: "Kindly review highlighted fields for errors."}
+		 	},
+	 	beforeSubmit : convertTextInputToUpperCase,				
+		submitSuccess : function(data){
+			window.location='/';
+		}						
 	});
-	*/
-	
-	 $('#btn_submit_data_entry').click(function(e){
-		 e.preventDefault();
-		 if($('#dataEntryForm').valid()){
-			 //convert every input type text into uppercase
-			 convertTextInputToUpperCase();
-			 $.ajax({
-				 url : $('#dataEntryForm').attr("action"),
-				 method: "POST",
-				 data : $('#dataEntryForm').serialize(),
-				 success : function(data){
-					 		$("*[class^='col-']").removeClass('has-error').addClass('has-success').removeAttr('title');
-					 		if(data && !data.success){
-					 			if(data.showInModal){
+});    
 
-					 				$.each(data.fieldErrors, function(i, _val){
-						 				console.log(_val);
-						 				var _elem = $("*[name='" + i + "']")
-						 				_elem.closest("*[class^='col-']")
-						 					.removeClass('has-success').addClass('has-error').attr('title', _val);
-						 			});
-
-					 				  
-					 				var _errTbl = $('#modal_promotion')
-				 				    	.modal({ backdrop: 'static', keyboard: false });
-					 				  
-					 				 $.each(data.dataEntryError, function(i, v){ console.log(i + "  " + v)});
-					 				$('#table-errors').bootstrapTable();
-					 				 $('#table-errors').bootstrapTable('load',data.dataEntryError);
-					 				 
-					 				  console.log(data.dataEntryError);
-					 			} else {
-					 				$.each(data.fieldErrors, function(i, _val){
-						 				console.log(_val);
-						 				var _elem = $("*[name='" + i + "']")
-						 				_elem.closest("*[class^='col-']")
-						 					.removeClass('has-success').addClass('has-error').attr('title', _val);
-						 			});	
-					 			}
-					 		}
-					 		else{
-					 			window.location='/';
-					 		}
-						},
-				 dataType : "json" 
-			 });	 
-		 }
-	});
-});      
 //]]>
 </script>
 </body>
