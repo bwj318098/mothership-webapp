@@ -17,8 +17,19 @@ jQuery.extend(jQuery.validator.messages, {
     range: jQuery.validator.format("Please enter a value between {0} and {1}."),
     max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
     min: jQuery.validator.format("Please enter a value greater than or equal to {0}."),
-    regex: " ",
-    skip_or_fill_minimum: " "
+    regex: "Kindly recheck character input",
+    skip_or_fill_minimum: function(_prop, _elem){
+    	var _message = "";
+    	$(_prop[1]).each(function(){
+    		var _propName = $(this).prop("placeholder") 
+    			|| $(this).prop("id")
+	    	    	.replace(/([a-z])([A-Z])/g, '$1 $2')
+	    	    	.replace(/^./, function(str){ return str.toUpperCase(); });
+    		_message += _message ? (", " + _propName) : _propName;	
+    	});
+    	
+    	return "All of these fields must not be empty: " + _message;
+    }
 });
 
 $.validator.addMethod("regex", function(value, element, param) {
@@ -38,14 +49,13 @@ $.validator.addMethod("checkDoB",function(value,element,param){
 	var age = parseInt(18);
 	
 	var cutOffDate = new Date(year + age, month, day);
-	console.log(cutOffDate);
 	if (cutOffDate > Date.now()) {
 	    return false;
 	} else {
 	    return true;
 	}
 	//message in here
-},"must be 18 years old to apply");
+},"Must be 18 years old to apply");
 
 
 $.validator.addMethod("greaterThan", function (value, element, param) {
@@ -64,7 +74,7 @@ $.validator.addMethod("greaterThan", function (value, element, param) {
         });
     }
     return parseInt(value) > parseInt($min.val());
-}, "Max must be greater than min");
+}, jQuery.validator.format("All of the {0} <> {1} are required."));//"Max must be greater than min");
 
 //alias the remote validator method and add the custom message.
 $.validator.addMethod("checkUserName", $.validator.methods.remote,
@@ -150,7 +160,6 @@ $.validator.addClassRules({
 	   maxlength: 30,
 	   regex: "^[0-9 -]*$",
 	   checkDoB :true
-		   
    },
    
    
@@ -455,15 +464,15 @@ $.validator.addClassRules({
 			//validate non-present or visible fields.
 			ignore: "",
 			errorPlacement: function(label, element) {
-			    $(element)
-			    	.tooltip({
-			    		title : $(label).text() || "Invalid input", 
+				$(element)
+					.closest(_thisForm.data("osa.validateForm.parentSelector"))
+			    		.removeClass('has-success')
+			    		.addClass('has-error')
+			    	.tooltip({ 
 			    		animation : true, 
 			    		placement : "auto"})
-			    	.closest(_thisForm.data("osa.validateForm.parentSelector"))
-			    		.removeClass('has-success')
-			    		.addClass('has-error');
-		    	$(label).hide();
+			    	.attr("data-original-title", $(label).text());
+				$(label).hide();
 			},
 	        success: function (label, element) {
 	        	$(element)
