@@ -128,7 +128,7 @@ public class ValidatePromotion {
 			if(promotionRules.getFpfrom()!=null || promotionRules.getFpTo()!=null){
 			
 						// Check if the finance price is less than Finance Price From
-						if(!(dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpfrom())>=0)){
+						if((dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpfrom())<=0)){
 							
 							FieldError fieldError_1 = new FieldError(String.valueOf(dataEntry.getInstallment().totalFinancePrice()), "installment.totalFinancePrice", 
 									"Finance price is less than "+ promotionRules.getFpfrom());
@@ -138,7 +138,7 @@ public class ValidatePromotion {
 						}
 
 						// Check if the finance price is greater than Finance Price From
-						if(!(dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpTo())<=0)){
+						if((dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpTo())>=0)){
 							
 							FieldError fieldError_2 = new FieldError(String.valueOf(dataEntry.getInstallment().totalFinancePrice()),"installment.totalFinancePrice",
 									"Finance price is greater than " + promotionRules.getFpTo());
