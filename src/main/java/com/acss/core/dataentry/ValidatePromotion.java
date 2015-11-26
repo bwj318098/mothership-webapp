@@ -2,6 +2,7 @@ package com.acss.core.dataentry;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.validation.FieldError;
@@ -21,9 +22,9 @@ public class ValidatePromotion {
 	 *	return List<FieldError>
 	 *
 	 */
-	public List<FieldError> promotionErrors(DataEntryDTO dataEntry, PromotionRules promotionRules){
+	public HashSet<FieldError> promotionErrors(DataEntryDTO dataEntry, PromotionRules promotionRules){
 		
-		List<FieldError> fieldErrorList = new ArrayList<FieldError>();
+		HashSet<FieldError> fieldErrorList = new HashSet<FieldError>();
 		
 		// Check if promotion code is available
 		if(promotionRules.getPromotion()==null){
