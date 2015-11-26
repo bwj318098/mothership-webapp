@@ -68,45 +68,14 @@
 </form>
 </div>
 </div>
-	<div th:replace="fragments/footer :: footer">&nbsp;</div>
-	<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
-	<div th:replace="fragments/promotion/modal_promotion :: modal_promotion(modal_id='modal_promotion',modal_title='Promotion Error')">&nbsp;</div>
-	<div th:replace="fragments/modal_generic :: modal_generic(modal_id='modal_generic',modal_title='--REPLACE ME--')">&nbsp;</div>
+	
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+<div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
+<div th:replace="fragments/modal_generic :: modal_generic(modal_id='modal_generic',modal_title='Information')">&nbsp;</div>
 	
 <script type="text/javascript">
 //<![CDATA[
-var updateTabsErrorCount = function(){
-	$(".tab-pane")
-	 	.each(function(){
-			var _this = $(this);
-			var _errCnt = _this.find(".has-error").length;
-	        $("a[href=#" + _this.attr("id") + "]").find(".badge")
-	        	.tooltip({title: _errCnt + ' error' + (_errCnt > 1 ? 's' : '') +  ' found'})
-	        	.text(_this.find(".has-error").length ? _this.find(".has-error").length : "");
-	    });
-}   
-
-var showGenericModal = function(_title, _message, _errorArr){
-	var _modal = $("#modal_generic");
-	_modal.find(".modal-title").text(_title);
-	if(_message){
-		_modal.find("#generic-message")
-			.show()
-			.text(_message);	
-	} else {
-		_modal.find("#generic-message")
-			.hide();
-	}
-	if(_errorArr){
-		_modal.find(".bootstrap-table, #generic-table-errors")
-			.show()
-			.bootstrapTable('load', _errorArr);	
-	} else {
-		_modal.find(".bootstrap-table, #generic-table-errors").hide();
-	}
-	_modal.modal({ backdrop: 'static', keyboard: false });
-}
-
 $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
 	e.preventDefault();
     var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
@@ -116,7 +85,6 @@ $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
             return;
     });
 });
-
 
 $( document ).on( "click", 'button[name^="btn_description"]', function(e) {
 	e.preventDefault();
@@ -153,133 +121,43 @@ $(document).ready(function(e){
     	//format: "YYYY-MM-DD HH:mm:ss"
     	format: "YYYY-MM-DD"
     });
+	
 	/* Prevents user to input character on fields marked with class numeric.*/
 	enableNumericOnlyForNumericClass();
 	enableDecimalOnlyForNumericClass();
 
-	
-	$('#dataEntryForm').validate({
-		//validate non-present or visible fields.
-		ignore: "",
-		invalidHandler : function(){
-			
-		},
-		errorPlacement: function(label, element) {
-		    $(element)
-		    	.tooltip({title: $(label).text() || "Invalid input", animation: true, placement: "auto"})
-		    	.closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
-	    	$(label).hide();
-		},
-        success: function (label, element) {
-        	$(element)
-        		.tooltip('destroy')
-        		.closest("*[class^='col-']").removeClass('has-error').addClass('has-success');
-        	$(label).hide();
-        }
-    });
-	
-	/* From old implementation
-	 $('button[name^="btn_category"]').on('click', function(e){
-		    e.preventDefault();
-		    var $categoryIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedCategory').val($categoryIndex);
-		    $('#categoryModal').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	 });
-	 
-	 $('button[name^="btn_description"]').on('click', function(e){
-		    e.preventDefault();
-		    var $descIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedDesc').val($descIndex);
-		    
-		    $category = $('#categoryCode_'+$descIndex).val();
-		    $('#descriptionModal_'+$category).modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	}); 
-	 
-	 $('button[name^="btn_brand"]').on('click', function(e){
-		    e.preventDefault();
-		    var $brandIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedBrand').val($brandIndex);
-		    $category = $('#categoryCode_'+$brandIndex).val();
-		    $('#brandModal_'+$category).modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {
-		            return;
-		    });
-	 }); */
-	 
 	 $('button[name^="btn_zipcode"]').on('click', function(e){
-		    e.preventDefault();
-		    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-		    $('#selectedZipcode').val($zipCodeIndex);
-		    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#close', function (e) {return;});
+	    e.preventDefault();
+	    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+	    $('#selectedZipcode').val($zipCodeIndex);
+	    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#close', function (e) {return;});
 	 });
-	/*
-	$('#submitApplication').on('click',function(e){
-		e.preventDefault();
-		if($('#dataEntryForm').valid()){
-			$(".se-pre-con").show();
-			//converts all known input into upper case.
-			convertTextInputToUpperCase();
-			$('#dataEntryForm').trigger('submit');
-		}//do nothing if not valid.
+	 
+    // view classRules.js for documentation
+	 $("#dataEntryForm").validateForm({
+		submitButton : "#btn_submit_data_entry",
+		parentSelector : "*[class^='col-']",
+		tabSelector : ".tab-pane",
+		modal : {
+				 selector : {
+					 id: "#modal_generic",
+					 title: ".modal-title",
+					 message: "#generic-message",
+					 errortable: "#generic-table-errors"},
+				 message : {
+					 title: "Promotion Errors",
+					 body: null,
+					 generic_title: "Input Errors",
+					 generic_body: "Kindly review highlighted fields for errors."}
+		 	},
+	 	beforeSubmit : convertTextInputToUpperCase,				
+		submitSuccess : function(data){
+			window.location='/';
+		}						
 	});
-	*/
-	
-	 $('#btn_submit_data_entry').click(function(e){
-		 e.preventDefault();
-		 if($('#dataEntryForm').valid()){
-			 //convert every input type text into uppercase
-			 convertTextInputToUpperCase();
-			 $.ajax({
-				 url : $('#dataEntryForm').attr("action"),
-				 method: "POST",
-				 data : $('#dataEntryForm').serialize(),
-				 success : function(data){
-					 		$("*[class^='col-']").removeClass('has-error').addClass('has-success').removeAttr('title');
-					 		if(data && !data.success){
-					 			if(data.showInModal){
-					 				$('#modal_promotion').modal({ backdrop: 'static', keyboard: false });
-					 				$('#table-errors').bootstrapTable('load',data.dataEntryError);
-					 			} else {
-					 				showGenericModal("Input Errors", "Kindly review highlighted fields for errors");
-					 			}
-					 			
-					 			$('.has-error')
-					 				.children()
-				        			.tooltip('destroy')
-				        			.removeClass('has-error')
-				        			.addClass('has-success');
-					 			
-					 			$.each(data.dataEntryError, function(i, _val){
-					 				$("*[name='" + _val.property + "']")
-					 					.tooltip({title: _val.error || "Invalid input", animation: true, placement: "auto"})
-				 						.closest("*[class^='col-']")
-					 					.removeClass('has-success')
-					 					.addClass('has-error');
-					 			});
-					 			
-					 			updateTabsErrorCount();
-					 		}
-					 		else{
-					 			window.location='/';
-					 		}
-						},
-				 dataType : "json" 
-			 });	 
-		 } else {
-			 showGenericModal("Input Errors", "Kindly review highlighted fields for errors");
-			 updateTabsErrorCount();
-		 }
-	});
-	
-	$('#table-errors, #generic-table-errors').bootstrapTable(); // initialize table-errors as bootstrap table on document load
-});      
+});    
+
 //]]>
 </script>
 </body>
