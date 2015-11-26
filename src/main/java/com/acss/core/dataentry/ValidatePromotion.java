@@ -57,70 +57,78 @@ public class ValidatePromotion {
 			
 			if(!promotionRules.getPromotion().getPcIsRetricted().equals(new BigDecimal(2))){
 				
-				for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
+				if(!dataEntry.getInstallment().getFirstProduct().getCategory().equals("")){
 					
-					if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategory()))){
+					for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
 						
-						fieldErrorList.clear();
-						break;
-						
-					}else{
-						
-						// Check if the product category of the first product is equal to the input of the 1st product category.
-						if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getFirstProduct().getCategory())){
+						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategoryCd()))){
 							
-							FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategory()),"installment.firstProduct.category", 
-									"1st Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+							fieldErrorList.clear();
+							break;
 							
-							fieldErrorList.add(fieldError_6);
-
-						}
-					}
+						}else{
+							
+							// Check if the product category of the first product is equal to the input of the 1st product category.
+							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getFirstProduct().getCategoryCd())){
 								
+								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategory()),"installment.firstProduct.category", 
+										"1st Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+								
+								fieldErrorList.add(fieldError_6);
+
+							}
+						}
+									
+					}
 				}
 				
-				for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
+				if(!dataEntry.getInstallment().getSecondProduct().getCategory().equals("")){
 					
-					if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategory()))){
+					for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
 						
-						fieldErrorList.clear();
-						break;
-						
-					}else{
-						
-						// Check if the product category of the first product is equal to the input of the 1st product category.
-						if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getSecondProduct().getCategory())){
+						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategoryCd()))){
 							
-							FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategory()),"installment.secondProduct.category", 
-									"2nd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+							fieldErrorList.clear();
+							break;
 							
-							fieldErrorList.add(fieldError_6);
-
-						}
-					}
+						}else{
+							
+							// Check if the product category of the first product is equal to the input of the 1st product category.
+							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getSecondProduct().getCategoryCd())){
 								
+								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategory()),"installment.secondProduct.category", 
+										"2nd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+								
+								fieldErrorList.add(fieldError_6);
+
+							}
+						}
+									
+					}
 				}
 				
-				for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
-					
-					if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategory()))){
+				if(!dataEntry.getInstallment().getSecondProduct().getCategory().equals("")){
+					for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
 						
-						fieldErrorList.clear();
-						break;
-						
-					}else{
-						
-						// Check if the product category of the first product is equal to the input of the 1st product category.
-						if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getThirdProduct().getCategory())){
+						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategoryCd()))){
 							
-							FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategory()),"installment.thirdProduct.category", 
-									"3rd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+							fieldErrorList.clear();
+							break;
 							
-							fieldErrorList.add(fieldError_6);
-
-						}
-					}
+						}else{
+							
+							// Check if the product category of the first product is equal to the input of the 1st product category.
+							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getThirdProduct().getCategoryCd())){
 								
+								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategory()),"installment.thirdProduct.category", 
+										"3rd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+								
+								fieldErrorList.add(fieldError_6);
+
+							}
+						}
+									
+					}
 				}
 			}
 			
