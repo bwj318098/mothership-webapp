@@ -191,7 +191,7 @@
 							<div class="row">
 							  <div class="col-md-5 col-md-offset-1"><label class="control-label" for="residenceType">Residence Type</label></div>
 							  <div class="col-md-6">
-							  		<select th:field="*{residence}" name="residenceType" class="form-control selectField" id="residenceType">
+							  		<select th:field="*{residence}" name="residenceType" class="form-control selectField checkHowMuch" id="residenceType" data-check-how-much="howMuch">
 							  			<option value=""></option>					
 										<option th:each="item : ${typeOfResidenceList}" th:value="${item}" th:text="#{${item.value}}"></option>
 									</select> 
@@ -200,6 +200,23 @@
 						</div>
 					</div>
 				</div>
+				<div class="row" id="optionalForResidence">
+					<div class="col-md-8"></div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+							  <div class="col-md-5 col-md-offset-1"><label class="control-label" for="howMuch">How Much</label></div>
+							  <div class="col-md-6">
+							  		<input th:value="*{howMuch}" 
+							  			name="howMuch" type="text" 
+							  			class="form-control numeric-decimal text-right checkHowMuch" 
+							  			id="howMuch" data-check-how-much="residenceType" placeholder="0.00" maxlength="11"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="row">
 					<div class="col-md-8">
 						<div class="form-group">

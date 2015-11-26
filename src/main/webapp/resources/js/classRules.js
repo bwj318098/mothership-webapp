@@ -55,8 +55,30 @@ $.validator.addMethod("checkDoB",function(value,element,param){
 	    return true;
 	}
 	//message in here
-},"Must be 18 years old to apply");
+}, "Must be 18 years old to apply");
 
+$.validator.addMethod("checkHowMuch", function(value,element,param){
+	var _elem = $(element);
+	var _relElem = $("#" + _elem.data("check-how-much"));
+	var _isValid;
+	if(_elem.prop("nodeName").toUpperCase() === "SELECT"){
+		return _relElem.valid();
+	}
+	var _elemVal = _relElem.val().toUpperCase();
+	if(_elemVal === "RENTED" || _elemVal === "MORTGAGED"){
+		var _howVal = _elem.val();
+		var _parsedVal = null;
+		return _howVal && (_parsedVal = parseFloat(_howVal)) && _parsedVal > 0.0;
+	} else {
+		return true;
+	}
+}, function(_prop, _elem){
+	var _elemObj = $(_elem);
+	var _resVal = (_elemObj.prop("nodeName").toUpperCase() === "SELECT") ?
+			_elemObj.val().toUpperCase()
+			: $("#" + _elemObj.data("check-how-much")).val().toUpperCase();
+	return "Required for " + _resVal + " Residence Type.";
+});
 
 $.validator.addMethod("greaterThan", function (value, element, param) {
     var $element = $(element)
@@ -73,8 +95,18 @@ $.validator.addMethod("greaterThan", function (value, element, param) {
             $element.valid();
         });
     }
-    return parseInt(value) > parseInt($min.val());
-}, jQuery.validator.format("All of the {0} <> {1} are required."));//"Max must be greater than min");
+    return value && $min.val() && parseInt(value) > parseInt($min.val());
+}, function(_prop, _elem){
+	var _elemObj = $(_elem);
+	var _toName = _elemObj.prop("id")
+	    	.replace(/([a-z])([A-Z])/g, '$1 $2')
+	    	.replace(/^./, function(str){ return str.toUpperCase(); });
+	var _fromName = _elemObj.data("min")
+		.replace(/([a-z])([A-Z])/g, '$1 $2')
+		.replace(/^./, function(str){ return str.toUpperCase(); });
+	
+	return jQuery.validator.format("{0} must be greater than {1}")(_toName, _fromName);
+});
 
 //alias the remote validator method and add the custom message.
 $.validator.addMethod("checkUserName", $.validator.methods.remote,
@@ -373,8 +405,11 @@ $.validator.addClassRules({
    
    selectField: {
 	   required: true
-   }
+   },
    
+   checkHowMuch: {
+	   checkHowMuch: true
+   }
 });
 
 (function($) {

@@ -84,9 +84,7 @@ $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
         .one('click', '#close', function (e) {
             return;
     });
-});
-
-$( document ).on( "click", 'button[name^="btn_description"]', function(e) {
+}).on( "click", 'button[name^="btn_description"]', function(e) {
 	e.preventDefault();
     var $descIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
     $('#selectedDesc').val($descIndex);
@@ -96,9 +94,7 @@ $( document ).on( "click", 'button[name^="btn_description"]', function(e) {
         .one('click', '#close', function (e) {
             return;
     });
-});
-
-$( document ).on( "click", 'button[name^="btn_brand"]', function(e) {
+}).on( "click", 'button[name^="btn_brand"]', function(e) {
 	e.preventDefault();
     var $brandIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
     $('#selectedBrand').val($brandIndex);
@@ -107,9 +103,7 @@ $( document ).on( "click", 'button[name^="btn_brand"]', function(e) {
         .one('click', '#close', function (e) {
             return;
     });
-});
-
-$(document).on("click",'[name^="btn_delete_"]',function(e){
+}).on("click",'[name^="btn_delete_"]',function(e){
 	//clear the chosen category
 	e.preventDefault();
 	$(this).parent().parent().find('input').val('');
@@ -133,6 +127,17 @@ $(document).ready(function(e){
 	    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
 	        .one('click', '#close', function (e) {return;});
 	 });
+	 
+	 $('#residenceType').on("change",function(e){
+	 	var _this = $(this);
+		var _thisVal = _this.val().toUpperCase();
+		var _howMuch = $("#" + _this.data("check-how-much"));
+		if(_thisVal === "RENTED" || _thisVal === "MORTGAGED"){
+			_howMuch.removeAttr("readonly");
+		} else {
+			_howMuch.val("").attr("readonly", "readonly");
+		}
+	}).change();
 	 
     // view classRules.js for documentation
 	 $("#dataEntryForm").validateForm({
