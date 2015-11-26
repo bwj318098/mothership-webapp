@@ -17,8 +17,8 @@ jQuery.extend(jQuery.validator.messages, {
     range: jQuery.validator.format("Please enter a value between {0} and {1}."),
     max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
     min: jQuery.validator.format("Please enter a value greater than or equal to {0}."),
-    regex: " ",
-    skip_or_fill_minimum: " "
+    regex: "Kindly recheck character input",
+    skip_or_fill_minimum: jQuery.validator.format("There are {0} fields, including this field, that are related.")
 });
 
 $.validator.addMethod("regex", function(value, element, param) {
