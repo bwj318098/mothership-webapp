@@ -1,7 +1,7 @@
 //replace the obnoxious error message for required.
 jQuery.extend(jQuery.validator.messages, {
-    required: " ",
-    remote: " ",
+    required: "Required field",
+    remote: "Invalid input",
     email: "Please enter a valid email address.",
     url: "Please enter a valid URL.",
     date: "Please enter a valid date.",
@@ -368,16 +368,25 @@ $.validator.addClassRules({
    
 });
 
-//defined a customized function to avoid duplication.
-function validateForm(arg){
-	_form = arg;
-	$(_form).validate({
-		ignore: [],
-		highlight: function (element) {
-            $(element).closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
-        },
-        success: function (element) {
-            element.addClass('valid').closest("*[class^='col-']").removeClass('has-error').addClass('has-success');
-        }
-    });
-}
+(function($) {
+	$.fn.validateForm = function(){
+		this.validate({
+			//validate non-present or visible fields.
+			ignore: "",
+//			showErrors : function(_map, _list){
+//				$('.has-error').removeClass('has-error').children().tooltip('destroy');
+//				$.each(_list, function(_i, _val){
+//					$(_val.element)
+//						.tooltip({title: _val.message || "Invalid input", animation: true, placement: "auto"})
+//						.closest("*[class^='col-']").addClass('has-error');
+//				});
+//			},
+			highlight: function (element) {
+	            $(element).closest("*[class^='col-']").removeClass('has-success').addClass('has-error');
+	        },
+	        success: function (element) {
+	            element.addClass('valid').closest("*[class^='col-']").removeClass('has-error').addClass('has-success');
+	        }
+	    });
+	} 
+})(jQuery);

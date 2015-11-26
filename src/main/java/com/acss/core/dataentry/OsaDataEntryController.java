@@ -1,9 +1,7 @@
 package com.acss.core.dataentry;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -167,8 +165,8 @@ public class OsaDataEntryController {
 	public static class DataEntryResult {
 		
 		boolean success;
-				
-		Map<String, String> fieldErrors = new HashMap<String, String>();
+		
+		List<DataEntryError> dataEntryError = new ArrayList<>();
 		
 		DataEntryDTO dataEntry;
 		
@@ -181,25 +179,18 @@ public class OsaDataEntryController {
 			return success;
 		}
 
-		/**
-		 * @return the fieldErrors
-		 */
-		public Map<String, String> getFieldErrors() {
-			return fieldErrors;
-		}
-		
 		public DataEntryDTO getDataEntry(){
 			return this.dataEntry;
 		}
 		
 		private void setFieldErrors(List<FieldError> fieldErrors){
 			for(FieldError error : fieldErrors){
-				this.fieldErrors.put(error.getField(), error.getDefaultMessage());	
+				this.dataEntryError.add(new DataEntryError(error.getField(), error.getDefaultMessage()));	
 			}
 		}
 		
 		private void addError(ObjectError error){
-			this.fieldErrors.put(error.getObjectName(), error.getDefaultMessage());
+			this.dataEntryError.add(new DataEntryError(error.getObjectName(), error.getDefaultMessage()));
 		}
 
 		public boolean isShowInModal() {
@@ -207,14 +198,7 @@ public class OsaDataEntryController {
 		}
 		
 		public List<DataEntryError> getDataEntryError(){
-			List<DataEntryError> error = new ArrayList<DataEntryError>();
-			
-			for(String key : fieldErrors.values()){
-				error.add(new DataEntryError(key));
-			}
-
-			return error;
-			
+			return this.dataEntryError;
 		}
 		
 	}
@@ -226,12 +210,28 @@ public class OsaDataEntryController {
 	 */
 	public static class DataEntryError {
 		
+		private String property;
+		
 		private String error;
 		
+		public DataEntryError(String property, String error) {
+			this.property = property;
+			this.error = error;
+		}
+
 		public DataEntryError(String error){
 			this.error = error;
 		}
 		
+		/**
+		 * @return the property
+		 */
+		public String getProperty() {
+			return property;
+		}
+
+
+
 		public String getError() {
 			return error;
 		}

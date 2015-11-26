@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+</head>
+<body>
+<!-- Modal -->
+<div class="modal fade" th:id="${modal_id}" th:fragment="modal_generic">
+	<div class="modal-dialog modal_generic">
+	<script type="text/javascript">
+	</script>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        <h4 class="modal-title" th:text="${modal_title}">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+      		<h4 id="generic-message"></h4>
+    		<table id= "generic-table-errors" class="field-errors">
+    			<thead>
+					<tr>
+						<th data-sortable="true" data-field="error">Errors</th>
+					</tr>
+				</thead>
+    			
+    		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
