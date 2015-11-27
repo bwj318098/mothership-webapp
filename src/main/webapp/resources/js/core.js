@@ -89,7 +89,7 @@ function enableToolTipForMerchantUpload(){
 	$('#incomeProof-addon').tooltip({title: "Proof of Income e.g. Payslip, Bank Statement.", animation: true,placement: "auto"});
 	
 	$('[name="addImage"]').tooltip({title: "Add more images if the above default is not enough. Note that this will clear all currently uploaded image/s.", animation: true,placement: "auto"});
-	$('#removeLink').tooltip({title: "Remove image/s that was previouly added.", animation: true,placement: "auto"});
+	$('#removeLink').tooltip({title: "Remove image/s that was previously added.", animation: true,placement: "auto"});
 	$('[name="clearUpload"]').tooltip({title: "Clears the uploaded file.", animation: true,placement: "auto"});
 	$('[name="upload_images"]').tooltip({title: "Submit the application for Data Entry.", animation: true,placement: "auto"});
 	$('[name="pending_images"]').tooltip({title: "Submit the application as Pending to be completed later. Only Application Form is required.", animation: true,placement: "auto"});

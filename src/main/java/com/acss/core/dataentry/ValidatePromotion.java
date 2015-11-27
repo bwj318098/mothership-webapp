@@ -1,12 +1,11 @@
 package com.acss.core.dataentry;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import org.springframework.validation.FieldError;
 
-import com.acss.core.model.ACSSDateUtil;
+
 import com.acss.core.model.application.ProductPromoCategory;
 import com.acss.core.model.application.PromotionRules;
 import com.acss.core.model.application.TermsPromo;
@@ -21,9 +20,9 @@ public class ValidatePromotion {
 	 *	return List<FieldError>
 	 *
 	 */
-	public List<FieldError> promotionErrors(DataEntryDTO dataEntry, PromotionRules promotionRules){
+	public HashSet<FieldError> promotionErrors(DataEntryDTO dataEntry, PromotionRules promotionRules){
 		
-		List<FieldError> fieldErrorList = new ArrayList<FieldError>();
+		HashSet<FieldError> fieldErrorList = new HashSet<FieldError>();
 		
 		// Check if promotion code is available
 		if(promotionRules.getPromotion()==null){
@@ -55,72 +54,80 @@ public class ValidatePromotion {
 				}
 			}
 			
-			if(!promotionRules.getPromotion().getPcIsRetricted().equals(new BigDecimal(2))){
+			if(promotionRules.getPromotion().getPcIsRetricted().equals(new BigDecimal(2))){
 				
-				for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
+				if(!dataEntry.getInstallment().getFirstProduct().getCategory().equals("")){
 					
-					if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategory()))){
+					for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
 						
-						fieldErrorList.clear();
-						break;
-						
-					}else{
-						
-						// Check if the product category of the first product is equal to the input of the 1st product category.
-						if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getFirstProduct().getCategory())){
+						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategoryCd()))){
 							
-							FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategory()),"installment.firstProduct.category", 
-									"1st Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+							fieldErrorList.clear();
+							break;
 							
-							fieldErrorList.add(fieldError_6);
-
-						}
-					}
+						}else{
+							
+							// Check if the product category of the first product is equal to the input of the 1st product category.
+							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getFirstProduct().getCategoryCd())){
 								
+								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategory()),"installment.firstProduct.category", 
+										"1st Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+								
+								fieldErrorList.add(fieldError_6);
+
+							}
+						}
+									
+					}
 				}
 				
-				for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
+				if(!dataEntry.getInstallment().getSecondProduct().getCategory().equals("")){
 					
-					if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategory()))){
+					for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
 						
-						fieldErrorList.clear();
-						break;
-						
-					}else{
-						
-						// Check if the product category of the first product is equal to the input of the 1st product category.
-						if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getSecondProduct().getCategory())){
+						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategoryCd()))){
 							
-							FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategory()),"installment.secondProduct.category", 
-									"2nd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+							fieldErrorList.clear();
+							break;
 							
-							fieldErrorList.add(fieldError_6);
-
-						}
-					}
+						}else{
+							
+							// Check if the product category of the first product is equal to the input of the 1st product category.
+							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getSecondProduct().getCategoryCd())){
 								
+								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategory()),"installment.secondProduct.category", 
+										"2nd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+								
+								fieldErrorList.add(fieldError_6);
+
+							}
+						}
+									
+					}
 				}
 				
-				for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
-					
-					if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategory()))){
+				if(!dataEntry.getInstallment().getThirdProduct().getCategory().equals("")){
+					for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
 						
-						fieldErrorList.clear();
-						break;
-						
-					}else{
-						
-						// Check if the product category of the first product is equal to the input of the 1st product category.
-						if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getThirdProduct().getCategory())){
+						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategoryCd()))){
 							
-							FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategory()),"installment.thirdProduct.category", 
-									"3rd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+							fieldErrorList.clear();
+							break;
 							
-							fieldErrorList.add(fieldError_6);
-
-						}
-					}
+						}else{
+							
+							// Check if the product category of the first product is equal to the input of the 1st product category.
+							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getThirdProduct().getCategoryCd())){
 								
+								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategory()),"installment.thirdProduct.category", 
+										"3rd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
+								
+								fieldErrorList.add(fieldError_6);
+
+							}
+						}
+									
+					}
 				}
 			}
 			
@@ -128,7 +135,7 @@ public class ValidatePromotion {
 			if(promotionRules.getFpfrom()!=null || promotionRules.getFpTo()!=null){
 			
 						// Check if the finance price is less than Finance Price From
-						if(!(dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpfrom())>=0)){
+						if((dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpfrom())<=0)){
 							
 							FieldError fieldError_1 = new FieldError(String.valueOf(dataEntry.getInstallment().totalFinancePrice()), "installment.totalFinancePrice", 
 									"Finance price is less than "+ promotionRules.getFpfrom());
@@ -138,7 +145,7 @@ public class ValidatePromotion {
 						}
 
 						// Check if the finance price is greater than Finance Price From
-						if(!(dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpTo())<=0)){
+						if((dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpTo())>=0)){
 							
 							FieldError fieldError_2 = new FieldError(String.valueOf(dataEntry.getInstallment().totalFinancePrice()),"installment.totalFinancePrice",
 									"Finance price is greater than " + promotionRules.getFpTo());
@@ -163,18 +170,18 @@ public class ValidatePromotion {
 			// Check the promotion date range
 			if(promotionRules.getPeriodFrom()!=null||promotionRules.getPeriodTo()!=null){
 				
-				if(!(promotionRules.getPeriodFrom().isBefore(dataEntry.getStore().getReceivedDate()))){
-					
-					FieldError fieldError_9 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "store.receivedDate", 
-							"Promotion is only valid from " + promotionRules.getPeriodFrom() + " to " + promotionRules.getPeriodTo());
+				//if(!(promotionRules.getPeriodFrom().isBefore(dataEntry.getStore().getReceivedDate()))){
+				if(!(promotionRules.getPeriodFrom().isBeforeNow())){	
+					FieldError fieldError_9 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "", 
+							"Promotion " + promotionRules.getPromotion().getPromotionName() +" is already expired");
 					
 					fieldErrorList.add(fieldError_9);
 				}
-
-				if(!(promotionRules.getPeriodTo().isAfter(dataEntry.getStore().getReceivedDate()))){
+				//if(!(promotionRules.getPeriodTo().isAfter(dataEntry.getStore().getReceivedDate())))
+				if(!(promotionRules.getPeriodTo().isAfterNow())){
 					
-					FieldError fieldError_10 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "store.receivedDate", 
-							"Promotion is only valid from " + ACSSDateUtil.getDateAsYYYYMMDDFromDateTime(promotionRules.getPeriodFrom()) + " to " + ACSSDateUtil.getDateAsYYYYMMDDFromDateTime(promotionRules.getPeriodTo()));
+					FieldError fieldError_10 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "", 
+							"Promotion " + promotionRules.getPromotion().getPromotionName() +" is already expired");
 					
 					fieldErrorList.add(fieldError_10);
 				}

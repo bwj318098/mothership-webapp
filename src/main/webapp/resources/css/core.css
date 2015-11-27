@@ -228,9 +228,15 @@ body.loading {
 .error{
 	color: #a94442;
 	display: block;
-	margin-top: 5px;
-	margin-bottom: 10px;
+	/* margin-top: 5px;
+	margin-bottom: 10px; */
 	font-weight: 300;
+}
+
+#dataEntryForm .tooltip-inner,
+#dataEntrySegments .tooltip-inner,
+#dataEntrySegments .badge {
+	background-color: #d9534f;
 }
 
 .tooltip-inner {
