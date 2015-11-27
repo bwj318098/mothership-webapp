@@ -33,11 +33,11 @@ $.validator.addMethod("regex", function(value, element, param) {
 
 $.validator.addMethod("checkDoB",function(value,element,param){
 	var day = value.substring(8,10);
-	var month = value.substring(5,7);
+	var month = parseInt(value.substring(5,7));
 	var year = parseInt(value.substring(0,4));
 	var age = parseInt(18);
-	
-	var cutOffDate = new Date(year + age, month, day);
+	console.log(day +'/'+month+ '/'+year);
+	var cutOffDate = new Date(year + age, month - 1, day);
 	console.log(cutOffDate);
 	if (cutOffDate > Date.now()) {
 	    return false;
