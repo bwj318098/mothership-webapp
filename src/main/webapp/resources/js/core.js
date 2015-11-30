@@ -79,6 +79,12 @@ function enableToolTipForHeader(){
 	$('[href="#logout"]').tooltip({title: "Logout to OSA-PH.", animation: true,placement: "auto"});
 }
 
+/* Show tooltip for user guide on convenient contact time */
+function enableToolTipForContactTime(){
+	$('[id^="contactFrom"]').tooltip({title: "Please follow military time format from 0800 to 1800.", animation: true,placement: "auto"});
+	$('[id^="contactTo"]').tooltip({title: "Please follow military time format from 0800 to 1800.", animation: true,placement: "auto"});
+}
+
 function enableToolTipForMerchantUpload(){
 	$('[name="generate"]').tooltip({title: "Generate a new application number. Note that this will clear all currently uploaded image/s.", animation: true,placement: "auto"});
 	$('#appNo-addon').tooltip({title: "Generated Application No.", animation: true,placement: "auto"});

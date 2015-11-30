@@ -46,16 +46,19 @@ $.validator.addMethod("checkDoB",function(value,element,param){
 	var day = value.substring(8,10);
 	var month = parseInt(value.substring(5,7));
 	var year = parseInt(value.substring(0,4));
-	var age = parseInt(18);
+	var minAge = parseInt(18);
+	var maxAge = parseInt(65);
 	console.log(day +'/'+month+ '/'+year);
-	var cutOffDate = new Date(year + age, month - 1, day);
-	if (cutOffDate > Date.now()) {
+	var cutOffDate = new Date(year + minAge, month - 1, day);
+	var maxCutOffDate = new Date(year + maxAge, month - 1, day);
+	console.log(maxCutOffDate);
+	if ((cutOffDate > Date.now()) || (maxCutOffDate < Date.now())) {
 	    return false;
 	} else {
 	    return true;
 	}
 	//message in here
-}, "Must be 18 years old to apply");
+}, "Must be 18-65 years old to apply");
 
 $.validator.addMethod("checkHowMuch", function(value,element,param){
 	var _elem = $(element);
@@ -276,14 +279,37 @@ $.validator.addClassRules({
        regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
    },
    
+   mon_2_req: {
+	   range: [0,11],
+       maxlength: 2,
+       required: true,
+       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+   },
+   
    phone_reg_4: {
+	   minlength: 2,
        maxlength: 4,
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
    },
    
    phoneno_11: {
-       maxlength: 11,
+	   minlength: 7,
+       maxlength: 7,
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   mobileno_reg_4: {
+	   required: true,
+	   minlength: 4,
+	   maxlength: 5,
+	   regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   mobileno_reg_7: {
+	   required: true,
+	   minlength: 7,
+	   maxlength: 7,
+	   regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
    },
    
    phone_reg_4_req: {
@@ -293,6 +319,7 @@ $.validator.addClassRules({
    },
    
    phoneno_11_req: {
+	   minlength: 7,
        maxlength: 11,
        required: true,
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
@@ -355,6 +382,7 @@ $.validator.addClassRules({
    },
    
    currency_10_req: {
+	   range: [8000,999999],
        maxlength: 10,
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?",
        required: true
