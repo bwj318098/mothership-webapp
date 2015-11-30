@@ -1,14 +1,14 @@
 [
-{"categoryCode" : "EL", "category" : "ELECTRICAL APPLIANCES"},
-{"categoryCode" : "CM", "category" : "CAMERA"},
-{"categoryCode" : "PC", "category" : "COMPUTER"},
-{"categoryCode" : "CO", "category" : "COMMUNICATION"},
-{"categoryCode" : "FU", "category" : "FURNITURE"},
-{"categoryCode" : "CA", "category" : "CAR ACCESSORIES"},
-{"categoryCode" : "SP", "category" : "SPORTS ACCESSORIES"},
-{"categoryCode" : "MU", "category" : "MUSIC INSTRUMENT"},
-{"categoryCode" : "BI", "category" : "BICYCLE & EBIKE STORE"},
-{"categoryCode" : "HW", "category" : "HARDWARE STORE"},
-{"categoryCode" : "HL", "category" : "HEALTH EQUIPMENT"},
-{"categoryCode" : "OT", "category" : "OTHER"}
+{"categoryCode" : "EL", "category" : "ELECTRICAL APPLIANCES", "interestRate" : "2.95"},
+{"categoryCode" : "CM", "category" : "CAMERA", "interestRate" : "2.95"},
+{"categoryCode" : "PC", "category" : "COMPUTER", "interestRate" : "2.95"},
+{"categoryCode" : "CO", "category" : "COMMUNICATION", "interestRate" : "3.30"},
+{"categoryCode" : "FU", "category" : "FURNITURE", "interestRate" : "2.95"},
+{"categoryCode" : "CA", "category" : "CAR ACCESSORIES", "interestRate" : "2.95"},
+{"categoryCode" : "SP", "category" : "SPORTS ACCESSORIES", "interestRate" : "2.95"},
+{"categoryCode" : "MU", "category" : "MUSIC INSTRUMENT", "interestRate" : "2.95"},
+{"categoryCode" : "BI", "category" : "BICYCLE & EBIKE STORE", "interestRate" : "2.95"},
+{"categoryCode" : "HW", "category" : "HARDWARE STORE", "interestRate" : "2.95"},
+{"categoryCode" : "HL", "category" : "HEALTH EQUIPMENT", "interestRate" : "2.95"},
+{"categoryCode" : "OT", "category" : "OTHER", "interestRate" : "2.95"}
 ]
