@@ -359,7 +359,10 @@ $.validator.addClassRules({
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?",
        required: true
    },
-   
+   currency_10: {
+       maxlength: 10,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
    //product price: ranged, numeric, size 10, required
    firstPriceRules: {
 	   range: [1000,999999],
@@ -409,6 +412,10 @@ $.validator.addClassRules({
    
    checkHowMuch: {
 	   checkHowMuch: true
+   },
+   
+   checkEmploymentType: {
+	   checkEmploymentType: true
    }
 });
 
@@ -497,7 +504,13 @@ $.validator.addClassRules({
 		
 		_thisForm.validate({
 			//validate non-present or visible fields.
-			ignore: "",
+			ignore: ".ignore",
+			unhighlight: function(element){
+				$(element)
+        		.tooltip('destroy')
+        		.closest(_thisForm.data("osa.validateForm.parentSelector"))
+        			.removeClass('has-error');
+			},
 			errorPlacement: function(label, element) {
 				$(element)
 					.closest(_thisForm.data("osa.validateForm.parentSelector"))
