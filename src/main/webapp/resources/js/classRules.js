@@ -532,13 +532,7 @@ $.validator.addClassRules({
 		
 		_thisForm.validate({
 			//validate non-present or visible fields.
-			ignore: ".ignore",
-			unhighlight: function(element){
-				$(element)
-        		.tooltip('destroy')
-        		.closest(_thisForm.data("osa.validateForm.parentSelector"))
-        			.removeClass('has-error');
-			},
+			ignore: "",
 			errorPlacement: function(label, element) {
 				$(element)
 					.closest(_thisForm.data("osa.validateForm.parentSelector"))

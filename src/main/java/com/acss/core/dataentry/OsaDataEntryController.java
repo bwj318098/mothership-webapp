@@ -74,7 +74,6 @@ public class OsaDataEntryController {
 			}
 			
 			dataEntryService.bindAllEnumsToModel(model);
-			
 			model.addAttribute("installment",dataEntry.getInstallment());
 			model.addAttribute("store", dataEntry.getStore());
 			model.addAttribute("comment", dataEntry.getComment());

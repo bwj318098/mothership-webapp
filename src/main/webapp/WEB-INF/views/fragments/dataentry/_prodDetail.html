@@ -29,8 +29,6 @@ function doCalc(){
 }
 
 </script>
-
-
 	  	<p></p>
 	  	<!-- Header for common fields -->
 		<div class="row">
@@ -75,6 +73,7 @@ function doCalc(){
 					  	<div class="col-md-2">
 					  	<div class="input-group">
 					  	<input th:value="*{installment.firstProduct.brand}" name="installment.firstProduct.brand" type="text" class="form-control alphaNum_30_req productGroup_1" id="brand_1" placeholder="Brand I" maxlength="30" readonly="readonly"/>
+					  	<input id="brandCode_1" type="hidden" th:value="*{installment.firstProduct.brandCd}" name="installment.firstProduct.brandCd" />
 					  	<div class="input-group-btn">
 							<button type="button" value="btn_brand_1" name="btn_brand_1" class="btn btn-primary">?</button>
 							<button type="button" name="btn_delete_brand" class="btn btn-info">x</button>
@@ -116,6 +115,7 @@ function doCalc(){
 					  	<div class="col-md-2">
 					  	<div class="input-group">
 					  	<input th:value="*{installment.secondProduct.brand}" name="installment.secondProduct.brand" type="text" class="form-control alphaNum_30 productGroup_2" id="brand_2" placeholder="Brand II" maxlength="30" readonly="readonly"/>
+					  	<input id="brandCode_2" type="hidden" th:value="*{installment.secondProduct.brandCd}" name="installment.secondProduct.brandCd" />
 					  	<div class="input-group-btn">
 									<button type="button" value="btn_brand_2" name="btn_brand_2" class="btn btn-primary">?</button>
 									<button type="button" name="btn_delete_brand" class="btn btn-info">x</button>
@@ -157,7 +157,7 @@ function doCalc(){
 					  	<div class="col-md-2">
 					  	<div class="input-group">
 					  	<input th:value="*{installment.thirdProduct.brand}" name="installment.thirdProduct.brand" type="text" class="form-control alphaNum_30 productGroup_3" id="brand_3" placeholder="Brand III" maxlength="30" readonly="readonly"/>
-					  	<input id="brandCode_3" type="hidden" />
+					  	<input id="brandCode_3" type="hidden" th:value="*{installment.thirdProduct.brandCd}" name="installment.thirdProduct.brandCd" />
 					  	<div class="input-group-btn">
 							<button type="button" value="btn_brand_3" name="btn_brand_3" class="btn btn-primary">?</button>
 							<button type="button" name="btn_delete_brand" class="btn btn-info">x</button>
@@ -308,20 +308,37 @@ function doCalc(){
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="comment">Comment</label></div>
-						<div class="col-md-5"><textarea id="comment" name="comment" th:text="*{comment}" class="form-control"></textarea></div>
-						<div class="col-md-2"><label class="control-label" for="firstPayment">First Payment Date</label></div>
+						<div class="col-md-2"><label class="control-label" for="receivedBy">Received By</label></div>
+						<div class="col-md-3"><input name="installment.receivedBy" th:value="*{installment.receivedBy}" type="text" class="form-control" id="receivedBy" placeholder="Received By"/></div>
+						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="firstPayment">First Payment Date</label></div>
 						<div class="col-md-3"><input name="installment.hpFirstDay" th:value="*{installment.hpFirstDayToString()}" type="text" class="form-control" id="hpFirstDay" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"></div>
-						<div class="col-md-5"></div>
+						<div class="col-md-2"><label class="control-label" for="deliveryMethod">Delivery Method</label></div>
+						<div class="col-md-2">
+							<select th:value="*{installment.deliveryMethod}" name="installment.deliveryMethod" class="form-control selectField" id="term">
+					  			<option value=""></option>					
+								<option th:each="item : ${deliveryMethodList}" 
+										th:selected="*{installment.deliveryMethod}==${item}"
+										th:value="${item}" th:text="#{${item.value}}"></option>
+							</select>
+						
+						</div>
+						<div class="col-md-3"><input name="installment.deliveryRemarks" th:value="*{installment.deliveryRemarks}" type="text" class="form-control" id="deliveryRemarks" placeholder="Delivery Remarks" /></div>
 						<div class="col-md-2"><label class="control-label" for="finalPayment">Final Payment Date</label></div>
-						<div class="col-md-3"><input name="installment.hpLastDay" th:value="*{installment.hpLastDayToString()}" type="text" class="form-control" id="hpLastDay" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
+						<div class="col-md-3"><input name="installment.hpLastDay" th:value="*{installment.hpLastDayToString()}" type="text" class="form-control" id="hpLastDay" placeholder="Received By" readonly="readonly"/></div>
 				  	</div>
-				</div>																										
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="comment">Comment</label></div>
+						<div class="col-md-5"><textarea id="comment" name="comment" th:text="*{comment}" class="form-control"></textarea></div>
+						<div class="col-md-2"></div>
+						<div class="col-md-3"></div>
+				  	</div>
+				</div>																											
 			</div>
 		</div>
 <div>

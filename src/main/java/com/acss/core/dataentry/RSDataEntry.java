@@ -23,6 +23,7 @@ import com.acss.core.model.dataentry.common.constants.BankAccountType;
 import com.acss.core.model.dataentry.common.constants.Citizenship;
 import com.acss.core.model.dataentry.common.constants.CivilStatus;
 import com.acss.core.model.dataentry.common.constants.DaysOfMonth;
+import com.acss.core.model.dataentry.common.constants.DeliveryMethod;
 import com.acss.core.model.dataentry.common.constants.EducationalAttainment;
 import com.acss.core.model.dataentry.common.constants.EmploymentStatus;
 import com.acss.core.model.dataentry.common.constants.Gender;
@@ -95,6 +96,7 @@ public class RSDataEntry implements DataEntryService{
 		model.addAttribute(ProcessingFeePayType.MODEL_ATTRIB_KEY,ProcessingFeePayType.values());
 		model.addAttribute(PromoterScreening.MODEL_ATTRIB_KEY,PromoterScreening.values());
 		model.addAttribute(LivePerson.MODEL_ATTRIB_KEY,LivePerson.values());
+		model.addAttribute(DeliveryMethod.MODEL_ATTRIB_KEY,DeliveryMethod.values());
 	}
 	/**
 	 * @author fcortez

@@ -12,16 +12,24 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="employmentType">Employment Type </label></div>
-					  	<div class="col-md-2">
+					  	<div class="col-md-3">
 					  		<select th:field="*{employmentType}" name="employmentType" class="form-control selectField" id="employmentType">
 					  			<option value=""></option>					
 								<option th:each="item : ${employmentTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
 							</select> 
 					  	</div>
-					  	<div class="col-md-2"><label class="control-label" for="employmentType">Monthly Net Income</label></div>
-					  	<div class="col-md-2"><input th:field="*{monthlyNetIncome}" name="monthlyIncome" type="text" class="form-control numeric-decimal currency_10_req" id="monthlyIncome" maxlength="10"/></div>
-					  	<div class="col-md-2"><label class="control-label" for="otherIncome">Other Income(if any)</label></div>
-					  	<div class="col-md-2"><input th:field="*{otherIncome}" name="otherIncome" type="text" class="form-control numeric-decimal currency_10_req" id="otherIncome" maxlength="10"/></div>
+					  	<div class="col-md-1">
+<!-- 					  		<label class="control-label" for="monthlyIncome">Monthly Net Income</label> -->
+					  	</div>
+					  	<div class="col-md-2">
+<!-- 					  		<input th:field="*{monthlyNetIncome}" name="monthlyIncome" type="text" class="form-control numeric-decimal currency_10_req" id="monthlyIncome" maxlength="10"/> -->
+					  	</div>
+					  	<div class="col-md-2">
+<!-- 					  		<label class="control-label" for="otherIncome">Other Income(if any)</label> -->
+					  	</div>
+					  	<div class="col-md-2">
+<!-- 					  		<input th:field="*{otherIncome}" name="otherIncome" type="text" class="form-control numeric-decimal currency_10_req" id="otherIncome" maxlength="10"/> -->
+					  	</div>
 				  	</div>
 				</div>
 			</div>
@@ -56,7 +64,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-									<input th:field="*{corpAddress.unitNo}" name="corpUnitNo" type="text" class="form-control any_6_req checkEmploymentType" id="corpUnitNo" placeholder="Unit No" maxlength="6"/>  
+									<input th:field="*{corpAddress.unitNo}" name="corpUnitNo" type="text" class="form-control any_6_req" id="corpUnitNo" placeholder="Unit No" maxlength="6"/>  
 								</div>
 								<div class="col-md-6">
 									<input th:field="*{corpAddress.street}" name="corpStreet" type="text" class="form-control any_70_req" id="corpStreet" placeholder="Street" maxlength="70"/>
@@ -76,7 +84,20 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-3 col-md-offset-5">
+						<div class="col-md-2"><label class="control-label" for="corpFaxNo">Company FAX No.</label></div>
+						<div class="col-md-3">
+						
+							<div class="form-group">
+								<div class="col-xs-5">
+									<input th:field="*{corpFaxReg}" name="corpFaxReg" type="text" class="form-control numeric" id="corpFaxReg" placeholder="Fax Reg." maxlength="4"/>
+								</div>
+								<div class="col-xs-7">
+									<input th:field="*{corpFaxNo}" name="corpFaxNo" type="text" class="form-control numeric" id="corpFaxNo" placeholder="Fax No." maxlength="20"/>
+								</div>
+							</div>
+						
+						</div>
+						<div class="col-md-3">
 							<input th:field="*{corpAddress.city}" name="city_3" type="text" class="form-control" id="city_3" placeholder="City" maxlength="100" readonly="readonly"/>
 						</div> 
 						<div class="col-md-4">
@@ -164,7 +185,7 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="contactTimeFrom">Convinient Contact Time</label></div>
+						<div class="col-md-2"><label class="control-label" for="contactTimeFrom">Convenient Contact Time</label></div>
 						<div class="col-md-1"><input th:field="*{contactTimeFrom}" name="contactFrom" type="text" class="form-control any_2 numeric contactTimeGroup" id="contactFrom" placeholder="From" maxlength="2"/></div>
 						<div class="col-md-1"><input th:field="*{contactTimeTo}" name="contactTo" type="text" class="form-control any_2 numeric contactTimeGroup greaterThan"  data-min="contactFrom" id="contactTo" placeholder="To" maxlength="2" /></div>
 						<div class="col-md-2"><label class="control-label" for="department">Department</label></div>
@@ -174,7 +195,68 @@
 				  	</div>
 				</div>
 			</div>
-		</div>		
+		</div>
+		
+		<!-- New Salary and Expense Calculation -->
+		<p></p>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="monthlyIncome">Monthly Net Income</label></div>
+					  	<div class="col-md-2"><input th:field="*{monthlyNetIncome}" name="monthlyIncome" type="text" class="form-control numeric-decimal currency_10_req" id="monthlyIncome" maxlength="10"/></div>
+						<div class="col-md-2"><label class="control-label" for="monthlyIncome">Other Income(if any)</label></div>
+					  	<div class="col-md-2"><input th:field="*{otherIncome}" name="otherIncome" type="text" class="form-control numeric-decimal currency_10" id="otherIncome" maxlength="10"/></div>
+					  	<div class="col-md-2"><label class="control-label" for="totalPersonalIncome">Total Personal Income</label></div>
+					  	<div class="col-md-2"><input name="totalPersonalIncome" type="text" class="form-control numeric-decimal currency_10" id="totalPersonalIncome" maxlength="10" readonly="readonly"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"></div>
+					  	<div class="col-md-2"></div>
+						<div class="col-md-2"><label class="control-label" for="remittance">Contributions/Remittances</label></div>
+					  	<div class="col-md-2"><input th:field="*{remittance}" name="remittance" type="text" class="form-control numeric-decimal currency_10" id="remittance" maxlength="10"/></div>
+					  	<div class="col-md-2"><label class="control-label" for="totalIncome">Total Income</label></div>
+					  	<div class="col-md-2"><input name="totalIncome" type="text" class="form-control numeric-decimal currency_10" id="otherIncome" maxlength="10" readonly="readonly"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="fixedExpenses">Fixed Expenses</label></div>
+					  	<div class="col-md-2"><input th:field="*{fixedExpenses}" name="fixedExpenses" type="text" class="form-control numeric-decimal currency_10" id="fixedExpenses" maxlength="10"/></div>
+						<div class="col-md-2"><label class="control-label" for="flexibleExpenses">Flexible Expenses</label></div>
+					  	<div class="col-md-2"><input th:field="*{flexibleExpenses}" name="flexibleExpenses" type="text" class="form-control numeric-decimal currency_10" id="flexibleExpenses" maxlength="10"/></div>
+					  	<div class="col-md-2"><label class="control-label" for="totalExpenses">Total Expense</label></div>
+					  	<div class="col-md-2"><input name="totalExpenses" type="text" class="form-control numeric-decimal currency_10" id="totalExpenses" maxlength="10" readonly="readonly"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"></div>
+					  	<div class="col-md-2"></div>
+						<div class="col-md-2"><label class="control-label" for="discretionaryExpense">Discretionary Expenses</label></div>
+					  	<div class="col-md-2"><input th:field="*{discretionaryExpense}" name="discretionaryExpense" type="text" class="form-control numeric-decimal currency_10" id="discretionaryExpense" maxlength="10"/></div>
+					  	<div class="col-md-2"><label class="control-label" for="expandedExpense">Expanded Expense</label></div>
+					  	<div class="col-md-2"><input name="expandedExpense" type="text" class="form-control numeric-decimal currency_10" id="expandedExpense" maxlength="10" readonly="readonly"/></div>
+				  	</div>
+				</div>
+			</div>
+		</div>	
 	</div>
 </body>
 </html>

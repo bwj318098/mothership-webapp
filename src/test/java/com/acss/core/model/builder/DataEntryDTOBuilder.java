@@ -116,7 +116,7 @@ public class DataEntryDTOBuilder {
 	 * @see com.acss.core.model.dataentry.DataEntryDTO#setResidence(com.acss.core.model.dataentry.common.constants.TypeOfResidence)
 	 */
 	public DataEntryDTOBuilder setResidence(TypeOfResidence residence) {
-		dataEntryDTO.setResidence(residence);
+		//dataEntryDTO.setResidence(residence);
 		return this;
 	}
 

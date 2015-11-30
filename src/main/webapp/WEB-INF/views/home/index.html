@@ -7,8 +7,9 @@
 
 <body>
 <div th:replace="fragments/header :: header">Header</div>
+<form id="dataEntryForm" class="form-horizontal form-de" >
 <div id="wrap">
-<div class="container">
+<div class="container-fluid">
 	
     <div class="text-center">
     	
@@ -16,18 +17,100 @@
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
     </th:block>
-        
+        <!-- 
         <h1>POC: Core Web Application</h1>
         <p class="lead">
             Welcome to NEO-Core Web Application!
             This is a prototype only.
         </p>
+         
         <p>
             <a href="/signin" th:href="@{/signin}" class="btn btn-primary btn-lg">Sign in</a>
         </p>
+        -->
+     	<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6 scrollable">
+					<div class="image-viewer">
+						<div id="controls">
+							<a href="#" id="rotate_left" title="Rotate left"> <i
+								class="glyphicon glyphicon-menu-left"></i>
+							</a> <a href="#" id="zoom_out" title="Zoom out"> <i
+								class="glyphicon glyphicon-zoom-out"></i>
+							</a> <a href="#" id="fit" title="Fit image"> <i
+								class="glyphicon glyphicon-fullscreen"> </i>
+							</a> <a href="#" id="zoom_in" title="Zoom in"> <i
+								class="glyphicon glyphicon-zoom-in"></i>
+							</a> <a href="#" id="rotate_right" title="Rotate right"> <i
+								class="glyphicon glyphicon-menu-right"></i>
+							</a>
+						</div>
+						
+						<div class='frame'>
+							<img id='sample_picture' src='/resources/images/w.macalino_af.jpg'></img>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6" >
+	    			<label>Data Entry Fields</label>
+	   			</div>
+     		</div>
+     	</div>
     </div>
 </div>
 </div>
+</form>
 <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+<script type="text/javascript">
+jQuery(function() {
+    var picture = $('#sample_picture');
+
+    // Make sure the image is completely loaded before calling the plugin
+    picture.one('load', function(){
+      // Initialize plugin (with custom event)
+      picture.guillotine({eventOnChange: 'guillotinechange'});
+
+      // Display inital data
+      var data = picture.guillotine('getData');
+      for(var key in data) { $('#'+key).html(data[key]); }
+
+      // Bind button actions
+      $('#rotate_left').click(function(){ picture.guillotine('rotateLeft'); });
+      $('#rotate_right').click(function(){ picture.guillotine('rotateRight'); });
+      $('#fit').click(function(){ picture.guillotine('fit'); });
+      $('#zoom_in').click(function(){ picture.guillotine('zoomIn'); });
+      $('#zoom_out').click(function(){ picture.guillotine('zoomOut'); });
+		
+      
+      $( '.scrollable' ).bind( 'mousewheel DOMMouseScroll', function ( e ) {
+    	    var e0 = e.originalEvent,
+    	        delta = e0.wheelDelta || -e0.detail;
+    	    
+    	    if (e.originalEvent.wheelDelta >= 0) {
+    	    	picture.guillotine('zoomIn')
+    	    }
+    	    else {
+    	    	picture.guillotine('zoomOut');
+    	    }
+    	    
+    	    e.preventDefault();
+    	});
+
+      // Update data on change
+      picture.on('guillotinechange', function(ev, data, action) {
+        data.scale = parseFloat(data.scale.toFixed(4));
+        for(var k in data) { $('#'+k).html(data[k]); }
+      });
+    });
+
+    // Make sure the 'load' event is triggered at least once (for cached images)
+    if (picture.prop('complete')) picture.trigger('load')
+  });
+
+
+
+
+</script>
 </body>
 </html>

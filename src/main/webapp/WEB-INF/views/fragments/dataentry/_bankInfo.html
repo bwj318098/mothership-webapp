@@ -27,7 +27,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="accountNo">Account No.</label></div>
-					  	<div class="col-md-4"><input th:field="*{accountNo}" type="text" class="form-control" id="accountNo" maxlength="50"/></div>
+					  	<div class="col-md-4"><input th:field="*{accountNo}" type="text" class="form-control" id="accountNo" maxlength="50" /></div>
 					  	
 					  	<div class="col-md-2"><label class="control-label" for="accountType">Type of Account</label></div>
 					  	<div class="col-md-4">
@@ -42,7 +42,32 @@
 				  	
 				</div>
 			</div>
-		</div>					
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="accountName">Account Holder Name #1</label></div>
+					  	<div class="col-md-4"><input th:field="*{accountName}" type="text" class="form-control" id="accountName" maxlength="50" /></div>
+					  	<div class="col-md-2"><label class="control-label" for="accountName">Account Holder Name #2</label></div>
+					  	<div class="col-md-4"><input th:field="*{accountName_2}" type="text" class="form-control" id="accountName_2" maxlength="50" /></div>
+				  	</div>  	
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label" for="accountName_3">Account Holder Name #3</label></div>
+					  	<div class="col-md-4"><input th:field="*{accountName_3}" type="text" class="form-control" id="accountName_3" maxlength="50" /></div>
+					  	<div class="col-md-2"><label class="control-label" for="accountName">Account Holder Name #4</label></div>
+					  	<div class="col-md-4"><input th:field="*{accountName_4}" type="text" class="form-control" id="accountName_4" maxlength="50" /></div>
+				  	</div>  	
+				</div>
+			</div>
+		</div>				
 	</div>
 </body>
 </html>

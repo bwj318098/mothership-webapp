@@ -117,7 +117,7 @@ button {
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
-@media (max-width: 767) {
+@media (max-width: 1000px) {
   .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
     color: #ffffff;
   }
@@ -253,8 +253,9 @@ body.loading {
 	text-transform:uppercase;
 }
 .modal-zipcode {
-  width: 900px;
+  width: 1000px;
 }
+
 
 /** No more table**/
 @media only screen and (max-width: 800px) {
@@ -315,52 +316,64 @@ body.loading {
 }
 
 
+@media (max-width: 1000px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-fixed-top {
+		top: 0;
+		border-width: 0 0 1px;
+	}
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+		margin-top: 7.5px;
+	}
+	.navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+  		display:block !important;
+	}
 }
 
-/** No more table**/
-@media only screen and (max-width: 800px) {
-    
-    /* Force table to not be like tables anymore */
-	#no-more-tables table, 
-	#no-more-tables thead, 
-	#no-more-tables tbody, 
-	#no-more-tables th, 
-	#no-more-tables td, 
-	#no-more-tables tr { 
-		display: block; 
-	}
- 
-	/* Hide table headers (but not display: none;, for accessibility) */
-	#no-more-tables thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
- 
-	#no-more-tables tr { border: 1px solid #ccc; }
- 
-	#no-more-tables td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50% !important; 
-		white-space: normal;
-	}
- 
-	#no-more-tables td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-		font-weight: bold;
-	}
- 
-	/*
-	Label the data
-	*/
-	#no-more-tables td:before { content: attr(data-title); }
+#controls {
+	padding-top: 10px;
+	height: 40px;
+    background-color: #1b1b1b;
+    text-align: center;
+}
+
+
+#controls a {
+    display: inline-block;
+    padding: 0 5%;
+    height: 20px;
+    font-size: 20px;
+    font-weight: 300;
+    color: #888;
+}
+
+.image-viewer {
+	margin-top:10px;
+	border: #cdcdcd medium solid;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
