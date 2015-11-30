@@ -387,10 +387,7 @@ $.validator.addClassRules({
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?",
        required: true
    },
-   currency_10: {
-       maxlength: 10,
-       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
-   },
+   
    //product price: ranged, numeric, size 10, required
    firstPriceRules: {
 	   range: [1000,999999],
