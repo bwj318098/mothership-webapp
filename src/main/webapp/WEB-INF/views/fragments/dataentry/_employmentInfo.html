@@ -106,6 +106,17 @@
 					  	
 						<div class="col-md-1"><input th:field="*{corpPhone.local}" name="corpLocal" class="form-control numeric" id="corpLocal" placeholder="Loc" maxlength="5"/></div>
 					  	
+					  	<!-- 
+					  		<div class="col-md-1"><label class="control-label" for="salaryType">Salary Type</label></div>
+							<div class="col-md-1">
+								<select th:field="*{salaryType}" name="salaryType" class="form-control selectField" id="salaryType">
+						  			<option value=""></option>					
+									<option th:each="item : ${salaryTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
+								</select>
+							</div>
+					  	 -->
+					  	
+						
 					  	<div class="col-md-1"><label class="control-label" for="salaryDate">Salary Date</label></div>
 						<div class="col-md-1">
 <!-- 							<input th:field="*{salaryDate}" name="salaryDate" type="text" class="form-control" id="salaryDate" placeholder="S.Date" maxlength="2"/> -->
@@ -133,7 +144,7 @@
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="yearsOfService">Years of Service</label></div>
 						<div class="col-md-1"><input th:field="*{yosYears}" name="yosYears" type="text" class="form-control any_2_req numeric" id="yosYears" placeholder="Years" maxlength="2"/></div>
-						<div class="col-md-1"><input th:field="*{yosMonths}" name="yosMonths" type="text" class="form-control any_2_req numeric" id="yosMonths" placeholder="Months" maxlength="2" /></div>
+						<div class="col-md-1"><input th:field="*{yosMonths}" name="yosMonths" type="text" class="form-control mon_2_req numeric" id="yosMonths" placeholder="Months" maxlength="2" /></div>
 						<div class="col-md-2"><label class="control-label" for="natureOfBusiness">Nature of Business</label></div>
 					  	<div class="col-md-2">
 					  		<select th:field="*{natureOfBusiness}" name="natureOfBusiness" class="form-control selectField" id="natureOfBusiness">
