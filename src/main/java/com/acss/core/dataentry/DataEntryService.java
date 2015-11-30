@@ -14,6 +14,12 @@ public interface DataEntryService {
 	public boolean save(DataEntryDTO dataEntry);
 	
 	/**
+	 * 
+	 */
+	public DataEntryDTO getDetails(String customerCd);
+	
+	
+	/**
 	 * binds all the ENUM to model for drop downs.
 	 */
 	public void bindAllEnumsToModel(Model model);

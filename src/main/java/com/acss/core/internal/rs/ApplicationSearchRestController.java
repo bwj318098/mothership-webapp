@@ -17,6 +17,8 @@ import com.acss.core.account.OsaUserDetailsService;
 import com.acss.core.application.ApplicationSearchCriteriaDTO;
 import com.acss.core.model.application.HpsApplication;
 import com.acss.core.model.application.ZipCode;
+import com.acss.core.model.dataentry.CustomerSearchDTO;
+import com.acss.core.model.dataentry.common.constants.TypeOfId;
 import com.acss.core.application.ZipCodeSearchCriteriaDTO;
 
 
@@ -28,6 +30,7 @@ public class ApplicationSearchRestController {
 	private static final String APPLICATIONS_URL_KEY = "rs.search.applications.url";
 	private static final String FOLLOWUP_URL_KEY = "rs.search.followup.url";
 	private static final String ZIPCODE_URL_KEY = "rs.util.zipcode.url";
+	private static final String MCUSTOMER_URL_KEY = "rs.util.customers.url";
 	
 	@Autowired
 	private OsaUserDetailsService userService;
@@ -98,4 +101,38 @@ public class ApplicationSearchRestController {
 		ZipCode[] zipCodes = template.getForObject(uri, ZipCode[].class);
 		return Arrays.asList(zipCodes);	
 	}
+	
+	@RequestMapping(value="/dataentry/mcustomers", method = RequestMethod.GET)
+	public List<CustomerSearchDTO> customers(
+			@RequestParam(value = "applicantName.firstName", required = false) String firstName,
+			@RequestParam(value = "applicantName.middleName", required = false) String middleName,
+			@RequestParam(value = "applicantName.surName", required = false) String lastName,
+			@RequestParam(value = "applicantId.idType", required = false) String idCardType,
+			@RequestParam(value = "applicantId.idCardNo", required = false) String idCardNo,
+			@RequestParam(value = "dateOfBirth", required = false) String dateOfBirth){
+			
+		String uri = MessageFormat.format(env.getProperty(MCUSTOMER_URL_KEY),"");
+		uri = uri + "/?";
+		uri = appendParameters(uri,firstName,middleName,lastName,idCardType,idCardNo,dateOfBirth);
+		RestTemplate template = new RestTemplate();
+		
+		CustomerSearchDTO[] mCustomers = template.getForObject(uri, CustomerSearchDTO[].class);
+		return Arrays.asList(mCustomers);	
+	}
+	
+	private String appendParameters(String uri, String firstName, 
+			String middleName, String lastName, String idCardType,
+			String idCardNo, String dateOfBirth) {
+		//bootstrap the enum for map.
+		TypeOfId.values();
+		
+		uri = firstName != null ? uri + "firstName=" + firstName + "&" : uri;
+		uri = middleName != null ? uri + "middleName=" + middleName + "&" : uri;
+		uri = lastName != null ? uri + "lastName=" + lastName + "&" : uri;
+		uri = idCardType != null && idCardType.length()>0? uri + "idCardType=" + TypeOfId.valueOf(idCardType).getCode() + "&" : uri;
+		uri = idCardNo != null ? uri + "idCardNo=" + idCardNo + "&" : uri;
+		uri = dateOfBirth != null ? uri + "dateOfBirth=" + dateOfBirth.replaceAll("-", "") + "&" : uri;
+		return uri;
+	}
+	
 }

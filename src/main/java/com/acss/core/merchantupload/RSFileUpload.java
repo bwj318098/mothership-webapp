@@ -45,6 +45,7 @@ public class RSFileUpload implements FileUploadService {
 	 * refer to osa.properties for the value of key 'upload.directory'
 	 */
 	private final static String UPLOAD_DIRECTORY_KEY = "upload.directory";
+	private final static String UPLOAD_DIRECTORY_LOGICAL_KEY = "upload.directory.logical";
 	/**
 	 * refer to osa.properties for the value of key 'rs.images.url'
 	 */
@@ -77,6 +78,10 @@ public class RSFileUpload implements FileUploadService {
 			try {
 				File newDirectory = new File(saveDirectory + File.separator
 						+ appImage.getGroupId());
+				
+				String logicalDirectory = env.getProperty(UPLOAD_DIRECTORY_LOGICAL_KEY)+File.separator
+						+appImage.getGroupId();
+				
 				// creates new directory using the application number
 				if (!newDirectory.exists())
 					newDirectory.mkdirs();
@@ -86,7 +91,9 @@ public class RSFileUpload implements FileUploadService {
 				
 				appImage.setImageCode(imageCode);
 				appImage.setImageFilename(imageCode+"."+fileExtension);
-				appImage.setImagePath(newDirectory.getAbsolutePath()+ File.separator + imageCode+"."+fileExtension);
+				//instead of using the physical location,let's have a configurable logical path.
+				//appImage.setImagePath(newDirectory.getAbsolutePath()+ File.separator + imageCode+"."+fileExtension);
+				appImage.setImagePath(logicalDirectory+ File.separator + imageCode+"."+fileExtension);
 				return true;
 			} catch (IllegalStateException | IOException e) {
 				return false;

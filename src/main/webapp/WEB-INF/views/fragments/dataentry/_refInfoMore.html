@@ -6,166 +6,275 @@
 </head>
 <body>
 	<div th:fragment="refInfoMore" id="refInfoMore" class="tab-pane fade">
-	<p></p>
-	<div class="row">
-			<div class="col-md-8">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-md-3"><label class="control-label" for="refOtherName">Reference Name</label></div>
-					  	<div class="col-md-3"><input name="refOtherFirstName" type="text" class="form-control size_30_mandatory" id="refOtherFirstName" placeholder="First Name" maxlength="30"/> </div>
-					  	<div class="col-md-3"><input name="refOtherMiddleName" type="text" class="form-control" id="refOtherMiddleName" placeholder="Middle Name" maxlength="30"/> </div>
-					  	<div class="col-md-3"><input name="refOtherSurName" type="text" class="form-control size_30_mandatory" id="refOtherSurName" placeholder="Surname" maxlength="30" /> </div>
-				  	</div>
-				</div>
-			</div>
-			
-			<div class="col-md-4">
-				<div class="form-group">
-				<div class="row">
-				  <div class="col-md-7 col-md-offset-1"><label class="control-label" for="refOtherationship">Relationship w/ Applicant</label></div>
-				  <div class="col-md-4">
-				  	<select name="refOtherationship" class="form-control" id="refOtherationship">
-			  			<option></option>					
-						<option>Mother</option>
-						<option>Father</option>
-						<option>Brother</option>
-						<option>Sister</option>
-						<option>Auntie</option>
-						<option>Uncle</option>
-						<option>Cousin</option>
-						<option>Referral</option>
-						<option>Other</option>
-					</select>
-				  </div>
-				</div>
-				</div>
-			</div>
-		</div>
+	<script type="text/javascript">
+	$(document).ready(function(e){
+		$('#btn_addMoreRef').on('click', addMoreReference);
+
+		$("#btn_deleteRef").on('click', deleteLastRow);
 		
-		<!--Start Copy Address Detail: you can copy paste from here but make sure id are modified and labels are updated. -->
-		<div class="row">
-			<div class="col-md-8">
+	});
+	
+	function deleteLastRow(){
+		var int_refIndex = parseInt(($('#otherReferences .otherRef').length), 10) - 1;
+		if(int_refIndex!=0){
+	    	$("#otherReference_"+ int_refIndex.toString()).remove();
+	    	console.log(int_refIndex.toString());
+		}
+	};
+	
+	function addMoreReference(){
+		
+		var int_refIndex = parseInt(($('#otherReferences .otherRef').length), 10);
+		if(int_refIndex > 4){
+			//do thing here
+		}else{
+			var input = $("<input />")
+			   	.attr("type", "hidden")
+			  	.attr("name", "addReference").val("na");
+			
+			$('#dataEntryForm').append($(input));
+			
+			$.post("../dataentry/ajax/references",$('#dataEntryForm').serialize(),function(data){
+				//console.log(data);
+				$("#refContent").html(data);
+			});
+		}
+		
+		
+	};
+	
+	</script>
+	
+	
+	<p></p>
+	<div th:fragment="refContent" id="refContent">
+	
+	<div id="otherReferences" th:fragment="otherReferences" th:each="otherRef, rowStat : *{otherReferences}" >
+		<div class="otherRef" th:id="${'otherReference_' +rowStat.index}" id="otherReference">
+			<div class="row" >
 				<div class="form-group">
-					<div class="row">
-						<div class="col-md-3"><label class="control-label" for="refOtherAddress">Reference Address</label></div>
-						<div class="col-md-9">
+					<div class="col-md-12">
+						<span style="font-weight:bold;color: #337ab7" th:text="${'Reference Person ' +rowStat.count}"></span>
+						<hr style="width: 100%; color: black; height: 1px; background-color:#c0c0c0;" />
+					</div>
+					
+				</div>
+			</div>
+			<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
 							<div class="row">
-								<div class="col-md-4">
-									<div class="input-group">
-										<input name="zipcode_5" type="text" class="form-control numeric size_6_mandatory" id="zipcode_5" placeholder="Zip Code" maxlength="6" readonly="readonly"/>								
-										<div class="input-group-btn">
-												<button value="btn_zipcode_5" name="btn_zipcode_5" type="button" class="btn btn-primary">?</button>
+								<div class="col-md-3"><label class="control-label" for="refName">Reference Name</label></div>
+							  	<div class="col-md-3"><input th:value="*{otherReferences[__${rowStat.index}__].refName==null?'':otherReferences[__${rowStat.index}__].refName.firstName}" 
+							  		th:name="otherReferences[__${rowStat.index}__].refName.firstName" type="text" class="form-control name_30" id="otherRefFirstName" placeholder="First Name" maxlength="30"/> </div>
+							  	
+							  	<div class="col-md-3"><input th:value="*{otherReferences[__${rowStat.index}__].refName==null?'':otherReferences[__${rowStat.index}__].refName.middleName}" 
+							  		th:name="otherReferences[__${rowStat.index}__].refName.middleName" type="text" class="form-control name_30" id="otherRefMiddleName" placeholder="Middle Name" maxlength="30"/> </div>
+							  		
+							  	<div class="col-md-3"><input th:value="*{otherReferences[__${rowStat.index}__].refName==null?'':otherReferences[__${rowStat.index}__].refName.surName}" 
+							  		th:name="otherReferences[__${rowStat.index}__].refName.surName" type="text" class="form-control name_30" id="otherRefSurName" placeholder="Surname" maxlength="30" /> </div>
+						  	</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+						<div class="row">
+						  <div class="col-md-7 col-md-offset-1"><label class="control-label" for="refationship">Relationship w/ Applicant</label></div>
+						  <div class="col-md-4">
+						  	<select th:name="otherReferences[__${rowStat.index}__].relationship" 
+						  		th:value="*{otherReferences[__${rowStat.index}__].relationship}" name="OtherRelationship" class="form-control" id="otherRefationship">
+					  			<option value=""></option>					
+								<option th:each="item : ${refRelationshipList}" 
+									th:selected="*{otherReferences[__${rowStat.index}__].relationship}==${item}"
+									th:value="${item}" 
+									th:text="#{${item.value}}"></option>
+							</select>
+						  </div>
+						</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--Start Copy Address Detail: you can copy paste from here but make sure id are modified and labels are updated. -->
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="refAddress">Reference Address</label></div>
+								<div class="col-md-9">
+									<div class="row">
+										<div class="col-md-4">
+											<!-- Please note the added '1' from the address attributes. This is to unique identify for auto-population functionality from modals. -->
+											<div class="input-group">
+												<input 
+													th:name="otherReferences[__${rowStat.index}__].refAddress.zipCode"
+													th:value="*{otherReferences[__${rowStat.index}__].refAddress==null?'':otherReferences[__${rowStat.index}__].refAddress.zipCode}" 
+													name="zipcode_4" type="text" class="form-control numeric any_6" 
+													th:id="${'zipcode_1'+rowStat.index}"
+													id="zipcode_4" placeholder="Zip Code" maxlength="6" readonly="readonly"/>								
+												<div class="input-group-btn">
+														<button th:name="${'btn_zipcode_1'+rowStat.index}" type="button" class="btn btn-primary">?</button>
+												</div>
+											</div>
 										</div>
+										<div class="col-md-2">
+											<input 
+												th:name="otherReferences[__${rowStat.index}__].refAddress.unitNo"
+												th:value="*{otherReferences[__${rowStat.index}__].refAddress==null?'':otherReferences[__${rowStat.index}__].refAddress.unitNo}" 
+												name="refOtherUnitNo" type="text" class="form-control any_6"	id="otherRefUnitNo" placeholder="Unit No" maxlength="6"/>  
+										</div>
+										<div class="col-md-6">
+											<input
+												th:name="otherReferences[__${rowStat.index}__].refAddress.street"
+												th:value="*{otherReferences[__${rowStat.index}__].refAddress==null?'':otherReferences[__${rowStat.index}__].refAddress.street}" 
+												name="refOtherStreet" type="text" class="form-control any_70" id="otherRefStreet" placeholder="Street" maxlength="70"/>
+										</div> 
 									</div>
 								</div>
-								<div class="col-md-2">
-									<input name="refOtherUnitNo" type="text" class="form-control size_6_mandatory"	id="refOtherUnitNo" placeholder="Unit No" maxlength="6"/>  
+								
+							</div>
+						</div>
+		
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-11 col-md-offset-1">
+									<input
+										th:id="${'area_1'+rowStat.index}"
+										th:name="otherReferences[__${rowStat.index}__].refAddress.baranggay"
+										th:value="*{otherReferences[__${rowStat.index}__].refAddress==null?'':otherReferences[__${rowStat.index}__].refAddress.baranggay}" 
+										name="area_4" type="text" class="form-control any_70" id="area_4" placeholder="Baranggay/Village" maxlength="70"/>
 								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6"></div>
 								<div class="col-md-6">
-									<input name="refOtherStreet" type="text" class="form-control size_70_mandatory" id="refOtherStreet" placeholder="Street" maxlength="70"/>
-								</div> 
+									<input 
+										th:id="${'city_1'+rowStat.index}"
+										th:name="otherReferences[__${rowStat.index}__].refAddress.city" 
+										th:value="*{otherReferences[__${rowStat.index}__].refAddress==null?'':otherReferences[__${rowStat.index}__].refAddress.city}" 
+										name="city_4" type="text" class="form-control" id="city_4" placeholder="City" maxlength="70" readonly="readonly"/>
+								</div>
+								
 							</div>
 						</div>
-						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-11 col-md-offset-1">
+									<input 
+										th:name="otherReferences[__${rowStat.index}__].refAddress.landMark"
+										th:value="*{otherReferences[__${rowStat.index}__].refAddress==null?'':otherReferences[__${rowStat.index}__].refAddress.landMark}" 
+										name="refOtherLandmark" type="text" class="form-control" id="otherRefLandmark" placeholder="Landmark" maxlength="70"/>
+								</div>
+							</div>
+						</div>	
 					</div>
 				</div>
-
-			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-md-11 col-md-offset-1">
-							<input name="area_5" type="text" class="form-control size_70_mandatory" id="area_5" placeholder="Baranggay/Village" maxlength="70"/>
+				<!-- End Copy Address Detail: you can copy paste from here but make sure id are modified and labels are updated. -->
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3"><label class="control-label" for="refHomePhone">Home Phone</label></div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<div class="col-xs-5">
+											<input
+												th:name="otherReferences[__${rowStat.index}__].refPhone.region"
+												th:value="*{otherReferences[__${rowStat.index}__].refPhone==null?'':otherReferences[__${rowStat.index}__].refPhone.region}" 
+												name="refOtherPhoneReg" type="text" class="form-control numeric phone_reg_4 refHomePhone"	id="otherRefPhoneReg" placeholder="_ _ _" maxlength="4"/> 
+										</div>
+										<div class="col-xs-7">
+											<input 
+												th:name="otherReferences[__${rowStat.index}__].refPhone.phoneNo"
+												th:value="*{otherReferences[__${rowStat.index}__].refPhone==null?'':otherReferences[__${rowStat.index}__].refPhone.phoneNo}" 
+												name="refOtherhomePhone" type="text" class="form-control numeric phoneno_8 refHomePhone" id="otherRefhomePhone" placeholder="_ _ _ _ _ _ _" maxlength="8"/>
+										</div> 
+									</div>
+								</div>
+								<div class="col-md-2"><label class="control-label" for="refMobileNo">Cell Phone</label></div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<div class="col-xs-12">
+											<input 
+												th:name="otherReferences[__${rowStat.index}__].refMobile.phoneNo"
+												th:value="*{otherReferences[__${rowStat.index}__].refMobile==null?'':otherReferences[__${rowStat.index}__].refMobile.phoneNo}" 
+												name="refOtherMobileNo" type="text" class="form-control numeric mobileno_11" id="otherRefMobileNo" placeholder="_ _ _ _ _ _ _ _ _ _ _" maxlength="11"/>
+										</div> 
+									</div>
+								
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>	
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="row">
+							  <div class="col-md-5 col-md-offset-1"><label class="control-label" for="refCorpPhoneNo">Company Phone</label></div>
+							  <div class="col-md-6">
+								<div class="row">
+									<div class="col-xs-5">
+										<input 
+											th:name="otherReferences[__${rowStat.index}__].refCorpPhone.region"
+											th:value="*{otherReferences[__${rowStat.index}__].refCorpPhone==null?'':otherReferences[__${rowStat.index}__].refCorpPhone.region}" 
+											name="refOtherCorpPhoneReg" type="text" class="form-control numeric phone_reg_4 refCorpPhone"	id="otherRefCorpPhoneReg" placeholder="_ _ _" maxlength="4"/> 
+									</div>
+									<div class="col-xs-7">
+										<input 
+											th:name="otherReferences[__${rowStat.index}__].refCorpPhone.phoneNo"
+											th:value="*{otherReferences[__${rowStat.index}__].refCorpPhone==null?'':otherReferences[__${rowStat.index}__].refCorpPhone.phoneNo}" 
+											name="refOtherCorpPhoneNo" type="text" class="form-control numeric phoneno_7 refCorpPhone" id="otherRefCorpPhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="7"/>
+									</div> 
+								</div>
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-2"><label class="control-label" for="refCorpName">Company Name</label></div>
+							  	<div class="col-md-9 col-md-offset-1">
+							  	<input
+							  		th:name="otherReferences[__${rowStat.index}__].companyName" 
+							  		th:value="*{otherReferences[__${rowStat.index}__].companyName}" 
+							  		name="refOtherCorpName" type="text" class="form-control" id="otherRefCorpName" maxlength="100"/></div>
+						  	</div>
+						</div>
+					</div>
+					<div class="col-md-1 col-md-offset-3"></div>
+					<hr style="width: 100%; color: black; height: 1px; background-color:#c0c0c0;" />
+				</div>			
 			</div>
-		</div>
+		</div><!-- Reference-->
+	</div><!-- References -->
 		
 		<div class="row">
-			<div class="col-md-8">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-md-6"></div>
-						<div class="col-md-6">
-							<input name="city_5" type="text" class="form-control" id="city_5" placeholder="City" maxlength="70" readonly="readonly"/>
-						</div>
-						
-					</div>
-				</div>
+			<div class="col-md-8"></div>
+			<div class="col-md-1 col-md-offset-2">
+				<button type="button" id="btn_addMoreRef" name="btn_addMoreRef" class="btn btn-primary" >Add More ... </button>
 			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-md-11 col-md-offset-1">
-							<input name="refOtherLandmark" type="text" class="form-control" id="refOtherLandmark" placeholder="Landmark" maxlength="70"/>
-						</div>
-					</div>
-				</div>	
+			<div class="col-md-1">
+				<button type="button" id="btn_deleteRef" name="btn_deleteRef" class="btn btn-primary" >Remove Last</button>
 			</div>
-		</div>
-		<!-- End Copy Address Detail: you can copy paste from here but make sure id are modified and labels are updated. -->
-		<div class="row">
-			<div class="col-md-8">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-md-3"><label class="control-label" for="refOtherHomePhone">Home Phone</label></div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<div class="col-xs-5">
-									<input name="refOtherPhoneReg" type="text" class="form-control"	id="refOtherPhoneReg" placeholder="_ _ _" maxlength="4"/> 
-								</div>
-								<div class="col-xs-7">
-									<input name="refOtherhomePhone" type="text" class="form-control" id="refOtherhomePhone" placeholder="_ _ _ _ _ _ _" maxlength="11"/>
-								</div> 
-							</div>
-						</div>
-						<div class="col-md-2"><label class="control-label" for="refOtherMobileNo">Cell Phone</label></div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<div class="col-xs-5">
-									<input name="refOtherMobileReg" type="text" class="form-control numeric size_4_mandatory"	id="refOtherMobileReg" placeholder="_ _ _" maxlength="4"/> 
-								</div>
-								<div class="col-xs-7">
-									<input name="refOtherMobileNo" type="text" class="form-control numeric size_11_mandatory" id="refOtherMobileNo" placeholder="_ _ _ _ _ _ _" maxlength="11"/>
-								</div> 
-							</div>
-						
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-md-4">
-				<div class="form-group">
-					<div class="row">
-					  <div class="col-md-5 col-md-offset-1"><label class="control-label" for="refOtherCorpPhoneNo">Company Phone</label></div>
-					  <div class="col-md-6">
-						<div class="row">
-							<div class="col-xs-5">
-								<input name="refOtherCorpPhoneReg" type="text" class="form-control"	id="refOtherCorpPhoneReg" placeholder="_ _ _" maxlength="4"/> 
-							</div>
-							<div class="col-xs-7">
-								<input name="refOtherCorpPhoneNo" type="text" class="form-control" id="refOtherCorpPhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="11"/>
-							</div> 
-						</div>
-					  </div>
-					</div>
-				</div>
-			</div>
-		</div>
+		</div>	
 		
-		<div class="row">
-			<div class="col-md-8">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-md-2"><label class="control-label" for="refOtherCorpName">Company Name</label></div>
-					  	<div class="col-md-9 col-md-offset-1"><input name="refOtherCorpName" type="text" class="form-control" id="refOtherCorpName" maxlength="100"/></div>
-				  	</div>
-				</div>
-			</div>
-			<div class="col-md-4"></div>
-		</div>					
 	</div>
+	
 </body>
 </html>

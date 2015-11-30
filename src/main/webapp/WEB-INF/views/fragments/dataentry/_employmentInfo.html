@@ -6,6 +6,36 @@
 </head>
 <body>
 	<div th:fragment="employmentInfo" id="empInfo" class="tab-pane fade">
+  	<script type="text/javascript">
+
+  	$(document).ready(function(e){
+  		 $('.income-group').on('change', function(e){
+  			calculateIncome();
+  		 });
+  		 
+  		 $('.expenses-group').on('change', function(e){
+  			calculateExpenses();
+   		 });
+  	});    
+  	
+  	function calculateIncome(){
+		$monthlyIncome = ($('#monthlyIncome').val()=='')|| ($('#monthlyIncome').val()==null) ? 0: parseInt($('#monthlyIncome').val(),10);
+		$otherIncome = ($('#otherIncome').val()=='')|| ($('#otherIncome').val()==null) ? 0: parseInt($('#otherIncome').val(),10);
+		$remittance = ($('#remittance').val()=='')|| ($('#remittance').val()==null) ? 0: parseInt($('#remittance').val(),10);
+  		$('#totalPersonalIncome').val($monthlyIncome + $otherIncome);
+  		$('#totalIncome').val($monthlyIncome + $otherIncome + $remittance);
+  	};
+  	
+  	function calculateExpenses(){
+		$fixedExpenses = ($('#fixedExpenses').val()=='')|| ($('#fixedExpenses').val()==null) ? 0: parseInt($('#fixedExpenses').val(),10);
+		$flexibleExpenses = ($('#flexibleExpenses').val()=='')|| ($('#flexibleExpenses').val()==null) ? 0: parseInt($('#flexibleExpenses').val(),10);
+		$discretionaryExpense = ($('#discretionaryExpense').val()=='')|| ($('#discretionaryExpense').val()==null) ? 0: parseInt($('#discretionaryExpense').val(),10);
+  		$('#totalExpenses').val($fixedExpenses + $flexibleExpenses);
+  		$('#expandedExpense').val($fixedExpenses + $flexibleExpenses + $discretionaryExpense);
+  	};
+  	
+  	</script>
+	  	
 	  	<p></p>
 		<div class="row">
 			<div class="col-md-12">
@@ -42,7 +72,7 @@
 						<div class="col-md-2"><label class="control-label" for="companyName">Company Name</label></div>
 					  	<div class="col-md-6"><input th:field="*{companyName}" name="companyName" type="text" class="form-control any_70_req text-left" id="companyName" placeholder="Company Name" maxlength="70"/></div>
 					  	<div class="col-md-2"><label class="control-label" for="sourceOfOtherIncome">Source of Other Income</label></div>
-					  	<div class="col-md-2"><input th:field="*{sourceOfIncome}" name="sourceOfOtherIncome" type="text" class="form-control any_50_req" id="sourceOfOtherIncome" maxlength="50"/></div>
+					  	<div class="col-md-2"><input th:field="*{sourceOfIncome}" name="sourceOfOtherIncome" type="text" class="form-control any_50" id="sourceOfOtherIncome" maxlength="50"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -120,7 +150,7 @@
 									<input th:field="*{corpPhone.region}" name="corpPhoneReg" type="text" class="form-control numeric phone_reg_4 corpPhone" id="corpPhoneReg" placeholder="_ _ _" maxlength="4"/> 
 								</div>
 								<div class="col-xs-7">
-									<input th:field="*{corpPhone.phoneNo}" name="corpPhoneNo" type="text" class="form-control numeric phoneno_11 corpPhone" id="corpPhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="10"/>
+									<input th:field="*{corpPhone.phoneNo}" name="corpPhoneNo" type="text" class="form-control numeric phoneno_7 corpPhone" id="corpPhoneNo" placeholder="_ _ _ _ _ _ _" maxlength="7"/>
 								</div> 
 							</div>
 						</div>
@@ -191,7 +221,7 @@
 						<div class="col-md-2"><label class="control-label" for="department">Department</label></div>
 					  	<div class="col-md-2"><input th:field="*{department}" name="department" type="text" class="form-control any_50_req" id="department" placeholder="Department" maxlength="50"/></div>
 					  	<div class="col-md-2"><label class="control-label" for="noOfEmployee">No. of Employee</label></div>
-						<div class="col-md-2"><input th:field="*{noOfEmployee}" name="noOfEmployee" type="text" class="form-control any_50_req" id="noOfEmployee" placeholder="No. of Employee" maxlength="5"/></div>
+						<div class="col-md-2"><input th:field="*{noOfEmployee}" name="noOfEmployee" type="text" class="form-control numeric any_3" id="noOfEmployee" placeholder="No. of Employee" maxlength="3"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -204,11 +234,11 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="monthlyIncome">Monthly Net Income</label></div>
-					  	<div class="col-md-2"><input th:field="*{monthlyNetIncome}" name="monthlyIncome" type="text" class="form-control numeric-decimal currency_10_req" id="monthlyIncome" maxlength="10"/></div>
+					  	<div class="col-md-2"><input th:field="*{monthlyNetIncome}" name="monthlyIncome" type="text" class="form-control income-group numeric-decimal currency_10_req" id="monthlyIncome" maxlength="10"/></div>
 						<div class="col-md-2"><label class="control-label" for="monthlyIncome">Other Income(if any)</label></div>
-					  	<div class="col-md-2"><input th:field="*{otherIncome}" name="otherIncome" type="text" class="form-control numeric-decimal currency_10" id="otherIncome" maxlength="10"/></div>
+					  	<div class="col-md-2"><input th:field="*{otherIncome}" name="otherIncome" type="text" class="form-control income-group numeric-decimal currency_10" id="otherIncome" maxlength="10"/></div>
 					  	<div class="col-md-2"><label class="control-label" for="totalPersonalIncome">Total Personal Income</label></div>
-					  	<div class="col-md-2"><input name="totalPersonalIncome" type="text" class="form-control numeric-decimal currency_10" id="totalPersonalIncome" maxlength="10" readonly="readonly"/></div>
+					  	<div class="col-md-2"><input name="totalPersonalIncome" type="text" class="form-control income-group numeric-decimal currency_10" id="totalPersonalIncome" maxlength="10" readonly="readonly"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -221,9 +251,9 @@
 						<div class="col-md-2"></div>
 					  	<div class="col-md-2"></div>
 						<div class="col-md-2"><label class="control-label" for="remittance">Contributions/Remittances</label></div>
-					  	<div class="col-md-2"><input th:field="*{remittance}" name="remittance" type="text" class="form-control numeric-decimal currency_10" id="remittance" maxlength="10"/></div>
+					  	<div class="col-md-2"><input th:field="*{remittance}" name="remittance" type="text" class="form-control income-group numeric-decimal currency_10" id="remittance" maxlength="10"/></div>
 					  	<div class="col-md-2"><label class="control-label" for="totalIncome">Total Income</label></div>
-					  	<div class="col-md-2"><input name="totalIncome" type="text" class="form-control numeric-decimal currency_10" id="otherIncome" maxlength="10" readonly="readonly"/></div>
+					  	<div class="col-md-2"><input name="totalIncome" type="text" class="form-control numeric-decimal currency_10" id="totalIncome" maxlength="10" readonly="readonly"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -234,9 +264,9 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="fixedExpenses">Fixed Expenses</label></div>
-					  	<div class="col-md-2"><input th:field="*{fixedExpenses}" name="fixedExpenses" type="text" class="form-control numeric-decimal currency_10" id="fixedExpenses" maxlength="10"/></div>
+					  	<div class="col-md-2"><input th:field="*{fixedExpenses}" name="fixedExpenses" type="text" class="form-control expenses-group numeric-decimal currency_10" id="fixedExpenses" maxlength="10"/></div>
 						<div class="col-md-2"><label class="control-label" for="flexibleExpenses">Flexible Expenses</label></div>
-					  	<div class="col-md-2"><input th:field="*{flexibleExpenses}" name="flexibleExpenses" type="text" class="form-control numeric-decimal currency_10" id="flexibleExpenses" maxlength="10"/></div>
+					  	<div class="col-md-2"><input th:field="*{flexibleExpenses}" name="flexibleExpenses" type="text" class="form-control expenses-group numeric-decimal currency_10" id="flexibleExpenses" maxlength="10"/></div>
 					  	<div class="col-md-2"><label class="control-label" for="totalExpenses">Total Expense</label></div>
 					  	<div class="col-md-2"><input name="totalExpenses" type="text" class="form-control numeric-decimal currency_10" id="totalExpenses" maxlength="10" readonly="readonly"/></div>
 				  	</div>
@@ -250,7 +280,7 @@
 						<div class="col-md-2"></div>
 					  	<div class="col-md-2"></div>
 						<div class="col-md-2"><label class="control-label" for="discretionaryExpense">Discretionary Expenses</label></div>
-					  	<div class="col-md-2"><input th:field="*{discretionaryExpense}" name="discretionaryExpense" type="text" class="form-control numeric-decimal currency_10" id="discretionaryExpense" maxlength="10"/></div>
+					  	<div class="col-md-2"><input th:field="*{discretionaryExpense}" name="discretionaryExpense" type="text" class="form-control expenses-group numeric-decimal currency_10" id="discretionaryExpense" maxlength="10"/></div>
 					  	<div class="col-md-2"><label class="control-label" for="expandedExpense">Expanded Expense</label></div>
 					  	<div class="col-md-2"><input name="expandedExpense" type="text" class="form-control numeric-decimal currency_10" id="expandedExpense" maxlength="10" readonly="readonly"/></div>
 				  	</div>

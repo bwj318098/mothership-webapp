@@ -3,7 +3,7 @@
 <head th:replace="fragments/resources :: resources(title=#{view.dataEntry.title})"></head>
 <body>
 <!-- Loading gif -->
-<!--<div class="se-pre-con"></div>-->
+<div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div id="wrap">
 <div class="container-fluid">
@@ -70,7 +70,8 @@
 </div>
 	
 <div th:replace="fragments/footer :: footer">&nbsp;</div>
-
+<!-- Customer Search Modal -->
+<div th:replace="fragments/customers/modal_customers :: modal_customers(modal_id='searchModal',modal_title='Customer Search')">&nbsp;</div>
 <div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 <div th:replace="fragments/modal_generic :: modal_generic(modal_id='modal_generic',modal_title='Information')">&nbsp;</div>
 	
@@ -107,6 +108,28 @@ $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
 	//clear the chosen category
 	e.preventDefault();
 	$(this).parent().parent().find('input').val('');
+	
+}).on("click",'button[name^="btn_zipcode"]',function(e){
+	    e.preventDefault();
+	    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
+	    $('#selectedZipcode').val($zipCodeIndex);
+	    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#close', function (e) {return;});
+	    
+}).on("click",'#btn_customerSearch',function(e){
+    e.preventDefault();
+    
+    convertTextInputToUpperCase();
+    
+    $('#table-customers').bootstrapTable('refresh',{
+        method: 'get',
+        url : "/dataentry/mcustomers?"+$.param($('#dataEntryForm').serializeObject()),
+        cache: false,
+        striped: true,
+        pagination: true});
+    
+    $('#searchModal').modal({ backdrop: 'static', keyboard: false })
+        .one('click', '#close', function (e) {return;});
 });
 
 $(document).ready(function(e){
@@ -121,13 +144,6 @@ $(document).ready(function(e){
 	enableDecimalOnlyForNumericClass();
 	enableToolTipForContactTime();
 
-	 $('button[name^="btn_zipcode"]').on('click', function(e){
-	    e.preventDefault();
-	    var $zipCodeIndex = $(this).attr('name').replace(/[^0-9]/gi, '');
-	    $('#selectedZipcode').val($zipCodeIndex);
-	    $('#zipcodeModal').modal({ backdrop: 'static', keyboard: false })
-	        .one('click', '#close', function (e) {return;});
-	 });
 	 
 	 $('#residenceType').on("change",function(e){
 	 	var _this = $(this);

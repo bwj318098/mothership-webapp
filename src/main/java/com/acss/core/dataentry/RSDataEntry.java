@@ -54,6 +54,8 @@ public class RSDataEntry implements DataEntryService{
 	 */
 	private final static String RS_DATAENTRY_URL_KEY = "rs.dataentry.url";
 	
+	private final static String RS_DATAENTRYDETAIL_URL_KEY = "rs.dataentrydetails.url";
+	
 	private final static String RS_PROMOTION_URL_KEY = "rs.util.promotion.url";
 	
 	public boolean save(DataEntryDTO dataEntry) {
@@ -116,6 +118,13 @@ public class RSDataEntry implements DataEntryService{
 		PromotionRules installmentDetail = mapper.map(rawDetails, PromotionRules.class);
 		
 		return installmentDetail;	
+	}
+
+	public DataEntryDTO getDetails(String customerCd) {
+		RestTemplate template = new RestTemplate();
+		String uri = MessageFormat.format(env.getProperty(RS_DATAENTRYDETAIL_URL_KEY),customerCd);
+		ResponseEntity<DataEntryDTO> response = template.getForEntity(uri,DataEntryDTO.class);
+		return response.getBody();
 	}
 
 }

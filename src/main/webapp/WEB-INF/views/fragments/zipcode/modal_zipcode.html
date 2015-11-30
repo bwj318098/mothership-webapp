@@ -41,6 +41,7 @@
 			$('#zipcode_'+$('#selectedZipcode').val()).val($(this).val());
 			$('#area_'+$('#selectedZipcode').val()).val($areaNm);
 			$('#city_'+$('#selectedZipcode').val()).val($cityNm);
+			
 		});
 		
 	</script>
@@ -56,7 +57,7 @@
     		<thead class="row">
     		<tr>
     		<th data-sortable="true" data-formatter="buttonFormatter_postCode" data-field="postCode"></th>
-    		<th data-sortable="true" data-formatter="zipCode_formatter" data-field="postCode" width="95" height="20" rowspan="1" colspan="1">Zipode</th>
+    		<th data-sortable="true" data-formatter="zipCode_formatter" data-field="postCode" width="95" height="20" rowspan="1" colspan="1">ZipCode</th>
     		<th data-sortable="true" data-formatter="areaNm_formatter" data-field="areaNm" width="105" height="20" rowspan="1" colspan="1">Area</th>
     		<th data-sortable="true" data-formatter="cityNm_formatter" data-field="cityNm" width="105" height="20" rowspan="1" colspan="1">City</th>
     		</tr>

@@ -256,6 +256,9 @@ body.loading {
   width: 1000px;
 }
 
+.modal-search {
+  width: 80%;
+}
 
 /** No more table**/
 @media only screen and (max-width: 800px) {

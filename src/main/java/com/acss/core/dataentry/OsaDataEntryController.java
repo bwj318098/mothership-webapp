@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.acss.core.application.HpsApplicationService;
 import com.acss.core.model.application.PromotionRules;
 import com.acss.core.model.dataentry.DataEntryDTO;
+import com.acss.core.model.dataentry.common.ReferenceData;
 import com.acss.core.support.web.AjaxUtils;
 
 @Controller
@@ -59,8 +60,19 @@ public class OsaDataEntryController {
 		}
 		
 	}
+	@RequestMapping(value = "dataentry/{appCd}/{customerCd}", method = RequestMethod.GET)
+	public String detail(HttpServletRequest request,Model model
+			,@PathVariable String appCd,@PathVariable String customerCd){
+		
+		DataEntryDTO detailsDto = dataEntryService.getDetails(customerCd);
+		detailsDto.setApplicationNo(appCd);
+		dataEntryService.bindAllEnumsToModel(model);
+		
+		model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY,detailsDto);
+		return "application/dataentry";
+	}
 	
-	@RequestMapping(value = "dataentry/ajax", method = RequestMethod.POST)
+	@RequestMapping(value = "dataentry/ajax",method = RequestMethod.POST)
 	public String calc(HttpServletRequest request,
 						Model model,
 						@ModelAttribute DataEntryDTO dataEntry,
@@ -79,6 +91,41 @@ public class OsaDataEntryController {
 			model.addAttribute("comment", dataEntry.getComment());
 			
 			return "fragments/dataentry/_prodDetail";
+		}
+		
+		dataEntryService.bindAllEnumsToModel(model);
+		model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY,dataEntry);
+		//do default
+		return "redirect:/dataentry/"+dataEntry.getApplicationNo();
+	}
+	
+	
+	@RequestMapping(value = "dataentry/ajax/references",params={"addReference"}, method = RequestMethod.POST)
+	public String addReference(HttpServletRequest request,
+						Model model,
+						@ModelAttribute DataEntryDTO dataEntry,
+						RedirectAttributes ra,
+						@RequestHeader("X-Requested-With") String requestedWith) {
+		
+		if(AjaxUtils.isAjaxRequest(requestedWith)){
+			
+			if(dataEntry==null) {
+				model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY, new com.acss.core.model.dataentry.DataEntryDTO());
+			}
+			dataEntryService.bindAllEnumsToModel(model);
+			dataEntry.addMoreReferences();
+			model.addAttribute("otherReferences",dataEntry.getOtherReferences());
+			
+			
+			int i=0;
+			for(ReferenceData ref : dataEntry.getOtherReferences()){
+				if(ref!=null){
+					model.addAttribute("otherReferences["+i+"]", dataEntry.getOtherReferences().get(i));
+					i++;
+				}
+			}
+			
+			return "fragments/dataentry/_refInfoMore :: refContent";
 		}
 		
 		dataEntryService.bindAllEnumsToModel(model);

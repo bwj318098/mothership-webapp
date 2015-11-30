@@ -225,34 +225,34 @@ $.validator.addClassRules({
    alphaNum_30_req:{
 	   required: true,
 	   maxlength: 30,
-	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+	   regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    alphaNum_50_req:{
 	   required: true,
 	   maxlength: 30,
-	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+	   regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    alphaNum_70_req:{
 	   required: true,
 	   maxlength: 70,
-	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+	   regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    alphaNum_30:{
 	   maxlength: 30,
-	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+	   regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    alphaNum_50:{
 	   maxlength: 30,
-	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+	   regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    alphaNum_70:{
 	   maxlength: 70,
-	   regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+	   regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    
@@ -264,26 +264,31 @@ $.validator.addClassRules({
    any_2_req: {
        maxlength: 2,
        required: true,
-       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
+   },
+   
+   any_3: {
+       maxlength: 3,
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    any_3_req: {
        maxlength: 3,
        required: true,
-       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    any_4_req: {
        maxlength: 4,
        required: true,
-       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    mon_2_req: {
 	   range: [0,11],
        maxlength: 2,
        required: true,
-       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    phone_reg_4: {
@@ -292,9 +297,21 @@ $.validator.addClassRules({
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
    },
    
-   phoneno_11: {
+   phoneno_7: {
 	   minlength: 7,
        maxlength: 7,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   phoneno_8: {
+	   minlength: 7,
+       maxlength: 8,
+       regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   phoneno_11: {
+	   minlength: 11,
+       maxlength: 11,
        regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
    },
    
@@ -309,6 +326,19 @@ $.validator.addClassRules({
 	   required: true,
 	   minlength: 7,
 	   maxlength: 7,
+	   regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   mobileno_reg_11: {
+	   required: true,
+	   minlength: 11,
+	   maxlength: 11,
+	   regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
+   },
+   
+   mobileno_11: {
+	   minlength: 11,
+	   maxlength: 11,
 	   regex: "([0-9]{1,10})(\.[0-9]{1,2})?"
    },
    
@@ -357,13 +387,12 @@ $.validator.addClassRules({
    },
    any_6_req: {
        maxlength: 6,
-       required: true,
-       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+       required: true
    },
    
    any_10_req: {
        maxlength: 10,
-       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$",
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$",
        required: true
    },
    
@@ -408,7 +437,7 @@ $.validator.addClassRules({
    
    any_20: {
        maxlength: 20,
-       regex: "^[A-Za-z0-9 - &]*[A-Za-z0-9][A-Za-z0-9 - &]*$"
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    any_20_req: {
