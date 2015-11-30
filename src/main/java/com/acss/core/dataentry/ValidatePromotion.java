@@ -133,27 +133,29 @@ public class ValidatePromotion {
 			
 		
 			if(promotionRules.getFpfrom()!=null || promotionRules.getFpTo()!=null){
-			
-						// Check if the finance price is less than Finance Price From
-						if((dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpfrom())<=0)){
-							
-							FieldError fieldError_1 = new FieldError(String.valueOf(dataEntry.getInstallment().totalFinancePrice()), "installment.totalFinancePrice", 
-									"Finance price is less than "+ promotionRules.getFpfrom());
-							
-							fieldErrorList.add(fieldError_1);
-							
-						}
+				
+				if(promotionRules.getPromotion().getFpIsRetricted().equals(new BigDecimal(2))){
+					// Check if the finance price is less than Finance Price From
+					if((dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpfrom())<0)){
+						
+						FieldError fieldError_1 = new FieldError(String.valueOf(dataEntry.getInstallment().totalFinancePrice()), "installment.totalFinancePrice", 
+								"Finance price is less than "+ promotionRules.getFpfrom());
+						
+						fieldErrorList.add(fieldError_1);
+						
+					}
 
-						// Check if the finance price is greater than Finance Price From
-						if((dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpTo())>=0)){
-							
-							FieldError fieldError_2 = new FieldError(String.valueOf(dataEntry.getInstallment().totalFinancePrice()),"installment.totalFinancePrice",
-									"Finance price is greater than " + promotionRules.getFpTo());
-							
-							fieldErrorList.add(fieldError_2);
-							
-						}
-			
+					// Check if the finance price is greater than Finance Price From
+					if((dataEntry.getInstallment().totalFinancePrice().compareTo(promotionRules.getFpTo())>0)){
+						
+						FieldError fieldError_2 = new FieldError(String.valueOf(dataEntry.getInstallment().totalFinancePrice()),"installment.totalFinancePrice",
+								"Finance price is greater than " + promotionRules.getFpTo());
+						
+						fieldErrorList.add(fieldError_2);
+						
+					}
+				}
+
 			}
 			
 			// Check if rate is equal to rate
@@ -173,7 +175,7 @@ public class ValidatePromotion {
 				//if(!(promotionRules.getPeriodFrom().isBefore(dataEntry.getStore().getReceivedDate()))){
 				if(!(promotionRules.getPeriodFrom().isBeforeNow())){	
 					FieldError fieldError_9 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "", 
-							"Promotion " + promotionRules.getPromotion().getPromotionName() +" is already expired");
+							"Promotion " + promotionRules.getPromotion().getPromotionName() +" will start on " + promotionRules.getPromotion().getFpfrom());
 					
 					fieldErrorList.add(fieldError_9);
 				}
@@ -191,7 +193,7 @@ public class ValidatePromotion {
 			// Check the total product price
 			if(promotionRules.getPpFrom()!=null || promotionRules.getPpTo()!=null){
 				
-				if(!(promotionRules.getPpFrom().compareTo(dataEntry.getInstallment().totalProductPrice())>=0)){
+				if(!(promotionRules.getPpFrom().compareTo(dataEntry.getInstallment().totalProductPrice())>0)){
 					
 					FieldError fieldError_11 = new FieldError(String.valueOf(dataEntry.getInstallment().totalProductPrice()), "installment.totalProductPrice", 
 							"Finance price is less than "+ promotionRules.getPpFrom());
@@ -200,7 +202,7 @@ public class ValidatePromotion {
 					
 				}
 
-				if(!(promotionRules.getPpTo().compareTo(dataEntry.getInstallment().totalProductPrice())<=0)){
+				if(!(promotionRules.getPpTo().compareTo(dataEntry.getInstallment().totalProductPrice())<0)){
 
 					FieldError fieldError_12 = new FieldError(String.valueOf(dataEntry.getInstallment().totalProductPrice()), "installment.totalProductPrice", 
 							"Finance price is less than "+ promotionRules.getPpTo());
