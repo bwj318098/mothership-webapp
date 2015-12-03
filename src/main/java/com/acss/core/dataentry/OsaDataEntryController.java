@@ -1,18 +1,18 @@
 package com.acss.core.dataentry;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,12 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.acss.core.application.HpsApplicationService;
+import com.acss.core.dto.RestResponseDTO;
 import com.acss.core.model.application.PromotionRules;
 import com.acss.core.model.dataentry.DataEntryDTO;
 import com.acss.core.support.web.AjaxUtils;
 
 @Controller
 public class OsaDataEntryController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(OsaDataEntryController.class);
+	
 	private static final String DOCUMENT_SUBMITTED="Documents Submitted";
 	static final String BINDING_RESULT_KEY = "org.springframework.validation.BindingResult.";	
 	static final String DATAENTRY_MODEL_ATTRIB_KEY = "dataEntryForm";
@@ -38,6 +42,10 @@ public class OsaDataEntryController {
 	
 	@Autowired
 	private HpsApplicationService rsApplicationService;
+
+	@Autowired
+	private SimpMessagingTemplate messageTemplate;
+
 	
 	@RequestMapping(value = "dataentry/{appCd}", method = RequestMethod.GET)
 	public String index(HttpServletRequest request,Model model,@PathVariable String appCd) {
@@ -90,184 +98,83 @@ public class OsaDataEntryController {
 		return "redirect:/dataentry/"+dataEntry.getApplicationNo();
 	}
 	
-	@RequestMapping(value = "dataentry/{appCd}", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public @ResponseBody DataEntryResult dataEntry(@ModelAttribute @Validated DataEntryDTO dataEntry,
-									BindingResult bindingResult,
-									Model model,
-									RedirectAttributes ra,
-									@PathVariable String appCd) {
+	/**
+	 * Processes and saves the inputs in aplication data entry page.
+	 */
+	@RequestMapping(value = "dataentry/{appCd}", 
+					method = RequestMethod.POST, 
+					produces = {MediaType.APPLICATION_JSON_VALUE})
+	public @ResponseBody RestResponseDTO<DataEntryDTO> saveDataEntry(
+			@ModelAttribute @Validated 	DataEntryDTO dataEntry,
+										BindingResult bindingResult,
+						 @PathVariable 	String appCd) {
 		
-		DataEntryResult result = new DataEntryResult();
+		RestResponseDTO<DataEntryDTO> result = new RestResponseDTO<DataEntryDTO>();
 		
-		if(dataEntry.getInstallment().getPromotionCode()!=null && 
-		      !dataEntry.getInstallment().getPromotionCode().equals("")){
+		this.messageTemplate.convertAndSend("/topic/dataentry", "{test: 'success'}");;
+		
+		if(bindingResult.hasErrors()){
+
+			result.setSuccess(false)
+				.setShowInModal(false)
+				.setFieldErrors(bindingResult.getFieldErrors());
+			
+		} else {
+		
+			try {
+				
+				result.setSuccess(true); // assume successful unless validated otherwise
+		
+				performBusinessValidations(dataEntry, result);
+				
+				if(result.isSuccess()){
+					result.setSuccess( dataEntryService.save(dataEntry) );
+					
+					if(!result.isSuccess()){
+						result.addError("error", "Error in saving data.");
+					}
+				}
+				
+			} catch (Exception e) {
+				
+				result.setSuccess(false)
+					.addError("error", "Error in saving data.");
+				
+				logger.error("Error in saveDataEntry", e);
+			}	
+			
+		}
+		
+		return result;
+	}
+	
+	private void performBusinessValidations(DataEntryDTO dataEntry, RestResponseDTO<DataEntryDTO> result) {
+		if(dataEntry.getInstallment().getPromotionCode() != null
+					&& dataEntry.getInstallment().getPromotionCode().trim().isEmpty()){
 			
 			ValidatePromotion validatePromo =  new ValidatePromotion();
 			
 			PromotionRules rules = dataEntryService.getPromotionDetails(dataEntry.getInstallment().getPromotionCode());
 			
-			if(!(rules.getPromotion()==null)){
+			if(rules.getPromotion() != null){
 				
-				HashSet<FieldError> promotionErrors = validatePromo.promotionErrors(dataEntry,rules);
+				Set<FieldError> promotionErrors = validatePromo.promotionErrors(dataEntry,rules);
 				
-				if(promotionErrors.size()>0){
+				if(promotionErrors.size() > 0){
 					
-					result.success = false;
-					result.showInModal = true;
-					result.setFieldErrors(promotionErrors);
-					result.getDataEntryError();
-					return result;
+					result.setSuccess(false)
+						.setShowInModal(true)
+						.setFieldErrors(promotionErrors);
 				}
 				
-			}else{
+			} else {
 				
-				HashSet<FieldError> promotionErrors = validatePromo.promotionErrors(dataEntry,rules);
-				result.success = false;
-				result.setFieldErrors(promotionErrors);
+				Set<FieldError> promotionErrors = validatePromo.promotionErrors(dataEntry,rules);
+				result.setSuccess(false)
+					.setFieldErrors(promotionErrors);
 				
 			}
 		}
-				
-		if(bindingResult.hasErrors()){
-
-			result.success = false;
-			result.showInModal = false;
-			result.setFieldErrors(new HashSet<FieldError>(bindingResult.getFieldErrors()));
-			
-		} else {
-			
-			//binds all the enum to model
-			dataEntryService.bindAllEnumsToModel(model);
-
-			try {
-				result.success = dataEntryService.save(dataEntry);
-				
-				if(!result.success){
-					result.success = false;
-					result.addError(new ObjectError("error", "Error in saving data."));
-				}
-				
-			} catch (Exception e) {
-			
-				result.success = false;
-				result.addError(new ObjectError("error", "Error in saving data."));
-				
-			}	
-			
-		}
-		return result;
 	}
 	
-	/**
-	 * 
-	 * @author fsolijon
-	 *
-	 */
-	public static class DataEntryResult {
-		
-		boolean success;
-		
-		HashSet<DataEntryError> dataEntryError = new HashSet<>();
-		
-		DataEntryDTO dataEntry;
-		
-		boolean showInModal;
-
-		/**
-		 * @return the success
-		 */
-		public boolean getSuccess() {
-			return success;
-		}
-
-		public DataEntryDTO getDataEntry(){
-			return this.dataEntry;
-		}
-		
-		private void setFieldErrors(HashSet<FieldError> fieldErrors){
-			for(FieldError error : fieldErrors){
-				this.dataEntryError.add(new DataEntryError(error.getField(), error.getDefaultMessage()));	
-			}
-		}
-		
-		private void addError(ObjectError error){
-			this.dataEntryError.add(new DataEntryError(error.getObjectName(), error.getDefaultMessage()));
-		}
-
-		public boolean isShowInModal() {
-			return showInModal;
-		}
-		
-		public HashSet<DataEntryError> getDataEntryError(){
-			return this.dataEntryError;
-		}
-		
-	}
-	
-	/**
-	 * 
-	 * @author fcortez
-	 *
-	 */
-	public static class DataEntryError {
-		
-		private String property;
-		
-		private String error;
-		
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((error == null) ? 0 : error.hashCode());
-			result = prime * result + ((property == null) ? 0 : property.hashCode());
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			DataEntryError other = (DataEntryError) obj;
-			if (error == null) {
-				if (other.error != null)
-					return false;
-			} else if (!error.equals(other.error))
-				return false;
-			if (property == null) {
-				if (other.property != null)
-					return false;
-			} else if (!property.equals(other.property))
-				return false;
-			return true;
-		}
-
-		public DataEntryError(String property, String error) {
-			this.property = property;
-			this.error = error;
-		}
-
-		public DataEntryError(String error){
-			this.error = error;
-		}
-		
-		/**
-		 * @return the property
-		 */
-		public String getProperty() {
-			return property;
-		}
-
-
-
-		public String getError() {
-			return error;
-		}
-
-		
-	}
 }

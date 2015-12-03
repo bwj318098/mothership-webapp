@@ -109,6 +109,24 @@ $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
 	$(this).parent().parent().find('input').val('');
 });
 
+var _osa = {
+		stompClient : null,
+		connect : function() {
+		    var socket = new SockJS('/osaws');
+		    _osa.stompClient = Stomp.over(socket);
+		    _osa.stompClient.connect({}, function(frame) {
+		        console.log('Connected: ' + frame);
+		        _osa.stompClient.subscribe('/topic/dataentry', function(res){
+		        	alert(res);
+		        });
+		    });
+		},
+		disconnect : function () {
+			_osa.stompClient.disconnect();
+		    console.log("Disconnected");
+		}			
+};
+
 $(document).ready(function(e){
 	// Convert into Upper Case
     $('#dateOfBirthPicker').datetimepicker({

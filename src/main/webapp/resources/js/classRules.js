@@ -521,7 +521,7 @@ $.validator.addClassRules({
 		
 		$(_thisForm.data("osa.validateForm.submitButton")).click(function(e){
 			$(".se-pre-con").show();
-			if(_thisForm.valid()){
+			if(!_thisForm.valid()){
 				 //convert every input type text into uppercase
 				 _thisForm.data("osa.validateForm.beforeSubmit").apply(_thisForm);
 				 
@@ -544,12 +544,15 @@ $.validator.addClassRules({
 						 				_thisForm.showGenericModal(_modalMessage.generic_title, _modalMessage.generic_body);
 						 			}
 						 			
-						 			$.each(data.dataEntryError, function(i, _val){
+						 			$.each(data.errors, function(i, _val){
 						 				$("*[name='" + _val.property + "']")
-						 					.tooltip({title: _val.error || "Invalid input", animation: true, placement: "auto"})
 					 						.closest(_thisForm.data("osa.validateForm.parentSelector"))
-						 					.removeClass('has-success')
-						 					.addClass('has-error');
+							 					.removeClass('has-success')
+							 					.addClass('has-error')
+						 					.tooltip({ 
+									    		animation : true, 
+									    		placement : "auto"})
+									    	.attr("data-original-title", _val.error || "Invalid input");
 						 			});
 						 			_thisForm.updateTabsErrorCount();
 						 		} else {
