@@ -29,13 +29,24 @@
 			
 		}
 		
+		function interestRate_formatter(value){
+			var $str = value;
+			var $detail_url = '<b><input type="hidden" class="control-label" id="interest" value="'+$str+'">'+$str+'</input></b>';
+			return $detail_url;
+			
+		}
+		
 		$(document).on( "click", 'button[name^="btnCategory"]', function(element) {
 			//this contains the data.  
 			$desc = $(this).parent().parent().find("label").text();
+			$interestRate = $(this).parent().parent().find("input").val();
 			//this contains the code
 			$('#categoryCode_'+$('#selectedCategory').val()).val($(this).val());
 			//this contains the desc.
 			$('#category_'+$('#selectedCategory').val()).val($desc);
+			//this contains the installment rate
+			$('#installment\\.rate').val($interestRate);
+			//$('#installment\\.rate').attr("readonly", "readonly");
 		});
 		
 	</script>
@@ -54,6 +65,7 @@
     		<th data-sortable="true" data-formatter="buttonFormatter_category" data-field="categoryCode"></th>
     		<th data-sortable="true" data-formatter="categoryCode_formatter" data-field="categoryCode" width="95" height="20" rowspan="1" colspan="1">Category Code</th>
     		<th data-sortable="true" data-formatter="categoryDesc_formatter" data-field="category" width="105" height="20" rowspan="1" colspan="1">Category</th>
+    		<th data-sortable="true" data-formatter="interestRate_formatter" data-field="interestRate" width="105" height="20" rowspan="1" colspan="1">Interest Rate</th>
     		</tr>
     		</thead>
     	</table>

@@ -119,6 +119,7 @@ $(document).ready(function(e){
 	/* Prevents user to input character on fields marked with class numeric.*/
 	enableNumericOnlyForNumericClass();
 	enableDecimalOnlyForNumericClass();
+	enableToolTipForContactTime();
 
 	 $('button[name^="btn_zipcode"]').on('click', function(e){
 	    e.preventDefault();
@@ -138,7 +139,7 @@ $(document).ready(function(e){
 			_howMuch.val("").attr("readonly", "readonly");
 		}
 	}).change();
-	 
+
     // view classRules.js for documentation
 	 $("#dataEntryForm").validateForm({
 		submitButton : "#btn_submit_data_entry",
