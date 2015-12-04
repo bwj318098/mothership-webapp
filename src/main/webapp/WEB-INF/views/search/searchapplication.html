@@ -5,7 +5,7 @@
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
-<div class="wrap">
+<div id="wrap">
 <div class="container-fluid">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
@@ -96,7 +96,6 @@
 </div>
 </div>
 <div th:replace="fragments/footer :: footer">&nbsp;</div>
-
 <script type="text/javascript" th:inline="javascript">
 
 $(document).ready(function () {
@@ -128,7 +127,7 @@ function remarksFormatter(value, row){
 	var $params = row.withPassword ? "?withPassword=true" : "";
 	var $reportsUrl =  /*[[${reportsUrl}]]*/;
 	var $detail_url = row.applicationStatus ===	"Approved" ?
-			('<a href="{0}/{1}' + $params + '" target="_blank">Letter of Notifaction</a>').format($reportsUrl, row.sysAppCd)
+			('<a href="{0}/{1}' + $params + '" target="_blank">Letter of Notification</a>').format($reportsUrl, row.sysAppCd)
 			: value;
 	return $detail_url;
 }

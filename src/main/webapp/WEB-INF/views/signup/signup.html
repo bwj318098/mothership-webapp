@@ -3,7 +3,7 @@
 <head th:replace="fragments/resources :: resources(title='User Registration')"></head>
 <body>
 <div th:replace="fragments/header :: header">Header</div>
-<div class="wrap">
+<div id="wrap">
 <div class="container">
 <!-- /* Handle the flash message */-->
 <th:block th:if="${message != null}">
@@ -75,7 +75,7 @@
         
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" id="resetPassword" class="btn btn-primary">Register</button>
             </div>
         </div>
 <!--         <div class="form-group"> -->
@@ -96,7 +96,14 @@ $(document).ready(function(){
 	enableToolTipForHeader();
 	enableTooltipForSignup();
 	showLoadingGifOnFormSubmit();
+	
+	$('#resetPassword').on('click',function(e){
+		convertTextInputToUpperCase();
+	})
+
 });
+
+
 </script>
 </body>
 </html>

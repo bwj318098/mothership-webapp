@@ -98,7 +98,7 @@ public class OsaResetPassword implements ResetPasswordService{
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo(user.getEmail());
 		email.setSubject("Reset Password");
-		email.setText(message + " rn " + url);
+		email.setText(message + " " + url);
 		email.setFrom("osa@aeonphilippines.com.ph");
 		return email;
 	}

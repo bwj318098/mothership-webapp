@@ -7,6 +7,8 @@
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
 <div th:replace="fragments/header :: header">Header</div>
+<div id="wrap">
+<div class="container">
 <form class="form-narrow form-horizontal" action="#" method="post" th:action="@{/authenticate}" th:object="${dummyApp}">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
@@ -18,7 +20,7 @@
         <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert</div>
     </th:block>
     <fieldset>
-        <legend>Please Sign In</legend>
+        <legend>ACSP-Online Submission Login</legend>
         <div class="form-group">
             <label for="inputUsername" class="col-lg-2 control-label">Username</label>
             <div class="col-lg-10">
@@ -58,5 +60,8 @@
     <!-- Include the CSRF Token -->
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
+</div>
+</div>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
 </body>
 </html>
