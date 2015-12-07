@@ -37,16 +37,17 @@ public class ValidatePromotion {
 		}
 			
 			// Check if the term exist in the list of terms
+			//BUG HERE
 			for(TermsPromo term : promotionRules.getTerm()){
-			
-				if(term.getMonthId().equals(String.valueOf(String.valueOf(dataEntry.getInstallment().getTerm().getCode())))){
+				FieldError fieldError_5 = null;
+				if(term.getMonthId().equals(String.valueOf(dataEntry.getInstallment().getTerm().getCode()))){
 					
-					fieldErrorList.clear();
+					fieldErrorList.remove(fieldError_5);
 					break;
 					
 				}else{
 					
-					FieldError fieldError_5 = new FieldError(String.valueOf(dataEntry.getInstallment().getTerm()),"installment.term",
+					fieldError_5 = new FieldError(String.valueOf(dataEntry.getInstallment().getTerm()),"installment.term",
 							"Loan term is not applicable for promotion number " + dataEntry.getInstallment().getPromotionCode());
 					
 						fieldErrorList.add(fieldError_5);
@@ -56,13 +57,15 @@ public class ValidatePromotion {
 			
 			if(promotionRules.getPromotion().getPcIsRetricted().equals(new BigDecimal(2))){
 				
+				FieldError fieldError_6 = null;
+						
 				if(!dataEntry.getInstallment().getFirstProduct().getCategory().equals("")){
 					
 					for(ProductPromoCategory category : promotionRules.getProductproductCategory()){
 						
 						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategoryCd()))){
 							
-							fieldErrorList.clear();
+							fieldErrorList.remove(fieldError_6);
 							break;
 							
 						}else{
@@ -70,7 +73,7 @@ public class ValidatePromotion {
 							// Check if the product category of the first product is equal to the input of the 1st product category.
 							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getFirstProduct().getCategoryCd())){
 								
-								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategory()),"installment.firstProduct.category", 
+								fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getFirstProduct().getCategory()),"installment.firstProduct.category", 
 										"1st Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
 								
 								fieldErrorList.add(fieldError_6);
@@ -87,7 +90,7 @@ public class ValidatePromotion {
 						
 						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategoryCd()))){
 							
-							fieldErrorList.clear();
+							fieldErrorList.remove(fieldError_6);
 							break;
 							
 						}else{
@@ -95,7 +98,7 @@ public class ValidatePromotion {
 							// Check if the product category of the first product is equal to the input of the 1st product category.
 							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getSecondProduct().getCategoryCd())){
 								
-								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategory()),"installment.secondProduct.category", 
+								fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getSecondProduct().getCategory()),"installment.secondProduct.category", 
 										"2nd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
 								
 								fieldErrorList.add(fieldError_6);
@@ -111,7 +114,7 @@ public class ValidatePromotion {
 						
 						if(category.getpCategoryCd().equals(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategoryCd()))){
 							
-							fieldErrorList.clear();
+							fieldErrorList.remove(fieldError_6);
 							break;
 							
 						}else{
@@ -119,7 +122,7 @@ public class ValidatePromotion {
 							// Check if the product category of the first product is equal to the input of the 1st product category.
 							if(!category.getpCategoryCd().equals(dataEntry.getInstallment().getThirdProduct().getCategoryCd())){
 								
-								FieldError fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategory()),"installment.thirdProduct.category", 
+								fieldError_6 = new FieldError(String.valueOf(dataEntry.getInstallment().getThirdProduct().getCategory()),"installment.thirdProduct.category", 
 										"3rd Product category is not valid for promotion number " + promotionRules.getPromotion().getPromotionCd());
 								
 								fieldErrorList.add(fieldError_6);

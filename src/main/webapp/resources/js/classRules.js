@@ -440,10 +440,6 @@ $.validator.addClassRules({
    
    checkHowMuch: {
 	   checkHowMuch: true
-   },
-   
-   checkEmploymentType: {
-	   checkEmploymentType: true
    }
 });
 
