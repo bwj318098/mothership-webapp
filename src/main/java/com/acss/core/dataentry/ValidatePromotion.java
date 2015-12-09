@@ -17,7 +17,7 @@ public class ValidatePromotion {
 	/**
 	 *  To validate promotion rules
 	 *  @author fcortez
-	 *	return List<FieldError>
+	 *	return HashSet<FieldError>
 	 *
 	 */
 	public HashSet<FieldError> promotionErrors(DataEntryDTO dataEntry, PromotionRules promotionRules){
@@ -37,7 +37,6 @@ public class ValidatePromotion {
 		}
 			
 			// Check if the term exist in the list of terms
-			//BUG HERE
 			for(TermsPromo term : promotionRules.getTerm()){
 				FieldError fieldError_5 = null;
 				if(term.getMonthId().equals(String.valueOf(dataEntry.getInstallment().getTerm().getCode()))){
