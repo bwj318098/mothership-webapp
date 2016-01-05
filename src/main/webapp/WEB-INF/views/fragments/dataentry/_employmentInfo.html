@@ -48,6 +48,7 @@
 								<option th:each="item : ${employmentTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
 							</select> 
 					  	</div>
+<<<<<<< HEAD
 					  	<div class="col-md-1">
 <!-- 					  		<label class="control-label" for="monthlyIncome">Monthly Net Income</label> -->
 					  	</div>
@@ -60,6 +61,12 @@
 					  	<div class="col-md-2">
 <!-- 					  		<input th:field="*{otherIncome}" name="otherIncome" type="text" class="form-control numeric-decimal currency_10_req" id="otherIncome" maxlength="10"/> -->
 					  	</div>
+=======
+					  	<div class="col-md-2"><label class="control-label" for="employmentType">Monthly Net Income</label></div>
+					  	<div class="col-md-2"><input th:field="*{monthlyNetIncome}" name="monthlyIncome" type="text" class="form-control numeric-decimal currency_10_req" id="monthlyIncome" maxlength="10"/></div>
+					  	<div class="col-md-2"><label class="control-label" for="otherIncome">Other Income(if any)</label></div>
+					  	<div class="col-md-2"><input th:field="*{otherIncome}" name="otherIncome" type="text" class="form-control numeric-decimal currency_10" id="otherIncome" maxlength="10"/></div>
+>>>>>>> branch 'master' of https://github.com/ultragaylord/mothership-webapp
 				  	</div>
 				</div>
 			</div>
