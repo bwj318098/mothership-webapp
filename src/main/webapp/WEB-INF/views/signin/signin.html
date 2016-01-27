@@ -56,6 +56,15 @@
 <!--                 <p>New here? <a href="signup" th:href="@{/signup}">Sign Up</a></p> -->
 <!--             </div> -->
         </div>
+        <div>
+        	<div class="col-lg-offset-8 col-lg-4">
+        		<small><label>Version :</label><label th:text="${version}"></label></small>
+        	</div>
+        	<div class="col-lg-offset-8 col-lg-4">
+        		<small><label>Build Date :</label><label th:text="${buildDate}"></label></small>
+        	</div>
+        	
+        </div>
     </fieldset>
     <!-- Include the CSRF Token -->
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

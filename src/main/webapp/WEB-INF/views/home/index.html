@@ -7,28 +7,28 @@
 
 <body>
 <div th:replace="fragments/header :: header">Header</div>
-<form id="dataEntryForm" class="form-horizontal form-de" >
 <div id="wrap">
-<div class="container-fluid">
-	
+<div class="container">
+<form id="dataEntryForm" class="form-horizontal form-de" >
+
     <div class="text-center">
-    	
+    
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
     </th:block>
-        <!-- 
-        <h1>POC: Core Web Application</h1>
+       
+        <h1>ACSPH - Online Submission Web Application</h1>
         <p class="lead">
-            Welcome to NEO-Core Web Application!
-            This is a prototype only.
+            Welcome to Online Submission Web Application!
+            Please sign in.
         </p>
          
         <p>
             <a href="/signin" th:href="@{/signin}" class="btn btn-primary btn-lg">Sign in</a>
         </p>
-        -->
-     	<div class="container-fluid">
+
+<!--      	<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6 scrollable">
 					<div class="image-viewer">
@@ -54,18 +54,29 @@
 
 				<div class="col-md-6" >
 	    			<label>Data Entry Fields</label>
+	    			<div class="input-group">
+	    				<input name="firstName" type="text" class="form-control" id="firstName" placeholder="Customer Name"/>
+						<div class="input-group-btn">
+							<button class="btn btn-primary" id="btn_customerSearch"
+								type="button">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</div>
+					</div>
+	    			
 	   			</div>
      		</div>
-     	</div>
+     	</div> -->
     </div>
+    </form>
 </div>
 </div>
-</form>
-<div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+<div th:replace="fragments/customers/modal_customers :: modal_customers(modal_id='searchModal',modal_title='Customer Search')">&nbsp;</div>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
 <script type="text/javascript">
 jQuery(function() {
     var picture = $('#sample_picture');
-
+	
     // Make sure the image is completely loaded before calling the plugin
     picture.one('load', function(){
       // Initialize plugin (with custom event)
@@ -108,9 +119,23 @@ jQuery(function() {
     if (picture.prop('complete')) picture.trigger('load')
   });
 
-
-
-
+$( document ).on("click",'#btn_customerSearch',function(e){
+    e.preventDefault();
+    $inputName = $('#firstName').val();
+    convertTextInputToUpperCase();
+    
+    $('#table-pagination').bootstrapTable('refresh',{
+        method: 'get',
+        url : "/dataentry/mcustomers?"+$('#dataEntryForm').serialize(),
+        cache: false,
+        striped: true,
+        pagination: true});
+    
+    $('#searchModal').modal({ backdrop: 'static', keyboard: false })
+        .one('click', '#close', function (e) {
+        	return;
+        });
+});
 </script>
 </body>
 </html>

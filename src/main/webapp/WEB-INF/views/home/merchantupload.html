@@ -38,7 +38,7 @@
 		<div class="col-md-3" th:classappend="${#fields.hasErrors('seqNo')}? 'has-error'">
 			<div class="input-group svX3" >
 				<label for="inputSeqNo" class="input-group-addon imagetype-width" id="seqNo-addon">Sequence No. :&nbsp;&nbsp;&nbsp;</label>
-				<input type="text" class="form-control numeric" th:field="*{seqNo}" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
+				<input type="text" class="form-control numeric appSeqNoCheckRemotely" th:field="*{seqNo}" id="inputSeqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
 			</div>
 			<span class="help-block" th:if="${#fields.hasErrors('seqNo')}" th:errors="*{seqNo}">This field is required.</span>
 		</div>
@@ -142,7 +142,7 @@
     	<div class="col-xs-2">
 			<div class="input-group">
 				<div class="input-group-btn">
-					<p><button type="submit" name="addImage" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Add</button></p>
+					<p><button type="submit" name="addImage" id="btn_addImage" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Add</button></p>
 				</div>
 				<div class="input-group-btn">
 					<p><button type="button" id="removeLink" class="btn btn-primary"><span class="glyphicon glyphicon-minus"></span>Remove</button></p>
@@ -186,7 +186,13 @@ function resetForm(id){
 	});
 }
 $(document).ready(function(){
-	showLoadingGifOnFormSubmit();
+	
+	$('#uploadForm').validateForm({
+		submitButton : "#btn_addImage",
+		parentSelector : "*[class^='col-']"
+	});
+	
+	//showLoadingGifOnFormSubmit();
 	enableToolTipForHeader();
 	enableToolTipForMerchantUpload();
 	$('button[name="upload_images"]').on('click', function(e){

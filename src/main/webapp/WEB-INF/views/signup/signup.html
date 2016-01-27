@@ -91,6 +91,20 @@
 <div th:replace="fragments/footer :: footer">&nbsp;</div>
 
 <script type="text/javascript">
+
+function validateForm(arg){
+	_form = arg;
+	$(_form).validate({
+		highlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function (element) {
+            element.addClass('valid').closest('.form-group').removeClass('has-error').addClass('has-success');
+        }
+        
+    });
+};
+
 $(document).ready(function(){
 	validateForm('#signupForm');
 	enableToolTipForHeader();

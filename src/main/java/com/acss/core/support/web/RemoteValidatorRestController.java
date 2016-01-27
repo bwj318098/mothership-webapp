@@ -22,6 +22,7 @@ public class RemoteValidatorRestController {
 	@Autowired
 	private Environment env;
 	private static final String STORES_URL_KEY = "rs.stores.url";
+	private static final String APPSEQ_URL_KEY = "rs.util.appseqno.url";
 	
 	/**
 	 * Checks if user exists return true if does not exists and return false if it exists.
@@ -52,4 +53,14 @@ public class RemoteValidatorRestController {
 		
 		return template.getForObject(uri, Boolean.class);
 	}
+	
+	@RequestMapping(value = "appseqno",method = RequestMethod.GET)
+	public boolean isAppSeqValid(@RequestParam(value = "seqNo", required = true) String seqNo,HttpServletResponse response){
+		RestTemplate template = new RestTemplate();
+		response.setStatus(HttpServletResponse.SC_OK);
+		String uri = env.getProperty(APPSEQ_URL_KEY)+"?seqNo="+seqNo;
+		
+		return template.getForObject(uri, Boolean.class);
+	}
+	
 }
