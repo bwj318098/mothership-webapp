@@ -41,7 +41,7 @@ public class ValidatePromotion {
 		    FieldError fieldError_5 = null;
 			for(TermsPromo term : promotionRules.getTerm()){
 				
-				if(term.getMonthId().equals(String.valueOf(dataEntry.getInstallment().getTerm().getCode()))){
+ 				if(term.getMonthId().equals(String.valueOf(dataEntry.getInstallment().getTerm().getCode()))){
 					
 					fieldErrorList.remove(fieldError_5);
 					break;
@@ -49,7 +49,8 @@ public class ValidatePromotion {
 				}else{
 					
 					fieldError_5 = new FieldError(String.valueOf(dataEntry.getInstallment().getTerm()),"installment.term",
-							"Loan term is not applicable for promotion number " + dataEntry.getInstallment().getPromotionCode());
+							"Loan term is not applicable for promotion number " + dataEntry.getInstallment().getPromotionCode() +
+							" Availabe Terms for this promotion : "+promotionRules.checkAvailableTerms());
 					
 						fieldErrorList.add(fieldError_5);
 					

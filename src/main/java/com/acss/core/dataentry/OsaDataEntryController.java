@@ -171,7 +171,7 @@ public class OsaDataEntryController {
 			
 			PromotionRules rules = dataEntryService.getPromotionDetails(dataEntry.getInstallment().getPromotionCode());
 			
-			if(!(rules.getPromotion()==null)){
+ 			if(!(rules.getPromotion()==null)){
 				
 				HashSet<FieldError> promotionErrors = validatePromo.promotionErrors(dataEntry,rules);
 				
