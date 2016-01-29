@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.acss.core.account.OsaUserDetailsService;
 import com.acss.core.application.HpsApplicationService;
 import com.acss.core.model.application.PromotionRules;
 import com.acss.core.model.dataentry.DataEntryDTO;
@@ -31,7 +34,10 @@ public class OsaDataEntryController {
 	private static final String DOCUMENT_SUBMITTED="Documents Submitted";
 	static final String BINDING_RESULT_KEY = "org.springframework.validation.BindingResult.";	
 	static final String DATAENTRY_MODEL_ATTRIB_KEY = "dataEntryForm";
-		
+	
+	@Autowired
+	private OsaUserDetailsService userService; 
+	
 	@Autowired
 	private DataEntryService dataEntryService;
 	
@@ -140,6 +146,11 @@ public class OsaDataEntryController {
 									Model model,
 									RedirectAttributes ra,
 									@PathVariable String appCd) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String storeCd = userService.getStorecdByUsername(auth.getName());
+		
+		dataEntry.getStore().setStoreCd(storeCd);
 		
 		DataEntryResult result = new DataEntryResult();
 		

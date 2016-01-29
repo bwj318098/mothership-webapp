@@ -3,15 +3,16 @@ package com.acss.core.dataentry;
 import java.math.BigDecimal;
 import java.util.HashSet;
 
+import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
-
 
 import com.acss.core.model.application.ProductPromoCategory;
 import com.acss.core.model.application.PromotionRules;
+import com.acss.core.model.application.StorePromo;
 import com.acss.core.model.application.TermsPromo;
 import com.acss.core.model.dataentry.DataEntryDTO;
 
-
+@Service
 public class ValidatePromotion {
 	
 	/**
@@ -214,6 +215,24 @@ public class ValidatePromotion {
 					fieldErrorList.add(fieldError_12);
 				}
 				
+			}
+			
+			FieldError fieldError_13 = null;
+
+			for(StorePromo store : promotionRules.getStore()){
+				
+				if(dataEntry.getStore().getStoreCd().equals(store.getSmCd())){
+					
+					fieldErrorList.remove(fieldError_13);
+					break;
+					
+				}else{
+					
+					fieldError_13 = new FieldError(String.valueOf(dataEntry.getStore().getStoreCd()), "installment.totalProductPrice", 
+							"Store code #" + dataEntry.getStore().getStoreCd() + " is invalid for " + promotionRules.getPromotion().getPromotionCd());
+					fieldErrorList.add(fieldError_13);
+					
+				}
 			}
 						
 			return fieldErrorList;
