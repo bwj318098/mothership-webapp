@@ -38,8 +38,9 @@ public class ValidatePromotion {
 		}
 			
 			// Check if the term exist in the list of terms
+		    FieldError fieldError_5 = null;
 			for(TermsPromo term : promotionRules.getTerm()){
-				FieldError fieldError_5 = null;
+				
 				if(term.getMonthId().equals(String.valueOf(dataEntry.getInstallment().getTerm().getCode()))){
 					
 					fieldErrorList.remove(fieldError_5);
