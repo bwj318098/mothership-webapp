@@ -180,7 +180,7 @@ public class ValidatePromotion {
 				//if(!(promotionRules.getPeriodFrom().isBefore(dataEntry.getStore().getReceivedDate()))){
 				if(!(promotionRules.getPeriodFrom().isBeforeNow())){	
 					FieldError fieldError_9 = new FieldError(String.valueOf(dataEntry.getStore().getReceivedDate()), "", 
-							"Promotion " + promotionRules.getPromotion().getPromotionName() +" will start on " + promotionRules.getPromotion().getFpfrom());
+							"Promotion " + promotionRules.getPromotion().getPromotionName() +" will start on " + promotionRules.getPromotion().getPeriodFrom());
 					
 					fieldErrorList.add(fieldError_9);
 				}
