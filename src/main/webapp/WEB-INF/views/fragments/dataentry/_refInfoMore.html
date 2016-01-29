@@ -34,7 +34,7 @@
 			
 			$('#dataEntryForm').append($(input));
 			
-			$.post("../dataentry/ajax/references",$('#dataEntryForm').serialize(),function(data){
+			$.post("/dataentry/ajax/references",$('#dataEntryForm').serialize(),function(data){
 				//console.log(data);
 				$("#refContent").html(data);
 			});

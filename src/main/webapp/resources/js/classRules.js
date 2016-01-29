@@ -118,6 +118,9 @@ $.validator.addMethod("checkUserName", $.validator.methods.remote,
 $.validator.addMethod("checkStoreCd", $.validator.methods.remote,
 "Store Code does not exists!");
 
+$.validator.addMethod("checkAppSeqNo", $.validator.methods.remote,
+"Application Sequence already exists!");
+
 $.validator.addClassRules({
     
 	uploadField: {
@@ -142,6 +145,16 @@ $.validator.addClassRules({
     		type: "GET"
     	}
     },
+    
+    appSeqNoCheckRemotely:{
+        minlength: 7,
+        maxlength: 7,
+    	checkAppSeqNo:{
+    		url: "../appseqno",
+    		type: "GET"
+    	}
+    },
+    
     passwordField: {
         required: true,
         minlength: 6,

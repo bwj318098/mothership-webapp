@@ -48,8 +48,8 @@ class CustomErrorController {
 	}
 	
 	@RequestMapping("error")
-	public String showErrorPage(){
-		return "error/general";
+	public String showErrorPage(Model model){
+		return model.containsAttribute("message")?"error/general":"redirect:/";
 	}
 	
 	private String getExceptionMessage(Throwable throwable, Integer statusCode) {

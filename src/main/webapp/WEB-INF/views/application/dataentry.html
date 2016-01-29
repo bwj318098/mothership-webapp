@@ -27,7 +27,7 @@
 		  	 				<button type="button" id="btn_submit_data_entry" class="btn btn-primary">Submit</button>
 		  	 			</div>
 		  	 			<div class="input-group-btn">
-		  	 				<button type="reset" id="resetForm" class="btn btn-primary">Clear</button>
+		  	 				<button type="button" id="resetForm" class="btn btn-primary">Clear</button>
 		  	 			</div>
 		  	 		<p></p>
 		  	 		</div>
@@ -74,7 +74,10 @@
 <div th:replace="fragments/customers/modal_customers :: modal_customers(modal_id='searchModal',modal_title='Customer Search')">&nbsp;</div>
 <div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 <div th:replace="fragments/modal_generic :: modal_generic(modal_id='modal_generic',modal_title='Information')">&nbsp;</div>
-	
+<div th:replace="fragments/modal_success :: modal_success(modal_id='successModal',modal_title='Success')">&nbsp;</div>
+<!-- Confirm Clear-->
+<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='clearModal',modal_title='Confirm Clear', modal_msg='Are you sure you want to clear the form?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+
 <script type="text/javascript">
 //<![CDATA[
 $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
@@ -155,7 +158,14 @@ $(document).ready(function(e){
 			_howMuch.val("").attr("readonly", "readonly");
 		}
 	}).change();
-
+	
+	 $('#resetForm').on("click",function(e){
+		    $('#clearModal').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirm', function (e) {
+	        	$('#dataEntryForm')[0].reset();
+	    });
+	 });
+	 
     // view classRules.js for documentation
 	 $("#dataEntryForm").validateForm({
 		submitButton : "#btn_submit_data_entry",
@@ -175,7 +185,15 @@ $(document).ready(function(e){
 		 	},
 	 	beforeSubmit : convertTextInputToUpperCase,				
 		submitSuccess : function(data){
-			window.location='/';
+			//window.location='/?message=dataentry.success';
+			
+			$('#successModal').modal({ backdrop: 'static', keyboard: false })
+        		.one('click', '#close', function (e) {
+        			
+        			var url = '/';
+        			$(location).attr('href',url);
+        			
+        		});
 		}						
 	});
 });    

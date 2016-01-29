@@ -66,16 +66,26 @@ public class OsaDataEntryController {
 		}
 		
 	}
+	
 	@RequestMapping(value = "dataentry/{appCd}/{customerCd}", method = RequestMethod.GET)
 	public String detail(HttpServletRequest request,Model model
 			,@PathVariable String appCd,@PathVariable String customerCd){
 		
-		DataEntryDTO detailsDto = dataEntryService.getDetails(customerCd);
-		detailsDto.setApplicationNo(appCd);
-		dataEntryService.bindAllEnumsToModel(model);
+		//check if appCd is eligibility for data entry.
+		String appStatus = rsApplicationService.getApplicationStatus(appCd);
 		
-		model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY,detailsDto);
-		return "application/dataentry";
+		if(DOCUMENT_SUBMITTED.equalsIgnoreCase(appStatus)){
+			DataEntryDTO detailsDto = dataEntryService.getDetails(customerCd);
+			detailsDto.setApplicationNo(appCd);
+			dataEntryService.bindAllEnumsToModel(model);
+			
+			model.addAttribute(DATAENTRY_MODEL_ATTRIB_KEY,detailsDto);
+			return "application/dataentry";
+		}else{
+			//remain on home if not.
+			return "redirect:/";
+		}
+		
 	}
 	
 	@RequestMapping(value = "dataentry/ajax",method = RequestMethod.POST)
@@ -196,7 +206,6 @@ public class OsaDataEntryController {
 
 			try {
 				result.success = dataEntryService.save(dataEntry);
-				
 				if(!result.success){
 					result.success = false;
 					result.addError(new ObjectError("error", "Error in saving data."));

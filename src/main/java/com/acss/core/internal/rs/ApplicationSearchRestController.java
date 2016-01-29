@@ -15,11 +15,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.acss.core.account.OsaUserDetailsService;
 import com.acss.core.application.ApplicationSearchCriteriaDTO;
+import com.acss.core.application.ZipCodeSearchCriteriaDTO;
 import com.acss.core.model.application.HpsApplication;
 import com.acss.core.model.application.ZipCode;
 import com.acss.core.model.dataentry.CustomerSearchDTO;
 import com.acss.core.model.dataentry.common.constants.TypeOfId;
-import com.acss.core.application.ZipCodeSearchCriteriaDTO;
 
 
 @RestController
@@ -115,9 +115,13 @@ public class ApplicationSearchRestController {
 		uri = uri + "/?";
 		uri = appendParameters(uri,firstName,middleName,lastName,idCardType,idCardNo,dateOfBirth);
 		RestTemplate template = new RestTemplate();
-		
-		CustomerSearchDTO[] mCustomers = template.getForObject(uri, CustomerSearchDTO[].class);
-		return Arrays.asList(mCustomers);	
+		String baseUrl = MessageFormat.format(env.getProperty(MCUSTOMER_URL_KEY),"")+"/?";
+		CustomerSearchDTO[] mCustomers = null;
+		if(baseUrl.compareToIgnoreCase(uri)!=0){
+			mCustomers = template.getForObject(uri, CustomerSearchDTO[].class);
+			return Arrays.asList(mCustomers);	
+		}else
+			return null;
 	}
 	
 	private String appendParameters(String uri, String firstName, 
@@ -126,12 +130,12 @@ public class ApplicationSearchRestController {
 		//bootstrap the enum for map.
 		TypeOfId.values();
 		
-		uri = firstName != null ? uri + "firstName=" + firstName + "&" : uri;
-		uri = middleName != null ? uri + "middleName=" + middleName + "&" : uri;
-		uri = lastName != null ? uri + "lastName=" + lastName + "&" : uri;
-		uri = idCardType != null && idCardType.length()>0? uri + "idCardType=" + TypeOfId.valueOf(idCardType).getCode() + "&" : uri;
-		uri = idCardNo != null ? uri + "idCardNo=" + idCardNo + "&" : uri;
-		uri = dateOfBirth != null ? uri + "dateOfBirth=" + dateOfBirth.replaceAll("-", "") + "&" : uri;
+		uri = firstName != null && firstName.length()>0 ? uri + "firstName=" + firstName + "&" : uri;
+		uri = middleName != null && middleName.length()>0 ? uri + "middleName=" + middleName + "&" : uri;
+		uri = lastName != null && lastName.length()>0 ? uri + "lastName=" + lastName + "&" : uri;
+		uri = idCardType != null && idCardType.length()>0 ? uri + "idCardType=" + TypeOfId.valueOf(idCardType).getCode() + "&" : uri;
+		uri = idCardNo != null && idCardNo.length()>0 ? uri + "idCardNo=" + idCardNo + "&" : uri;
+		uri = dateOfBirth != null && dateOfBirth.length()>0 ? uri + "dateOfBirth=" + dateOfBirth.replaceAll("-", "") + "&" : uri;
 		return uri;
 	}
 	
