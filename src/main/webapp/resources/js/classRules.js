@@ -130,7 +130,7 @@ $.validator.addClassRules({
     usernameCheckRemotely: {
 	
 	 required: true,
-	 maxlength: 20,
+	 maxlength: 10,
 	 //Do a remote checking if username is already taken.
 	 checkUserName:{
 		 url: "../users", //make sure to return true or false with a 200 status code
@@ -401,6 +401,23 @@ $.validator.addClassRules({
    any_6_req: {
        maxlength: 6,
        required: true
+   },
+   
+   dashedAlphaNumeric_6_req: {
+       maxlength: 6,
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$",
+       required: true
+   },
+   
+   dashedAlphaNumeric_20_req: {
+       maxlength: 20,
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$",
+       required: true
+   },
+   
+   dashedAlphaNumeric_20: {
+       maxlength: 20,
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$"
    },
    
    any_10_req: {

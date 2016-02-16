@@ -186,12 +186,35 @@ function resetForm(id){
 	});
 }
 $(document).ready(function(){
+	var validator = 
+	$('#uploadForm').validate({
+		//validate non-present or visible fields.
+		ignore: "",
+		errorPlacement: function(label, element) {
+			$(element)
+				.closest("*[class^='col-']")
+		    		.removeClass('has-success')
+		    		.addClass('has-error')
+		    	.tooltip({ 
+		    		animation : true, 
+		    		placement : "auto"})
+		    	.attr("data-original-title", $(label).text());
+			$(label).hide();
+		},
+        success: function (label, element) {
+        	$(element)
+        		.tooltip('destroy')
+        		.closest("*[class^='col-']")
+        			.removeClass('has-error')
+        			.addClass('has-success');
+        	$(label).hide();
+        }
+    });
 	
-	$('#uploadForm').validateForm({
-		submitButton : "#btn_addImage",
-		parentSelector : "*[class^='col-']"
-	});
-	
+	//individually validate this field.
+	if($('#inputSeqNo').val().length>0){
+		validator.element( "#inputSeqNo" );
+	}
 	//showLoadingGifOnFormSubmit();
 	enableToolTipForHeader();
 	enableToolTipForMerchantUpload();

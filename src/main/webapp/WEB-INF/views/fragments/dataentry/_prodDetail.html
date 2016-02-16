@@ -309,7 +309,7 @@ function doCalc(){
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="receivedBy">Received By</label></div>
-						<div class="col-md-3"><input name="installment.receivedBy" th:value="*{installment.receivedBy}" type="text" class="form-control" id="receivedBy" placeholder="Received By"/></div>
+						<div class="col-md-3"><input name="installment.receivedBy" th:value="*{installment.receivedBy}" type="text" class="form-control" id="receivedBy" placeholder="Received By" maxlength="50"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="firstPayment">First Payment Date</label></div>
 						<div class="col-md-3"><input name="installment.hpFirstDay" th:value="*{installment.hpFirstDayToString()}" type="text" class="form-control" id="hpFirstDay" placeholder="YYYY-MM-DD" readonly="readonly"/></div>
 				  	</div>
@@ -334,7 +334,7 @@ function doCalc(){
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="comment">Comment</label></div>
-						<div class="col-md-5"><textarea id="comment" name="comment" th:text="*{comment}" class="form-control"></textarea></div>
+						<div class="col-md-5"><textarea id="comment" name="comment" th:text="*{comment}" class="form-control" maxlength="100"></textarea></div>
 						<div class="col-md-2"></div>
 						<div class="col-md-3"></div>
 				  	</div>

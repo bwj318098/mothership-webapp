@@ -51,7 +51,7 @@
 							  			<option th:each="item : ${idTypeList}" th:value="${item}" th:text="#{${item.value}}"></option>
 									</select>
 								</div>
-								<div class="col-md-3"><input th:field="*{applicantId.idCardNo}" name="idNo" type="text" class="form-control any_20_req idGroup" id="idNo" placeholder="ID No." maxlength="20" /> </div>
+								<div class="col-md-3"><input th:field="*{applicantId.idCardNo}" name="idNo" type="text" class="form-control dashedAlphaNumeric_20_req idGroup" id="idNo" placeholder="ID No." maxlength="20" /> </div>
 								<div class="col-md-3">
 									<div class="input-group">
 										<input th:field="*{customerCd}" name="customerCd" type="text" class="form-control" id="customerCd" placeholder="Customer Search" readonly="readonly"/>								
@@ -94,7 +94,7 @@
 									</select> 
 								
 								</div>
-								<div class="col-md-3"><input th:field="*{otherId.idCardNo}" name="otherIdNo" type="text" class="form-control any_20 otherGroup" id="otherIdNo" placeholder="Other ID No." maxlength="20" /> </div>
+								<div class="col-md-3"><input th:field="*{otherId.idCardNo}" name="otherIdNo" type="text" class="form-control dashedAlphaNumeric_20 otherGroup" id="otherIdNo" placeholder="Other ID No." maxlength="20" /> </div>
 								<div class="col-md-3"></div>
 							</div>
 						</div>
@@ -132,7 +132,7 @@
 											</div>
 										</div>
 										<div class="col-md-2">
-											<input th:field="*{address.unitNo}" name="homeUnitNo" type="text" class="form-control any_6_req"	id="homeUnitNo" placeholder="Unit No" maxlength="6"/>  
+											<input th:field="*{address.unitNo}" name="homeUnitNo" type="text" class="form-control dashedAlphaNumeric_6_req"	id="homeUnitNo" placeholder="Unit No" maxlength="6"/>  
 										</div>
 										<div class="col-md-6">
 											<input th:field="*{address.street}" name="homeStreet" type="text" class="form-control any_70_req" id="homeStreet" placeholder="Street" maxlength="70"/>
@@ -383,7 +383,7 @@
 											</div>
 										</div>
 										<div class="col-md-2">
-											<input th:field="*{permanentAddress.unitNo}" name="homePermUnitNo" type="text" class="form-control any_6_req" id="homePermUnitNo" placeholder="Unit No" maxlength="6"/> 
+											<input th:field="*{permanentAddress.unitNo}" name="homePermUnitNo" type="text" class="form-control dashedAlphaNumeric_6_req" id="homePermUnitNo" placeholder="Unit No" maxlength="6"/> 
 										</div>
 										<div class="col-md-6">
 											<input th:field="*{permanentAddress.street}" name="homePermStreet" type="text" class="form-control any_70_req" id="homePermStreet" placeholder="Street" maxlength="70"/>

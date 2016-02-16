@@ -30,9 +30,9 @@ import com.acss.core.Application;
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-    private static final String MESSAGE_SOURCE = "/WEB-INF/i18n/messages";
+    private static final String MESSAGE_SOURCE = "classpath:messages";
     private static final String VALIDATOR_MESSAGE_SOURCE = "classpath:ValidationMessages";
-    private static final String ENUMS_MESSAGE_SOURCE = "/WEB-INF/i18n/enums";
+    private static final String ENUMS_MESSAGE_SOURCE = "classpath:enums";
     
     private static final String VIEWS = "/WEB-INF/views/";
 

@@ -30,7 +30,7 @@ public class UserService implements OsaUserDetailsService{
 	 */
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
-		Condition whereUserNameEquals = M_ACCOUNT.USERNAME.equal(username);
+		Condition whereUserNameEquals = M_ACCOUNT.USERNAME.equal(username.toUpperCase());
 		List<Account> accounts = accountRepo.findUsingCondition(whereUserNameEquals);
 		if(accounts.size()>0){
 			Account account = accounts.get(0);

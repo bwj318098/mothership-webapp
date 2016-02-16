@@ -19,6 +19,30 @@
    		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     </properties>
     
+    <!-- PROFILES -->
+	<profiles>
+		<!-- DEVELOPMENT PROFILE FOR APP BUILD -->	
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>dev</build.profile.id>
+			</properties>
+		<!-- main build profile ends here -->			
+		</profile>
+		
+		<!-- DEVELOPMENT PROFILE FOR APP BUILD -->	
+		<profile>
+			<id>prod</id>
+			<properties>
+				<build.profile.id>prod</build.profile.id>
+			</properties>
+		<!-- main build profile ends here -->			
+		</profile>
+	</profiles>
+
 	<dependencyManagement>
 	    <dependencies>
 	        <dependency>
@@ -178,7 +202,7 @@
 	</dependencies>
 	
   <build>
-    <finalName>com.acss.core.webapp</finalName>
+    <finalName>osa</finalName>
     <plugins>
 	    <plugin>
 			<groupId>org.apache.tomcat.maven</groupId>
@@ -198,30 +222,45 @@
                <artifactId>maven-compiler-plugin</artifactId>
                <version>2.3.2</version>
                <configuration>
-                   <source>${java-version}</source>
-                   <target>${java-version}</target>
+				<source>${java-version}</source>
+				<target>${java-version}</target>
                </configuration>
          </plugin>
-         
 		<plugin>
 		    <groupId>org.apache.maven.plugins</groupId>
 		    <artifactId>maven-war-plugin</artifactId>
 		    <version>2.1.1</version>
 		    <configuration>
 		    	<failOnMissingWebXml>false</failOnMissingWebXml>
+				<webResources>
+					<resource>
+						<directory>${project.build.directory}/classes</directory>
+						<!-- override the destination directory for this resource -->
+						<targetPath>WEB-INF/i18n</targetPath>
+						<!-- enable filtering -->
+						<filtering>true</filtering>
+						<includes>
+							<includes>**messages.properties</includes>
+						</includes>
+					</resource>
+				</webResources>
 		    </configuration>
 		</plugin>
     </plugins>
-	    
+	
+	<filters>
+		<filter>src/main/resources/profiles/${build.profile.id}/env-${build.profile.id}.properties</filter>
+	</filters>
 	<resources>
-	   <resource>
-	      <directory>src/main/resources</directory>
-	      <filtering>true</filtering>
-	   </resource>
-	   <resource>
-	      <directory>src/main/webapp/WEB-INF/i18n</directory>
-	      <filtering>true</filtering>
-	   </resource>
+		<resource>
+			<filtering>true</filtering>
+			<directory>src/main/resources</directory>
+		</resource>
+		<resource>
+			<filtering>true</filtering>
+			<directory>src/main/webapp/WEB-INF/i18n</directory>
+		</resource>
 	</resources>
+	
   </build>
 </project>

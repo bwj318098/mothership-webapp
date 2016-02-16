@@ -22,14 +22,14 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
             <label for="username" class="col-lg-2 control-label">Username</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control usernameCheckRemotely" id="username" placeholder="Username" th:field="*{username}" />
+                <input type="text" class="form-control usernameCheckRemotely" id="username" placeholder="Username" th:field="*{username}" maxlength="10"/>
                 <span class="help-block" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Incorrect username</span>
             </div>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
             <label for="password" class="col-lg-2 control-label">Password</label>
             <div class="col-lg-10">
-                <input type="password" class="form-control passwordField" id="password" placeholder="Password" th:field="*{password}"/>
+                <input type="password" class="form-control passwordField" id="password" placeholder="Password" th:field="*{password}" maxlength="20"/>
                 <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect password</span>
             </div>
         </div>

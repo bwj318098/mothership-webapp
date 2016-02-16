@@ -380,3 +380,10 @@ body.loading {
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
+
+.glyphicon glyphicon-ok {
+  width: 28px;
+  height: 28px;
+  background-size: 938px 318px;
+  background-position: -624px -48px;
+}

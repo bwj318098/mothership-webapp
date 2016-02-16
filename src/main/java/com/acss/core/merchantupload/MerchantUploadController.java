@@ -1,7 +1,10 @@
 package com.acss.core.merchantupload;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +31,11 @@ public class MerchantUploadController {
 	
 	@Autowired
 	private FileUploadService uploadService;
+	
+	@RequestMapping(value = "upload" , method = RequestMethod.GET)
+	public String home(HttpServletRequest request,Model model) {
+		return "redirect:/";
+	}
 	
 	/**
 	 * Uploads the images to server and persists the information to hps database via
