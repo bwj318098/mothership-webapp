@@ -90,7 +90,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
         	.addResourceHandler(RESOURCES_HANDLER)
-        	.addResourceLocations(RESOURCES_LOCATION);
+        	.addResourceLocations(RESOURCES_LOCATION)
+        	.setCachePeriod(31556926);
     }
 
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
