@@ -28,6 +28,11 @@
 			$('#brandCode_'+$('#selectedBrand').val()).val($(this).val());
 			//this contains the desc.
 			$('#brand_'+$('#selectedBrand').val()).val($desc);
+			
+			$('#brandCode_'+$('#selectedBrand').val()).trigger("focusout");
+			//this contains the desc.
+			$('#brand_'+$('#selectedBrand').val()).trigger("focusout");
+			
 		});
 	</script>
     <!-- Modal content-->
@@ -38,7 +43,7 @@
         <h4 class="modal-title" th:text="${modal_title}">Confirmation</h4>
       </div>
       <div class="modal-body">
-		  <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{/resources/json/brand/__${categoryCd}__/productbrand.json}" data-cache="false" data-height="400" data-search="true" data-pagination="true">
+		  <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{/resources/json/brand/__${categoryCd}__/productbrand.json}" data-cache="true" data-height="400" data-search="true" data-pagination="true">
     		<thead class="row">
     		<tr>
     		<th data-sortable="true" data-formatter="buttonFormatter_brand" data-field="prodDescCode"></th>

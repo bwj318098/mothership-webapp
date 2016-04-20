@@ -2,14 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="resources">
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title th:text="${title}"></title>
+	<!-- CSS -->
+	<link href="/favicon.ico" rel="icon" th:href="@{/resources/img/favicon.ico}" type="image/x-icon" />
+	<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+	<link href="../../../resources/css/bootstrap-theme.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-theme.css}"/>
+	<link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+</head>
 
+<!-- Basic Set of JS-->
+<div th:fragment="basic-resources">
+<!-- Jquery -->
+<script src="../../../resources/js/jquery-2.1.4.min.js" th:src="@{/resources/js/jquery-2.1.4.min.js}"></script>
+<!-- Used for hiding the loading gif (there's a better and cleaner way to do it, lets have this for now.) -->
+<script type="text/javascript">
+$(window).load(function() {
+	// hide the loading screen.
+	$(".se-pre-con").hide();
+});
+</script>
+<script src="../../../resources/js/formCacheSession.js" th:src="@{/resources/js/formCacheSession.js}"></script>
+</div>
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title th:text="${title}"></title>
+<div th:fragment="validation-resources">
+	<!-- Validation java scripts -->
+	<script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+	<script src="../../../resources/js/jquery.validate.min.js" th:src="@{/resources/js/jquery.validate.min.js}"></script>
+	<script src="../../../resources/js/additional-methods.min.js" th:src="@{/resources/js/additional-methods.min.js}"></script>
+	<script src="../../../resources/js/classRules.js" th:src="@{/resources/js/classRules.js}"></script>
+	<!-- Numeric Js-->
+	<script src="../../../resources/js/jquery.numeric.min.js" th:src="@{/resources/js/jquery.numeric.min.js}"></script>
+	<!-- Core JS for ACSS OSA-PH -->
+	<script src="../../../resources/js/core.js" th:src="@{/resources/js/core.js}"></script>
+</div>
+
+<div th:fragment="calendar-resources">
+	<link href="../../../resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-datetimepicker.min.css}" />
+	<script src="../../../resources/js/moment.js" th:src="@{/resources/js/moment.js}"></script>
+	<script src="../../../resources/js/bootstrap-datetimepicker.min.js" th:src="@{/resources/js/bootstrap-datetimepicker.min.js}"></script>
+</div>
+
+<div th:fragment="table-resources">
+	<link href="../../../resources/css/bootstrap-table.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-table.min.css}" />
+	<script src="../../../resources/js/bootstrap-table.min.js" th:src="@{/resources/js/bootstrap-table.min.js}"></script>
+</div>
+
+<div th:fragment="gallery-resources">
+	<link href="../../../resources/css/blueimp-gallery.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/blueimp-gallery.min.css}" />
+	<script src="../../../resources/js/jquery.blueimp-gallery.min.js" th:src="@{/resources/js/jquery.blueimp-gallery.min.js}"></script>
+	<script src="../../../resources/js/blueimp-gallery.min.js" th:src="@{/resources/js/blueimp-gallery.min.js}"></script>
+</div>
+
+<div th:fragment="table-datepicker">
+	<script src="../../../resources/js/bootstrap-table.min.js" th:src="@{/resources/js/bootstrap-table.min.js}"></script>
+	<script src="../../../resources/js/min/moment.min.js" th:src="@{/resources/js/min/moment.min.js}"></script>
+	<script src="../../../resources/js/bootstrap-datetimepicker.min.js" th:src="@{/resources/js/bootstrap-datetimepicker.min.js}"></script>
+</div>
+
+<div th:fragment="image-upload">
+	<script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+	<script src="resources/js/min/tmpl.min.js"></script>
+	<script src="resources/js/load-image.all.min.js"></script>
+	<script src="resources/js/canvas-to-blob.min.js"></script>
+	<script src="resources/js/min/vendor/jquery.ui.widget.min.js"></script>
+	<!--<script src="resources/js/jquery.iframe-transport.js"></script>-->
+	<script src="resources/js/min/jquery.fileupload.min.js"></script>
+	<script src="resources/js/min/jquery.fileupload-process.min.js"></script>
+	<script src="resources/js/min/jquery.fileupload-image.min.js"></script>
+	<script src="resources/js/min/jquery.fileupload-validate.min.js"></script>
+	<script src="resources/js/min/jquery.fileupload-ui.min.js"></script>
+</div>
+
+<!-- OLD CSS AND JS INCLUSION TO BE USED AS REFERENCE-->
 <link href="/favicon.ico" rel="icon" th:href="@{/resources/img/favicon.ico}" type="image/x-icon" />
-
 <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
 <link href="../../../resources/css/bootstrap-theme.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-theme.css}"/>
 <link href="../../../resources/css/bootstrap-theme.css.map" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-theme.css.map}"/>
@@ -19,11 +86,19 @@
 
 <link href="../../../resources/css/blueimp-gallery.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/blueimp-gallery.min.css}" />
 <link href="../../../resources/css/bootstrap-image-gallery.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-image-gallery.min.css}" />
-
 <link href="../../../resources/css/jquery.guillotine.css" rel="stylesheet" media="screen" th:href="@{/resources/css/jquery.guillotine.css}" />
+
+<!--<link rel="stylesheet" href="../../../resources/css/jquery-ui.min.css" />-->
+<link rel="stylesheet" href="../../../resources/css/upload/style.css" />
+<link rel="stylesheet" href="../../../resources/css/upload/jquery.fileupload.css" />
+<link rel="stylesheet" href="../../../resources/css/upload/jquery.fileupload-ui.css" />
+
 
 <script src="../../../resources/js/moment.js" th:src="@{/resources/js/moment.js}"></script>
 <script src="../../../resources/js/jquery-2.1.4.min.js" th:src="@{/resources/js/jquery-2.1.4.min.js}"></script>
+
+<!-- <script src="../../../resources/js/jquery-ui.min.js" th:src="@{/resources/js/jquery-ui.min.js}"></script> -->
+
 <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 <script src="../../../resources/js/bootstrap-datetimepicker.min.js" th:src="@{/resources/js/bootstrap-datetimepicker.min.js}"></script>
 <script src="../../../resources/js/bootstrap-table.min.js" th:src="@{/resources/js/bootstrap-table.min.js}"></script>
@@ -49,5 +124,7 @@ $(window).load(function() {
 });
 
 </script>
-</head>
+
+<!-- OLD CSS AND JS INCLUSION TO BE USED AS REFERENCE-->
+
 </html>

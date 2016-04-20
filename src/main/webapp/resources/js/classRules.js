@@ -147,6 +147,7 @@ $.validator.addClassRules({
     },
     
     appSeqNoCheckRemotely:{
+    	required: true,
         minlength: 7,
         maxlength: 7,
     	checkAppSeqNo:{
@@ -409,6 +410,12 @@ $.validator.addClassRules({
        required: true
    },
    
+   dashedAlphaNumeric_10_req: {
+       maxlength: 11,
+       regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$",
+       required: true
+   },
+   
    dashedAlphaNumeric_20_req: {
        maxlength: 20,
        regex: "^[A-Za-z0-9 & -]*[A-Za-z0-9][A-Za-z0-9 & -]*$",
@@ -491,7 +498,8 @@ $.validator.addClassRules({
    },
    
    selectField: {
-	   required: true
+	   required: true,
+	   minlength: 1,
    },
    
    checkHowMuch: {
@@ -616,6 +624,7 @@ $.validator.addClassRules({
 					 url : _thisForm.attr("action"),
 					 method: "POST",
 					 data : _thisForm.serialize(),
+					 
 					 success : function(data){
 						 		var _modalMessage = _thisForm.data("osa.validateForm.modal").message;
 						 		$('.has-error')
@@ -644,8 +653,14 @@ $.validator.addClassRules({
 						 		}
 						 		$(".se-pre-con").hide();
 							},
-					 dataType : "json" 
-				 });	 
+							
+					 dataType : "json"
+							
+				 }).fail(function(jqXHR, textStatus){
+					 	$(".se-pre-con").hide();
+					 	_thisForm.showGenericModal("Data Entry Submission Failed", "Error occured please try again later.");
+					 });
+				 
 			 } else {
 				 $(".se-pre-con").hide();
 				 _thisForm.updateTabsErrorCount();

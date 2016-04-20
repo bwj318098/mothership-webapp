@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title th:text="${title}"></title>
+<link href="/favicon.ico" rel="icon" th:href="@{/resources/img/favicon.ico}" type="image/x-icon" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+<link href="../../../resources/css/bootstrap-theme-min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap-theme-min.css}"/>
+<link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+<link href="../../../resources/css/blueimp-gallery.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/blueimp-gallery.min.css}" />
+
+<link rel="stylesheet" href="../../../resources/css/upload/style.css" />
+<link rel="stylesheet" href="../../../resources/css/upload/jquery.fileupload.css" />
+<link rel="stylesheet" href="../../../resources/css/upload/jquery.fileupload-ui.css" />
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">Header</div>
+<div id="wrap">
+<div class="container">
+<form id="fileupload" th:action="@{/ajaxUpload}" method="post" class="form-horizontal form-de" enctype="multipart/form-data">
+    <div class="text-left">
+    <!-- 
+    <th:block th:if="${param.message[0] != null}" th:unless="${param.message == null}">
+        <div th:replace="fragments/alert :: alert (type='success', message='Image Upload Complete.')">&nbsp;</div>
+    </th:block>
+     -->
+    <th:block th:if="${message != null}">
+        <!-- /* The message code is returned from the @Controller */ -->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.isEmpty(message.args)?'':message.args[0]})})">&nbsp;</div>
+    </th:block>
+    </div>
+    <div class="row">
+    	<div class="col-md-8">
+    			<div class="input-group">
+					<label for="inputAppNo" class="input-group-addon imagetype-width" id="appNo-addon">Application No.:</label>
+					<input type="text" class="form-control dashedAlphaNumeric_10_req" id="applicationNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" readonly="readonly" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-primary" name="generate" id="generate" >Generate</button>
+					</span>
+			</div>
+    	</div>
+    	
+    	<div class="col-md-4">
+		 	<!-- Sequence number in application form. -->
+			<div class="input-group svX3">
+				<label for="inputSeqNo" class="input-group-addon imagetype-width" id="seqNo-addon">Sequence No. :</label>
+				<input type="text" class="form-control numeric appSeqNoCheckRemotely" id="seqNo" name="seqNo" aria-describedby="seqNo-addon" maxlength="7" />
+				<input type="hidden" id="groupId" name="groupId" />
+			</div>
+		</div>
+    </div>
+    <h3></h3>
+    
+    <div class="row fileupload-buttonbar">
+    	<div class="col-md-5">		
+				<span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                    <input type="file" name="files[]" multiple="multiple" class="add-file" />
+                </span>
+                <button id="upload-start" class="btn btn-primary start" disabled="disabled" type="submit">
+                    	<i class="glyphicon glyphicon-upload"></i>
+                    	<span>Start upload</span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel upload</span>
+                </button>
+                <span class="fileupload-process"></span>
+		</div>
+    </div>
+    <h6></h6>
+    <div class="row fileupload-buttonbar">
+		<!-- The global progress state -->
+     	<div class="col-md-12 fileupload-progress fade">
+             <!-- The global progress bar -->
+             <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                 <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+             </div>
+             <!-- The extended global progress state -->
+             <div class="progress-extended">&nbsp;</div>
+     	</div>
+    </div>
+   	 <!-- The table listing the files available for upload/download -->
+     <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+    </form>
+</div>
+</div>
+
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+//<![CDATA[
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+
+<div class="row">
+    <tr class="template-upload fade" >
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+			<select class="form-control required" id="imageType[]" name="{%=file.name%}" value="{%=file.imageType%}">
+						<option value=""></option>
+						<option value="0">Application Form</option>
+						<option value="1">ID Proof</option>
+						<option value="2">Proof of Billing</option>
+						<option value="3">Proof of Income</option>
+						<option value="4">House Sketch</option>
+						<option value="5">Customer Image</option>
+						<option value="6">Supporting Documents</option>
+			</select>
+        </td>
+		<td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            
+			<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        	
+		</td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start" disabled style="display: none;">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle cancel"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+</div>
+{% } %}
+
+//]]>
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+</script>
+
+<div th:replace="fragments/resources :: basic-resources"></div>
+<div th:replace="fragments/resources :: validation-resources"></div>
+<div th:replace="fragments/resources :: image-upload"></div>
+<!-- The File Upload user interface plugin -->
+<script src="resources/js/main.js"></script>
+</body>
+</html>

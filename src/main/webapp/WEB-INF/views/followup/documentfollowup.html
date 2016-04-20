@@ -1,25 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title=#{view.followup.title})"></head>
-<script type="text/javascript">
-$(function () {
-	enableToolTipForHeader();
-    $('#datetimepicker_from').datetimepicker();
-    $('#datetimepicker_to').datetimepicker();
-    $("#datetimepicker_from").on("dp.change", function (e) {
-        $('#datetimepicker_to').data("DateTimePicker").minDate(e.date);
-    });
-    $("#datetimepicker_to").on("dp.change", function (e) {
-        $('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
-    });
-});
-
-function appFormatter(value){
-	var $detail_url = '<a href="detail" th:href="@{/followup/{0}}">{1}</a>'.format(value,value);
-	return $detail_url;
-}
-
-</script>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div id="wrap">
@@ -83,7 +64,7 @@ function appFormatter(value){
     </form>
 	
 	<div>
-    <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url=@{${followUpSearchUrl}}" data-cache="false" data-height="425" data-search="true" data-pagination="true">
+    <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url=@{${followUpSearchUrl}}" data-cache="true" data-height="425" data-search="true" data-pagination="true">
     <thead class="row">
         <tr>
             <th class="col-md-1" data-sortable="true" data-field="appNo" data-formatter="appFormatter">Application No</th>
@@ -101,5 +82,30 @@ function appFormatter(value){
 </div>
 <!-- Wrapper end tag -->
 <div th:replace="fragments/footer :: footer">&nbsp;</div>
+<div th:replace="fragments/resources :: basic-resources"></div>
+<div th:replace="fragments/resources :: validation-resources"></div>
+<div th:replace="fragments/resources :: calendar-resources"></div>
+<div th:replace="fragments/resources :: table-resources"></div>
+
+<script type="text/javascript">
+$(function () {
+	enableToolTipForHeader();
+    $('#datetimepicker_from').datetimepicker();
+    $('#datetimepicker_to').datetimepicker();
+    $('#datetimepicker_to').datetimepicker();
+    $("#datetimepicker_birthday").on("dp.change", function (e) {
+        $('#datetimepicker_to').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepicker_to").on("dp.change", function (e) {
+        $('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
+    });
+});
+
+function appFormatter(value){
+	var $detail_url = '<a href="detail" th:href="@{/followup/{0}}">{1}</a>'.format(value,value);
+	return $detail_url;
+}
+
+</script>
 </body>
 </html>

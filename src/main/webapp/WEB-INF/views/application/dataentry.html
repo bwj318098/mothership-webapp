@@ -4,6 +4,7 @@
 <body>
 <!-- Loading gif -->
 <div class="se-pre-con"></div>
+<div th:replace="fragments/resources :: basic-resources"></div>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div id="wrap">
 <div class="container-fluid">
@@ -21,13 +22,17 @@
 	  	<div class="col-lg-5 col-lg-offset-3 col-md-5 col-md-offset-3 col-xs-8" >
 	  		<div class="input-group">
 		  		<div class="row">
-		  	 		<div class="col-xs-4 col-xs-offset-8">
+		  	 		<div class="col-xs-6 col-xs-offset-6">
 		  	 		<p></p>
+		  	 			<div class="input-group-btn">
+		  	 				<button type="button" id="autoCalc" class="btn btn-success btn_autoCalculate">Auto Calc</button>
+		  	 			</div>
+		  	 			
 		  	 			<div class="input-group-btn">
 		  	 				<button type="button" id="btn_submit_data_entry" class="btn btn-primary">Submit</button>
 		  	 			</div>
 		  	 			<div class="input-group-btn">
-		  	 				<button type="button" id="resetForm" class="btn btn-primary">Clear</button>
+		  	 				<button type="button" id="resetForm" class="btn btn-primary btn_clearSavedSession">Clear</button>
 		  	 			</div>
 		  	 		<p></p>
 		  	 		</div>
@@ -70,13 +75,18 @@
 </div>
 	
 <div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+<div th:replace="fragments/resources :: validation-resources"></div>
+<div th:replace="fragments/resources :: calendar-resources"></div>
+<div th:replace="fragments/resources :: table-resources"></div>
+
 <!-- Customer Search Modal -->
 <div th:replace="fragments/customers/modal_customers :: modal_customers(modal_id='searchModal',modal_title='Customer Search')">&nbsp;</div>
 <div th:replace="fragments/zipcode/modal_zipcode :: modal_zipcode(modal_id='zipcodeModal',modal_title='Zipcode')">&nbsp;</div>
 <div th:replace="fragments/modal_generic :: modal_generic(modal_id='modal_generic',modal_title='Information')">&nbsp;</div>
 <div th:replace="fragments/modal_success :: modal_success(modal_id='successModal',modal_title='Success')">&nbsp;</div>
 <!-- Confirm Clear-->
-<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='clearModal',modal_title='Confirm Clear', modal_msg='Are you sure you want to clear the form?',pendingRemarks='pendingRemarks')">&nbsp;</div>
+<div th:replace="fragments/modal_confirm :: modal_confirm(modal_id='clearModal',modal_title='Confirm Clear', modal_msg='Are you sure you want to clear the form and the previous session?',pendingRemarks='pendingRemarks')">&nbsp;</div>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -94,6 +104,7 @@ $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
     $('#selectedDesc').val($descIndex);
     
     $category = $('#categoryCode_'+$descIndex).val();
+    
     $('#descriptionModal_'+$category).modal({ backdrop: 'static', keyboard: false })
         .one('click', '#close', function (e) {
             return;
@@ -111,6 +122,7 @@ $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
 	//clear the chosen category
 	e.preventDefault();
 	$(this).parent().parent().find('input').val('');
+	//$(this).parent().parent().find('input').change();
 	
 }).on("click",'button[name^="btn_zipcode"]',function(e){
 	    e.preventDefault();
@@ -136,6 +148,7 @@ $( document ).on( "click", 'button[name^="btn_category"]', function(e) {
 });
 
 $(document).ready(function(e){
+	
 	// Convert into Upper Case
     $('#dateOfBirthPicker').datetimepicker({
     	//format: "YYYY-MM-DD HH:mm:ss"
@@ -146,7 +159,10 @@ $(document).ready(function(e){
 	enableNumericOnlyForNumericClass();
 	enableDecimalOnlyForNumericClass();
 	enableToolTipForContactTime();
-
+	
+	$('#dateOfBirth').on('focusout',function(e){
+		$(this).trigger('change');
+	});
 	 
 	 $('#residenceType').on("change",function(e){
 	 	var _this = $(this);
@@ -163,6 +179,8 @@ $(document).ready(function(e){
 		    $('#clearModal').modal({ backdrop: 'static', keyboard: false })
 	        .one('click', '#confirm', function (e) {
 	        	$('#dataEntryForm')[0].reset();
+	        	var path = window.location.pathname;
+    			$(location).attr('href',path);
 	    });
 	 });
 	 
@@ -192,12 +210,32 @@ $(document).ready(function(e){
         			
         			var url = '/';
         			$(location).attr('href',url);
-        			
+        			//clears the session storage upon success.
+        			sessionStorage.clear();
         		});
 		}						
 	});
-});    
+    
+	$('.btn_autoCalculate').on('click', doCalc);
+	$('.btn_clearSavedSession').on('click',function(e){sessionStorage.clear();});
+ 	
+	//checks if its from normal data entry or customer load page by it's path:
+	var path = window.location.pathname
+	var segment = path.split("/").length - 1 - (path.indexOf("http://")==-1?0:2);
+	if(segment <= 2){
+		$('form').FormCache();
+	}
 
+// 	$('#downPayment').val('0.00');
+// 	$('#total').val('0.00');
+// 	$('#financeAmount').val('0.00');
+// 	$('#interestAmount').val('0.00');
+// 	$('#totalInstallment').val('0.00');
+// 	$('#processingFee').val('0.00');
+// 	$('#monthlyInstallment').val('0.00');
+// 	$('#cashout').val('0.00');
+// 	$('#initialCashOut').val('0.00');
+});	
 //]]>
 </script>
 </body>

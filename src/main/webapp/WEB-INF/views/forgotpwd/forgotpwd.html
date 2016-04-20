@@ -4,7 +4,9 @@
 <body>
 <div th:replace="fragments/header :: header">Header</div>
 <!-- Loading gif -->
+
 <div class="se-pre-con"></div>
+<div id="wrap">
 <form class="form-narrow form-horizontal" method="post" th:action="@{/forgotpwd}" th:object="${forgotPasswordForm}">
     <!--/* Show general error message when form contains errors */-->
     <th:block th:if="${#fields.hasErrors('${forgotPasswordForm.*}')}">
@@ -36,11 +38,16 @@
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
 	</form>
+</div>
 <script type="text/javascript">
 $(document).ready(function(){
 	showLoadingGifOnFormSubmit();
 });
 </script>
+
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+<div th:replace="fragments/resources :: basic-resources"></div>
+<div th:replace="fragments/resources :: validation-resources"></div>
 </body>
 
 </html>

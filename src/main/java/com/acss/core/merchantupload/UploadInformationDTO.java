@@ -65,10 +65,10 @@ public class UploadInformationDTO {
 	
 	public List<HpsUploadFileDTO> getUploadFiles(){
 		List<HpsUploadFileDTO> files = new ArrayList<>();
-		if(!this.appForm.isEmpty())files.add(new HpsUploadFileDTO("0", this.appForm));
-		if(!this.idProof.isEmpty())files.add(new HpsUploadFileDTO("1", this.idProof));
-		if(!this.addressProof.isEmpty())files.add(new HpsUploadFileDTO("2", this.addressProof));
-		if(!this.incomeProof.isEmpty())files.add(new HpsUploadFileDTO("3", this.incomeProof));
+		if(this.appForm!=null)files.add(new HpsUploadFileDTO("0", this.appForm));
+		if(this.idProof!=null)files.add(new HpsUploadFileDTO("1", this.idProof));
+		if(this.addressProof!=null)files.add(new HpsUploadFileDTO("2", this.addressProof));
+		if(this.incomeProof!=null)files.add(new HpsUploadFileDTO("3", this.incomeProof));
 		files.addAll(this.additionalImages);
 		return files;
 	}

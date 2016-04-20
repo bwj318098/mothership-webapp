@@ -2,9 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: resources(title='Welcome to Online Submission')"></head>
 
-<script>
-</script>
-
 <body>
 <div th:replace="fragments/header :: header">Header</div>
 <div id="wrap">
@@ -73,6 +70,8 @@
 </div>
 <div th:replace="fragments/customers/modal_customers :: modal_customers(modal_id='searchModal',modal_title='Customer Search')">&nbsp;</div>
 <div th:replace="fragments/footer :: footer">&nbsp;</div>
+<div th:replace="fragments/resources :: basic-resources"></div>
+
 <script type="text/javascript">
 jQuery(function() {
     var picture = $('#sample_picture');
@@ -137,5 +136,8 @@ $( document ).on("click",'#btn_customerSearch',function(e){
         });
 });
 </script>
+
+
+
 </body>
 </html>

@@ -1,7 +1,11 @@
 package com.acss.core.merchantupload;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.acss.core.application.ApplicationDetailDTO;
 import com.acss.core.followup.FollowupDetailDTO;
+import com.acss.core.model.application.ApplicationSeqNo;
+import com.acss.core.model.image.ApplicationImage;
 
 
 public interface FileUploadService {
@@ -33,4 +37,19 @@ public interface FileUploadService {
 	 * @return Application No.
 	 */
 	public String generateAppNo();
+	
+	/**
+	 * Generates group sequence no for folder grouping
+	 */
+	public String generateRequestedNumType(String numType);
+	
+	/**
+	 * persists image to disk and database
+	 */
+	public void saveImage(MultipartFile file,ApplicationImage imageDTO);
+	
+	/**
+	 * creates new application with the new seq no
+	 */
+	public void createNewApplicationWithSeqNo(ApplicationSeqNo appSeqNo);
 }

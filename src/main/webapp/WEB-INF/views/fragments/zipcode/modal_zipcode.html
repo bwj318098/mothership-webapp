@@ -37,10 +37,16 @@
 		
 		$(document).on( "click", 'button[name^="btnZipCode"]', function(element) {
 			$areaNm = $(this).parent().parent().find("label").text();
+			//trigger change event
 			$cityNm = $(this).parent().parent().find("input").val();
+			
 			$('#zipcode_'+$('#selectedZipcode').val()).val($(this).val());
 			$('#area_'+$('#selectedZipcode').val()).val($areaNm);
 			$('#city_'+$('#selectedZipcode').val()).val($cityNm);
+			
+			$('#zipcode_'+$('#selectedZipcode').val()).trigger("focusout");
+			$('#area_'+$('#selectedZipcode').val()).trigger("focusout");
+			$('#city_'+$('#selectedZipcode').val()).trigger("focusout");
 			
 		});
 		
@@ -53,7 +59,7 @@
         <h4 class="modal-title" th:text="${modal_title}">Confirmation</h4>
       </div>
       <div class="modal-body">
-		  <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{/zipcode}" data-cache="false" data-height="400" data-search="true" data-pagination="true">
+		  <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{/zipcode}" data-cache="true" data-height="400" data-search="true" data-pagination="true">
     		<thead class="row">
     		<tr>
     		<th data-sortable="true" data-formatter="buttonFormatter_postCode" data-field="postCode"></th>

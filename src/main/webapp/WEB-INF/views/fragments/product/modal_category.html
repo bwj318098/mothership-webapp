@@ -47,6 +47,11 @@
 			//this contains the installment rate
 			$('#installment\\.rate').val($interestRate);
 			//$('#installment\\.rate').attr("readonly", "readonly");
+			
+		    $('#category_'+$('#selectedCategory').val()).trigger("focusout");
+		    $('#installment\\.rate').trigger("focusout");
+		    $('#categoryCode_'+$('#selectedCategory').val()).trigger("focusout");
+		    
 		});
 		
 	</script>
@@ -58,7 +63,7 @@
         <h4 class="modal-title" th:text="${modal_title}">Confirmation</h4>
       </div>
       <div class="modal-body">
-		  <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{/resources/json/productcategory.json}" data-cache="false" data-height="400" data-search="true" data-pagination="true">
+		  <table id="table-pagination" class="table table-striped" data-toggle="table" th:attr="data-url= @{/resources/json/productcategory.json}" data-cache="true" data-height="400" data-search="true" data-pagination="true">
     		<thead class="row">
     		
     		<tr>

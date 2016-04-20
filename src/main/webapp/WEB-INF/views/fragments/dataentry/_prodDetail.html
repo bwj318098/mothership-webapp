@@ -9,7 +9,12 @@
 
 $(document).ready(function(e){
 	
-	$('[name^=installment]').on('change', doCalc);
+	//$('[name^=installment]').on('change', doCalc);
+	//installment.firstProduct.price
+	//installment.rate
+	//installment.firstProduct.downPayment
+	//term
+	//processingFeePayType
 	
     $('#receivedDatePicker').datetimepicker({
     	//format: "YYYY-MM-DD HH:mm:ss"
@@ -17,15 +22,33 @@ $(document).ready(function(e){
     });
 	enableNumericOnlyForNumericClass();
 	enableDecimalOnlyForNumericClass();
+	
 });     
 
 function doCalc(){
 	var url = '';
 	//$("#prodDetail").load("dataentry/ajax");
+	
 	$.post("../../dataentry/ajax",$('#dataEntryForm').serialize(),function(data){
 		//console.log(data);
 		$("#prodDetail").html(data);
+	}).fail(function(data) {
+	    alert( "error" );
 	});
+	
+// 	 $.ajax({
+// 	         Uncomment the following to send cross-domain cookies:
+// 	        xhrFields: {withCredentials: true},
+// 	        url: '../../dataentry/ajax',
+// 	        method: "POST",
+// 			data: $('#dataEntryForm').serialize()
+// 	    }).error(function (textStatus,errorThrown) {
+// 	        console.log(errorThrown);
+// 	    }).success(function (data) {
+// 	    	$("#prodDetail").html(data);
+// 	    }); 
+	 
+	
 }
 
 </script>
@@ -81,8 +104,8 @@ function doCalc(){
 					  	</div>
 					  	</div>
 					  	<div class="col-md-2"><input th:value="*{installment.firstProduct.modelNo}" name="installment.firstProduct.modelNo" type="text" class="form-control alphaNum_30_req productGroup_1" id="model_1" placeholder="Model I" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:value="*{installment.firstProduct.price==0.00?'':installment.firstProduct.price}" name="installment.firstProduct.price" type="text" class="form-control numeric-decimal text-right firstPriceRules productGroup_1" id="installment.firstProduct.price" placeholder="Price I" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:value="*{installment.firstProduct.downPayment}" name="installment.firstProduct.downPayment" type="text" class="form-control numeric-decimal text-right currency_10" id="installment.firstProduct.downPayment" placeholder="DP I" maxlength="11"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.firstProduct.price==0.00?'':installment.firstProduct.price}" name="installment.firstProduct.price" type="text" class="form-control numeric-decimal text-right firstPriceRules productGroup_1 autoCalculate" id="installment.firstProduct.price" placeholder="Price I" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:value="*{installment.firstProduct.downPayment}" name="installment.firstProduct.downPayment" type="text" class="form-control numeric-decimal text-right currency_10 autoCalculate" id="installment.firstProduct.downPayment" placeholder="DP I" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -123,8 +146,8 @@ function doCalc(){
 					  	</div>
 					  	</div>
 					  	<div class="col-md-2"><input th:value="*{installment.secondProduct.modelNo}" name="installment.secondProduct.modelNo" type="text" class="form-control alphaNum_30 productGroup_2" id="model_2" placeholder="Model II" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:value="*{installment.secondProduct.price==0.00?'':installment.secondProduct.price}" name="installment.secondProduct.price" type="text" class="form-control numeric-decimal text-right otherPriceRules productGroup_2" id="installment.secondProduct.price" placeholder="Price II" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:value="*{installment.secondProduct.downPayment}" name="installment.secondProduct.downPayment" type="text" class="form-control numeric-decimal text-right" id="installment.secondProduct.downPayment" placeholder="DP II" maxlength="11"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.secondProduct.price==0.00?'':installment.secondProduct.price}" name="installment.secondProduct.price" type="text" class="form-control numeric-decimal text-right otherPriceRules productGroup_2 autoCalculate" id="installment.secondProduct.price" placeholder="Price II" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:value="*{installment.secondProduct.downPayment}" name="installment.secondProduct.downPayment" type="text" class="form-control numeric-decimal text-right autoCalculate" id="installment.secondProduct.downPayment" placeholder="DP II" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -165,8 +188,8 @@ function doCalc(){
 					  	</div>
 					  	</div>
 					  	<div class="col-md-2"><input th:value="*{installment.thirdProduct.modelNo}" name="installment.thirdProduct.modelNo" type="text" class="form-control alphaNum_30 productGroup_3" id="model_3" placeholder="Model III" maxlength="30"/></div>
-					  	<div class="col-md-2"><input th:value="*{installment.thirdProduct.price==0.00?'':installment.thirdProduct.price}" name="installment.thirdProduct.price" type="text" class="form-control numeric-decimal text-right otherPriceRules productGroup_3" id="installment.thirdProduct.price" placeholder="Price III" maxlength="11"/></div>
-					  	<div class="col-md-1"><input th:value="*{installment.thirdProduct.downPayment}" name="installment.thirdProduct.downPayment" type="text" class="form-control numeric-decimal text-right" id="installment.thirdProduct.downPayment" placeholder="DP III" maxlength="11"/></div>
+					  	<div class="col-md-2"><input th:value="*{installment.thirdProduct.price==0.00?'':installment.thirdProduct.price}" name="installment.thirdProduct.price" type="text" class="form-control numeric-decimal text-right otherPriceRules productGroup_3 autoCalculate" id="installment.thirdProduct.price" placeholder="Price III" maxlength="11"/></div>
+					  	<div class="col-md-1"><input th:value="*{installment.thirdProduct.downPayment}" name="installment.thirdProduct.downPayment" type="text" class="form-control numeric-decimal text-right autoCalculate" id="installment.thirdProduct.downPayment" placeholder="DP III" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -178,10 +201,10 @@ function doCalc(){
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-2"><label class="control-label" for="category_1">Monthly Interest Rate</label></div>
-						<div class="col-md-1"><input th:value="*{installment.rate}" name="installment.rate" type="text" class="form-control numeric-decimal" id="installment.rate" placeholder="%" maxlength="5"/></div>
+						<div class="col-md-1"><input th:value="*{installment.rate}" name="installment.rate" type="text" class="form-control numeric-decimal autoCalculate" id="installment.rate" placeholder="%" maxlength="5"/></div>
 						<div class="col-md-2"><label class="control-label" for="category_1">Installment Term</label></div>
 					  	<div class="col-md-1">
-					  		<select th:value="*{installment.term}" name="installment.term" class="form-control selectField" id="term">
+					  		<select th:value="*{installment.term}" name="installment.term" class="form-control selectField autoCalculate" id="term">
 					  			<option value=""></option>					
 								<option th:each="item : ${termList}" 
 										th:selected="*{installment.term}==${item}"
@@ -190,7 +213,7 @@ function doCalc(){
 					  	</div>
 					  	<div class="col-md-1"><label class="control-label" for="category_1">months</label></div>
 						<div class="col-md-2"><label class="control-label" for="category_1">Total Product Price</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalProductPrice()}" type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Total" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalProductPrice()}" type="text" class="form-control numeric-decimal text-right" id="total" placeholder="Total" name="total" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 			</div>
@@ -203,7 +226,7 @@ function doCalc(){
 						<div class="col-md-2"><label class="control-label" for="category_1">Promotion Code</label></div>
 						<div class="col-md-2"><input th:value="*{installment.promotionCode}" name="installment.promotionCode" type="text" class="form-control" id="promoCode" placeholder="Promotion Code" maxlength="6"/></div>
 						<div class="col-md-2 col-md-offset-3"><label class="control-label" for="category_1" >Down Payment(a)</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalDownPayment()}" type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Down Payment" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalDownPayment()}" type="text" class="form-control numeric-decimal text-right" id="downPayment" name="downPayment" placeholder="Down Payment" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -211,22 +234,22 @@ function doCalc(){
 						<div class="col-md-2"><label class="control-label" for="processingFeePayType">Processing Fee Type</label></div>
 						
 						<div class="col-md-1">
-							<label class="control-label"><input name="installment.processingFeePayType" 
+							<label class="control-label"><input name="installment.processingFeePayType"
 							th:checked="*{installment.processingFeePayType}==${processingFeePayTypeList[0]}"
-							th:value="${processingFeePayTypeList[0]}" th:text="#{${processingFeePayTypeList[0].value}}" class="control-label" type="radio" /></label>
+							th:value="${processingFeePayTypeList[0]}" th:text="#{${processingFeePayTypeList[0].value}}" class="control-label autoCalculate" type="radio" /></label>
 						</div>
 						<div class="col-md-2">
 							<label class="control-label"><input name="installment.processingFeePayType" 
 							th:checked="*{installment.processingFeePayType}==${processingFeePayTypeList[1]}"
-							th:value="${processingFeePayTypeList[1]}" th:text="#{${processingFeePayTypeList[1].value}}" class="control-label" type="radio" /></label>
+							th:value="${processingFeePayTypeList[1]}" th:text="#{${processingFeePayTypeList[1].value}}" class="control-label autoCalculate" type="radio" /></label>
 						</div>
 						<div class="col-md-2">
 							<label class="control-label"><input name="installment.processingFeePayType" 
 							th:checked="*{installment.processingFeePayType}==${processingFeePayTypeList[2]}"
-							th:value="${processingFeePayTypeList[2]}" th:text="#{${processingFeePayTypeList[2].value}}" class="control-label" type="radio" /></label>
+							th:value="${processingFeePayTypeList[2]}" th:text="#{${processingFeePayTypeList[2].value}}" class="control-label autoCalculate" type="radio" /></label>
 						</div>
 						<div class="col-md-2"><label class="control-label" for="voucher">Promo Voucher</label></div>
-						<div class="col-md-3"><input th:value="*{installment.promoVoucher==0.00?'':installment.promoVoucher}" name="installment.promoVoucher" type="text" class="form-control numeric-decimal text-right" id="voucher" placeholder="Promo Voucher" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.promoVoucher==0.00?'':installment.promoVoucher}" name="installment.promoVoucher" type="text" class="form-control numeric-decimal text-right autoCalculate" id="voucher" placeholder="Promo Voucher" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -234,7 +257,7 @@ function doCalc(){
 						<div class="col-md-2"><label class="control-label" for="storeCd">Store Code</label></div>
 						<div class="col-md-3"><input th:value="*{store.storeCd}" name="store.storeCd" type="text" class="form-control" id="storeCd" placeholder="Store Code" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Finance Amount</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalFinancePrice()}" type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Finance Amount" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalFinancePrice()}" type="text" class="form-control numeric-decimal text-right" id="financeAmount" name="financeAmount" placeholder="Finance Amount" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -242,7 +265,7 @@ function doCalc(){
 						<div class="col-md-2"><label class="control-label" for="store.storeName">Store Name</label></div>
 						<div class="col-md-3"><input th:value="*{store.storeName}" type="text" class="form-control" id="store.storeName" placeholder="Store Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Interest Amount</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalInterestAmount()}" type="text" class="form-control numeric-decimal text-right" id="category_3" placeholder="Interest Amount" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalInterestAmount()}" type="text" class="form-control numeric-decimal text-right" id="interestAmount" name="interestAmount" placeholder="Interest Amount" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -259,7 +282,7 @@ function doCalc(){
 							</div>
 						</div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="totalInstallment">Total Installment Amount</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalInstallmentAmount()}" type="text" class="form-control numeric text-right" id="totalInstallment" placeholder="Total Installment Amount" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalInstallmentAmount()}" type="text" class="form-control numeric text-right" id="totalInstallment" name="totalInstallment" placeholder="Total Installment Amount" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -267,7 +290,7 @@ function doCalc(){
 						<div class="col-md-2"><label class="control-label" for="merchantStaffName">Merchant Staff Name</label></div>
 						<div class="col-md-3"><input th:value="*{store.merchantStaffName}" name="store.merchantStaffName" type="text" class="form-control" id="merchantStaffName" placeholder="Staff Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Monthly Installment</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalMonthlyPayment()}" type="text" class="form-control numeric text-right" id="category_3" placeholder="Monthly Installment" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalMonthlyPayment()}" type="text" class="form-control numeric text-right" id="monthlyInstallment" name="monthlyInstallment" placeholder="Monthly Installment" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -275,7 +298,7 @@ function doCalc(){
 						<div class="col-md-2"><label class="control-label" for="aeonStaff">AEON Staff</label></div>
 						<div class="col-md-3"><input th:value="*{store.aeonStaff}" name="store.aeonStaff" type="text" class="form-control" id="aeonStaff" placeholder="Staff Name" readonly="readonly"/></div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">Processing Fee(b)</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalProcessingFee()}" type="text" class="form-control numeric text-right" id="category_3" placeholder="Processing Fee" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalProcessingFee()}" type="text" class="form-control numeric text-right" id="processingFee" name="processingFee" placeholder="Processing Fee" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -283,12 +306,12 @@ function doCalc(){
 						<div class="col-md-2"><label class="control-label" for="receivedDate">AEON Staff Date Received </label></div>
 						  <div class="col-md-3">
 							<div class="input-group date" id='receivedDatePicker'> 
-								<input type='text' th:value="*{store.receivedDate}" class="form-control dateDashedNumber_req" name="store.receivedDate" maxlength="10"/>
+								<input type='text' th:value="*{store.receivedDate}" class="form-control dateDashedNumber_req" name="store.receivedDate" id="store.receivedDate" maxlength="10"/>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 						  	</div>
 						</div>
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="cashout">Initial Cashout (a+b)</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalInitialCashout()}" type="text" class="form-control numeric text-right" id="cashout" placeholder="Initial Cashout (a+b)" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalInitialCashout()}" type="text" class="form-control numeric text-right" id="cashout" name="cashout" placeholder="Initial Cashout (a+b)" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -303,7 +326,7 @@ function doCalc(){
 							</select>
 						</div>						
 						<div class="col-md-2 col-md-offset-2"><label class="control-label" for="category_1">First Installment Amount</label></div>
-						<div class="col-md-3"><input th:value="*{installment.totalInitialPayment()}" type="text" class="form-control numeric text-right" id="category_3" placeholder="Initial Cashout" readonly="readonly" maxlength="11"/></div>
+						<div class="col-md-3"><input th:value="*{installment.totalInitialPayment()}" type="text" class="form-control numeric text-right" id="initialCashOut" name="initialCashOut" placeholder="Initial Cashout" readonly="readonly" maxlength="11"/></div>
 				  	</div>
 				</div>
 				<div class="form-group">
@@ -377,9 +400,9 @@ function doCalc(){
 <div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_PC',modal_title='Product Brand',categoryCd='PC')">&nbsp;</div>
 <div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_SP',modal_title='Product Brand',categoryCd='SP')">&nbsp;</div>
 <div th:replace="fragments/product/modal_brand :: modal_brand(modal_id='brandModal_HL',modal_title='Product Brand',categoryCd='HL')">&nbsp;</div>		
-<script src="../../../resources/js/bootstrap-table.min.js" th:src="@{/resources/js/bootstrap-table.min.js}"></script>
-<script src="../../../resources/js/moment.js" th:src="@{/resources/js/moment.js}"></script>
-<script src="../../../resources/js/bootstrap-datetimepicker.min.js" th:src="@{/resources/js/bootstrap-datetimepicker.min.js}"></script>
+
+<div th:replace="fragments/resources :: table-datepicker"></div>
+
 </div>
 </body>
 </html>

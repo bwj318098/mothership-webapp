@@ -107,7 +107,7 @@ public class RSFileUpload implements FileUploadService {
 	 * @param numType
 	 * @return requested Code
 	 */
-	private String generateRequestedNumType(String numType) {
+	public String generateRequestedNumType(String numType) {
 		String imagesRestFulEndpoint = env.getProperty(RS_SEQUENCE_URL_KEY);
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<String> res = rt.postForEntity(imagesRestFulEndpoint,numType,String.class);
@@ -124,16 +124,23 @@ public class RSFileUpload implements FileUploadService {
 	public boolean processUpload(UploadInformationDTO uploadInformation) {
 		String appNo = uploadInformation.getAppNo();
 		
-		RestTemplate rt = new RestTemplate();
 		ApplicationSeqNo appSeqNo = new ApplicationSeqNo();
 		appSeqNo.setAppCd(uploadInformation.getAppNo());
 		appSeqNo.setAppSeqNo(uploadInformation.getSeqNo());
 
-		//saves the new sequence no with this application no.
-		rt.postForEntity(env.getProperty(RS_APPSEQNO_URL_KEY), appSeqNo, ApplicationSeqNo.class);
+		createNewApplicationWithSeqNo(appSeqNo);
 		
 		return doPostInRsImageUpload(appNo, uploadInformation.getUploadFiles(),
 				uploadInformation.isForPendingSubmission(),uploadInformation.getPendingRemarks());
+	}
+	
+	/**
+	 * Creates a new application with defined seq no
+	 */
+	public void createNewApplicationWithSeqNo(ApplicationSeqNo appSeqNo){
+		RestTemplate rt = new RestTemplate();
+		//saves the new sequence no with this application no.
+		rt.postForEntity(env.getProperty(RS_APPSEQNO_URL_KEY), appSeqNo, ApplicationSeqNo.class);
 	}
 	
 	/**
@@ -146,6 +153,35 @@ public class RSFileUpload implements FileUploadService {
 		//do a post on image restful web services.
 		return doPostInRsImageUpload(appNo,additionalUpload.getAdditionalImages(),false,"");
 	}
+	
+	/**
+	 * Saves the images to disk and persist data in database
+	 * @param appNo
+	 * @param groupId
+	 * @param imageType
+	 */
+	public void saveImage(MultipartFile file,ApplicationImage imageDTO){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String storeCd = userService.getStorecdByUsername(auth.getName());
+		//creates a new instance of application image dto to persist
+		//ApplicationImage imageDTO = 
+		//		new ImageBuilder().withDefaultValues().build();
+		imageDTO.setStoreCd(storeCd);
+		//imageDTO.setDataCd(appNo);
+		//imageDTO.setGroupId(groupId);
+		//imageDTO.setImageType(new BigDecimal(imageType));
+		//withThisDTO.setComments(pendingRemarks);
+		imageDTO.setCrePerson(auth.getName());
+		imageDTO.setUpdPerson(auth.getName());
+		
+		saveFile(file,imageDTO);
+		RestTemplate rt = new RestTemplate();
+		String imagesRestFulEndpoint = env.getProperty(RS_IMAGES_URL_KEY);
+		rt.postForEntity(imagesRestFulEndpoint,imageDTO,ApplicationImage.class);
+	}
+	
+
+
 	/**
 	 * POST's to the image web services to create a new image.
 	 * @param appNo
