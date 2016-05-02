@@ -19,20 +19,29 @@
 	  <div class="row">
 	  	<div class="col-xs-4"><strong><label class="control-label" th:text="*{'Application Data Entry '+ applicationNo}" >Application Data Entry</label></strong></div>
 	  	<input type="hidden" th:field="*{applicationNo}" />
-	  	<div class="col-lg-5 col-lg-offset-3 col-md-5 col-md-offset-3 col-xs-8" >
+	  	<div class="col-lg-5 col-lg-offset-3 col-md-6 col-md-offset-2 col-xs-8" >
 	  		<div class="input-group">
 		  		<div class="row">
 		  	 		<div class="col-xs-6 col-xs-offset-6">
 		  	 		<p></p>
 		  	 			<div class="input-group-btn">
-		  	 				<button type="button" id="autoCalc" class="btn btn-success btn_autoCalculate">Auto Calc</button>
+		  	 				<button type="button" id="autoCalc" class="btn btn-success btn_autoCalculate">
+		  	 					<i class="glyphicon glyphicon-ok hidden-md hidden-lg"></i>
+								<span class="hidden-xs">Auto Calc</span>
+		  	 				</button>
 		  	 			</div>
 		  	 			
 		  	 			<div class="input-group-btn">
-		  	 				<button type="button" id="btn_submit_data_entry" class="btn btn-primary">Submit</button>
+		  	 				<button type="button" id="btn_submit_data_entry" class="btn btn-primary">
+		  	 					<i class="glyphicon glyphicon-upload hidden-md hidden-lg"></i>
+								<span class="hidden-xs">Submit</span>
+		  	 				</button>
 		  	 			</div>
 		  	 			<div class="input-group-btn">
-		  	 				<button type="button" id="resetForm" class="btn btn-primary btn_clearSavedSession">Clear</button>
+		  	 				<button type="button" id="resetForm" class="btn btn-warning btn_clearSavedSession">
+		  	 					<i class="glyphicon glyphicon-ban-circle hidden-md hidden-lg"></i>
+                    			<span class="hidden-xs">Clear All</span>
+		  	 				</button>
 		  	 			</div>
 		  	 		<p></p>
 		  	 		</div>
@@ -43,12 +52,12 @@
   </div>
   <p></p>
   <ul id="dataEntrySegments" class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#appInfo"><strong>Applicant Information</strong> <span class="badge badge-danger"></span></a></li>
-    <li><a data-toggle="tab" href="#empInfo"><strong>Employment Information</strong> <span class="badge badge-danger"></span></a></li>
-    <li><a data-toggle="tab" href="#bankInfo"><strong>Bank Account Information</strong> <span class="badge badge-danger"></span></a></li>
-    <li><a data-toggle="tab" href="#refInfo"><strong>Reference I (Relative)</strong> <span class="badge badge-danger"></span></a></li>
-    <li><a data-toggle="tab" href="#refInfoMore"><strong>Reference II (Non-Relative)</strong> <span class="badge badge-danger"></span></a></li>
-    <li><a data-toggle="tab" href="#prodDetail"><strong>Product and Installment Detail</strong> <span class="badge badge-danger"></span></a></li>
+    <li class="active"><a data-toggle="tab" href="#appInfo"><i class="glyphicon glyphicon-user hidden-md hidden-lg"></i><strong class="hidden-xs">Applicant Information</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#empInfo"><i class="glyphicon glyphicon-briefcase hidden-md hidden-lg"></i><strong class="hidden-xs">Employment Information</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#bankInfo"><i class="glyphicon glyphicon-usd hidden-md hidden-lg"></i><strong class="hidden-xs">Bank Account Information</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#refInfo"><i class="glyphicon glyphicon-eye-open hidden-md hidden-lg"></i><strong class="hidden-xs">Reference I (Relative)</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#refInfoMore"><i class="glyphicon glyphicon-eye-open hidden-md hidden-lg"></i><strong class="hidden-xs">Reference II (Non-Relative)</strong> <span class="badge badge-danger"></span></a></li>
+    <li><a data-toggle="tab" href="#prodDetail"><i class="glyphicon glyphicon-shopping-cart hidden-md hidden-lg"></i><strong class="hidden-xs">Product and Installment Detail</strong> <span class="badge badge-danger"></span></a></li>
   </ul>
 <div class="container-fluid">
 	<div class="tab-content">

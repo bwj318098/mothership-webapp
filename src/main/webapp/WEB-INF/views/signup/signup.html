@@ -115,6 +115,10 @@ $(document).ready(function(){
 	
 	$('#resetPassword').on('click',function(e){
 		convertTextInputToUpperCase();
+	});
+	
+	$('#storeCd').on('focusout',function(e){
+		convertTextInputToUpperCase();
 	})
 
 });

@@ -37,8 +37,7 @@
     </div>
     <p></p>
     <div class="row">
-   		<div class="col-md-6"></div>
-		<div class="col-md-2 col-md-offset-4">
+   		<div class="col-md-2 col-md-offset-10 col-xs-12">
 			<div class="input-group svX3">
 				<button th:if="${appDetailsForm.applicationStatus=='Documents Submitted'}" name="dataentry" type="submit" class="btn btn-primary">
 					Proceed to Data Entry
@@ -137,11 +136,17 @@
 			<div class="input-group">
 				<div class="input-group-btn">
 					<div class="row">
-						<div class="col-md-4 col-xs-4">
-							<button type="submit" name="addImage" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add</button>
+						<div class="col-md-4 col-xs-3">
+							<button type="submit" name="addImage" class="btn btn-primary">
+								<i class="glyphicon glyphicon-plus"></i>
+								<span class="hidden-xs">Add</span>
+							</button>
 						</div>
-						<div class="col-md-8 col-xs-8">
-							<button type="button" id="removeLink" class="btn btn-primary"><span class="glyphicon glyphicon-minus"></span>&nbsp;Remove</button>
+						<div class="col-md-8 col-xs-9">
+							<button type="button" id="removeLink" class="btn btn-primary">
+								<i class="glyphicon glyphicon-minus"></i>
+								<span class="hidden-xs">Remove</span>
+							</button>
 						</div>
 					</div>
 				</div>
@@ -152,16 +157,25 @@
 			<div class="input-group">
 				<div class="text-right input-group-btn" >
 						<input type="hidden" th:field="*{applicationStatus}" name="applicationStatus"/>
+						<!-- 
 						<p>
 						<button th:if="${appDetailsForm.applicationStatus=='With Pending Documents'}"  name="completeSubmission" type="button" class="btn btn-primary">Submit</button>
 						<button name="complete" type="submit" class="btn btn-primary" style="display: none;">doCompleteApplication</button>
 						</p>
+						 -->
 						<div class="row">
-							<div class="col-md-8 col-md-offset-2 col-xs-4 col-xs-offset-2">
-								<button name="attach_images" type="button" class="btn btn-primary">Attach Image/s</button>
+							<div class="col-md-8 col-md-offset-2 col-xs-8">
+								<button name="attach_images" type="button" class="btn btn-primary">
+								<i class="glyphicon glyphicon-paperclip"></i>
+									<span class="hidden-xs">Attach Image/s</span>
+								</button>
+								
 							</div>
-							<div class="col-md-2 col-xs-6">
-								<button name="view_images" type="button" class="btn btn-primary" >View Image/s</button>
+							<div class="col-md-2 col-xs-4">
+								<button name="view_images" type="button" class="btn btn-primary" >
+									<i class="glyphicon glyphicon-search"></i>
+									<span class="hidden-xs">View Images</span>
+								</button>
 							</div>
 						</div>
 				</div>
