@@ -194,9 +194,11 @@ $(document).on('upload-complete', function() {
         data: $('#fileupload').serialize()
     }).success(function () {
 		//do a location update to application detail endpoint
-		var url = '/detail/'+$('#applicationNo').val();
-		//$(location).attr('href',url);
-		setTimeout(function(){ document.location = url;}, 2000 ); 
+		//var url = '/detail/'+$('#applicationNo').val();
+		//setTimeout(function(){ document.location = url;}, 3000 ); 
+    	var url = '/?appcd='+$('#applicationNo').val();
+		$(location).attr('href',url);
+		
     }).error(function (errorThrown) {
     	console.log(errorThrown);
     	//something wrong happened.   	
