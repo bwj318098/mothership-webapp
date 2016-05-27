@@ -11,45 +11,47 @@
 
 
 function disableUploadOnIncompleteDocuments(){
-    	var isValid = false;
-    	var isComplete = new RegExp('^(?=.*[1]{1,}.*)(?=.*[2]{1,}.*)(?=.*[3]{1,}.*).*$');
-    	var num_matches = 0;
-    	var concatenatedImageType = '';
-    	
-    	var images = 0;
-    	$('#imageType\\[\\]').each(function( index ) {
-    		concatenatedImageType += ($(this).val());
-    		images += 1;
-    	});
-    	//console.log(concatenatedImageType);
-    	if(concatenatedImageType.length > 0 ){
-    		num_matches = concatenatedImageType.match(/0/gi) != null ?
-    				concatenatedImageType.match(/0/gi).length : 0;
-    	}
-    	
-    	//required docs should be selected
-    	if(isComplete.test(concatenatedImageType) && 
-    			//only one copy of application form is allowed
-    			num_matches==1 && 
-    			//no error is found
-    				$('.error').text().length==0 &&
-    					//check if all images are tagged
-    						images == concatenatedImageType.length &&
-    							//check if the seqno is already valid as well
-    								$('#fileupload').valid()){
-    		$('#upload-start').prop('disabled', false);
-    		isValid=true;
-    	}else{
-    		$('#upload-start').prop('disabled', true);
-    	}
-    	
-    	return isValid;
+	var isValid = false;
+	var isComplete = new RegExp('^(?=.*[0]{1,}.*).*$');
+	var num_matches = 0;
+	var concatenatedImageType = '';
+	
+	var images = 0;
+	$('#imageType\\[\\]').each(function( index ) {
+		concatenatedImageType += ($(this).val());
+		images += 1;
+	});
+	//console.log(concatenatedImageType);
+	if(concatenatedImageType.length > 0 ){
+		num_matches = concatenatedImageType.match(/0/gi) != null ?
+				concatenatedImageType.match(/0/gi).length : 0;
+	}
+	
+	//required docs should be selected
+	if(isComplete.test(concatenatedImageType) && 
+			//only one copy of application form is allowed
+			num_matches==1 && 
+			//no error is found
+				$('.error').text().length==0 &&
+					//check if all images are tagged
+						images == concatenatedImageType.length &&
+							//check if the seqno is already valid as well
+								$('#fileupload').valid()){
+		$('#upload-start').prop('disabled', false);
+		isValid=true;
+	}else{
+		$('#upload-start').prop('disabled', true);
+	}
+	
+	return isValid;
 }    
+
+var osa = {};
 
 /* global $, window */
 $(function () {
     'use strict';
-    
+    osa.apptype = {'Normal':[0,1,2,3], 'Fastlane SSS':[0,7], 'Fastlane Reprocess':[0]};
     // Initialize the jQuery File Upload widget:
     $('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
@@ -72,6 +74,9 @@ $(function () {
         
     }).on("fileuploadchange",function(){;
     	disableUploadOnIncompleteDocuments();
+    	console.log(osa);
+    	console.log($(this).find('select option'));
+    	
     });
     
     // Enable iframe cross-domain access via redirect option:
@@ -83,7 +88,7 @@ $(function () {
             '/home%s'
         )
     );
-    
+        
     // Load existing files:
     $('#fileupload').addClass('fileupload-processing');
     $.ajax({
@@ -134,6 +139,7 @@ $(document).ready(function(e){
 	//disable the upload button on these scenarios. please see the main.js for the function implementation
 	$( document ).on('change', '#seqNo', function(e) {disableUploadOnIncompleteDocuments();});
 	$( document ).on('change', '#imageType\\[\\]', function(e) {disableUploadOnIncompleteDocuments();});
+	$( document ).on('change', '#appProcess', function(e) {disableUploadOnIncompleteDocuments();});
 	$( document ).on('click', '.start', function(e) {
 		var isValid = disableUploadOnIncompleteDocuments();
 		if(isValid){

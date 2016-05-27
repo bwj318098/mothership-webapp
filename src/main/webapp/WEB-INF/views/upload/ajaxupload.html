@@ -35,7 +35,7 @@
     	<div class="col-md-8">
     			<div class="input-group">
 					<label for="inputAppNo" class="input-group-addon imagetype-width" id="appNo-addon">Application No.:</label>
-					<input type="text" class="form-control dashedAlphaNumeric_10_req" id="applicationNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" readonly="readonly" />
+					<input type="text" class="form-control dashedAlphaNumeric_10_req" id="applicationNo" placeholder="_________-_" name="applicationNo" aria-describedby="appNo-addon" maxlength="11" readonly="readonly"/>
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-primary" name="generate" id="generate" >
 							<i class="glyphicon glyphicon-play"></i>
@@ -44,7 +44,6 @@
 					</span>
 			</div>
     	</div>
-    	
     	<div class="col-md-4">
 		 	<!-- Sequence number in application form. -->
 			<div class="input-group svX3">
@@ -55,8 +54,21 @@
 		</div>
     </div>
     <h3></h3>
-    
-    <div class="row fileupload-buttonbar">
+    <div class="row">
+   <!-- <div class="col-md-5">
+		<label>
+  			<input type="radio" id="appProcess" class="appProcess" name="appProcess" value="Normal" checked="checked"/>&nbsp;Normal &nbsp;&nbsp; &nbsp;
+  		</label>
+		<label>
+  			<input type="radio" id="appProcess" class="appProcess" name="appProcess" value="Fastlane SSS" />&nbsp;Fastlane SSS&nbsp;&nbsp;&nbsp;
+  		</label>
+  		<label>
+  			<input type="radio" id="appProcess" class="appProcess" name="appProcess" value="Fastlane Reprocess" />&nbsp;Fastlane Reprocess&nbsp;&nbsp;&nbsp;
+  		</label>
+	 </div> -->
+	</div>
+    <h3></h3>
+   <div class="row fileupload-buttonbar">
     	<div class="col-md-5">		
 				<span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
@@ -74,6 +86,8 @@
                 <span class="fileupload-process"></span>
 		</div>
     </div>
+     
+ 
     <h6></h6>
     <div class="row fileupload-buttonbar">
 		<!-- The global progress state -->
@@ -88,24 +102,43 @@
     </div>
    	 <!-- The table listing the files available for upload/download -->
      <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+     <h3></h3>
+     <div class="row">
+     	<!--  <div class="alert alert-success" role="alert">
+     	<h4>Selected</h4>
+     	<ul id="isSelected">
+     		<li id="selectedAppForm">Application Form</li>
+     	</ul>
+     	</div>-->
+     	<!--  <div id="isSelected" class="alert alert-warning" role="alert">
+     	<h4>Required Fields</h4>
+     	<ul>
+     		<li id="appFormMissing">Application Form</li>
+     		<li id="idProofMissing">ID Proof</li>
+     		<li id="proofOfBillingMissing">Proof Of Billing</li>
+     		<li id="proofOfIncomeMissing">Proof Of Income</li>
+     		<li id="sssScreenShotMissing">SSS Screenshot</li>
+     	</ul>
+     	</div>-->
+     	
+     </div>
     </form>
 </div>
 </div>
 
 <div th:replace="fragments/footer :: footer">&nbsp;</div>
-
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 //<![CDATA[
-{% for (var i=0, file; file=o.files[i]; i++) { %}
 
+{% for (var i=0, file; file=o.files[i]; i++) { %}
 <div class="row">
     <tr class="template-upload fade" >
         <td>
             <span class="preview"></span>
         </td>
         <td>
-			<select class="form-control required" id="imageType[]" name="{%=file.name%}" value="{%=file.imageType%}">
+			<select class="form-control required imageClass" id="imageType[]" name="{%=file.name%}" value="{%=file.imageType%}">
 						<option value=""></option>
 						<option value="0">Application Form</option>
 						<option value="1">ID Proof</option>
@@ -114,6 +147,7 @@
 						<option value="4">House Sketch</option>
 						<option value="5">Customer Image</option>
 						<option value="6">Supporting Documents</option>
+						<option value="7">SSS Screenshot</option>
 			</select>
         </td>
 		<td>
@@ -143,7 +177,6 @@
     </tr>
 </div>
 {% } %}
-
 //]]>
 </script>
 <!-- The template to display files available for download -->

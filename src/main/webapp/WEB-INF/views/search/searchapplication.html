@@ -87,7 +87,7 @@
 	            <th data-sortable="true" data-field="applicationDate">Application Date</th>
 	            <th data-sortable="true" data-field="applicationStatus">Application Status</th>
 	            <th data-sortable="true" data-field="seqNo">SeqNo</th>
-	            <th data-sortable="true" data-field="remarks" data-formatter="remarksFormatter">Remarks</th>
+	            <th data-sortable="true" data-field="remarks" data-formatter="getLon">Remarks</th>
 	        </tr>
 	    </thead>
 		</table>
@@ -102,7 +102,7 @@
 <div th:replace="fragments/resources :: table-resources"></div>
 
 <script type="text/javascript" th:inline="javascript">
-
+//<![CDATA[
 $(document).ready(function () {
 	
 	showLoadingGifOnFormSubmit();
@@ -123,20 +123,59 @@ $(document).ready(function () {
     });
 });
 
+
+var $showReport = function(row){	
+	console.log(row.osaClaimed);
+	if(row.applicationStatus === "Approved" && (row.osaClaimed === "FALSE" || row.osaClaimed === null)){
+		
+		var str_judgementDate = new Date(row.judgementDate).toDateString("yyyy-MM-dd");
+		var str_dateToday = new Date().toDateString("yyyy-MM-dd");
+		
+		var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+		
+		var judgementDate = new Date(str_judgementDate);
+		var dateToday  = new Date(str_dateToday);
+		
+		var diffDays = Math.round(Math.abs((judgementDate.getTime() - dateToday.getTime())/(oneDay)));
+		
+		console.log(diffDays);
+		
+		if(diffDays>10){
+			return false;
+		}
+		
+		return true;
+		
+	}else{
+		return false;
+	}
+	
+};
+
+//]]>
+</script>
+<script type="text/javascript" th:inline="javascript">
+function getLon(value, row){
+	
+	var remarks = '';
+
+	if(value === 'INSERT DOWNLOAD LINK HERE'){
+		remarks = 'LON IS ALREADY PRINTED OR EXPIRED';
+	}else{
+		remarks = value;
+	}	
+	var $lon_url = $showReport(row) ? 
+			('<a href="lonurl" th:href="@{/lonurl/{0}}" target="_blank">Letter of Notification</a>').format(row.sysAppCd) 
+			: remarks;
+
+	return $lon_url;	
+}
+
+	  
 function appFormatter(value){
 	var $detail_url = '<a href="detail" th:href="@{/detail/{0}}">{1}</a>'.format(value,value);
 	return $detail_url;
 }
-
-function remarksFormatter(value, row){
-	var $params = row.withPassword ? "?withPassword=true" : "";
-	var $reportsUrl =  /*[[${reportsUrl}]]*/;
-	var $detail_url = row.applicationStatus ===	"Approved" ?
-			('<a href="{0}/{1}' + $params + '" target="_blank">Letter of Notification</a>').format($reportsUrl, row.sysAppCd)
-			: value;
-	return $detail_url;
-}
-
 </script>
 </body>
 </html>

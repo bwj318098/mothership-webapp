@@ -16,6 +16,8 @@ public class ApplicationSearchCriteriaDTO {
 	private String appDateTo;
 	private String appStatus;
 
+	private String osaClaimed;
+    
 	public ApplicationSearchCriteriaDTO() {}
 	
 	/**
@@ -43,7 +45,14 @@ public class ApplicationSearchCriteriaDTO {
 		this.appDateTo = appDateTo;
 		this.appStatus = appStatus;
 	}
+	
+    public String getOsaClaimed() {
+		return osaClaimed;
+	}
 
+	public void setOsaClaimed(String osaClaimed) {
+		this.osaClaimed = osaClaimed;
+	}
 	public String getApplicationNo() {
 		return applicationNo;
 	}

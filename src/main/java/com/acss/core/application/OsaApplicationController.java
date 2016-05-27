@@ -1,7 +1,12 @@
 package com.acss.core.application;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.acss.core.merchantupload.FileUploadService;
@@ -19,6 +25,7 @@ import com.acss.core.merchantupload.HpsUploadFileDTO;
 import com.acss.core.merchantupload.validator.TaggedAsCompleteInformationData;
 import com.acss.core.merchantupload.validator.UploadInformationData;
 import com.acss.core.support.web.MessageHelper;
+import com.google.common.net.MediaType;
 
 /**
  * Controller for the Application Related operation like search,show details and  upload more image/s.
@@ -38,7 +45,10 @@ public class OsaApplicationController {
 	
 	@Autowired
 	private FileUploadService uploadService;
-		
+	
+	@Autowired
+	private LonService lonService;
+	
 	@Autowired
 	private Environment env;
 	
@@ -184,4 +194,15 @@ public class OsaApplicationController {
 		
 		return "redirect:/detail/"+appNo;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/lonurl/{sysAppCd}", method = RequestMethod.GET,  produces="application/pdf")
+	public byte[] getLon(@PathVariable String sysAppCd) throws IOException{
+
+		ResponseEntity<byte[]> lon = lonService.generateLon(sysAppCd);
+		
+		return lon.getBody();
+		
+	}
+	
 }
