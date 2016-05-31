@@ -57,6 +57,7 @@ public class RSDataEntry implements DataEntryService{
 	private Environment env;
 	@Autowired
 	private OsaUserDetailsService userService;
+
 	/**
 	 * refer to osa.properties for the value of key 'rs.images.url'
 	 */
@@ -200,5 +201,12 @@ public class RSDataEntry implements DataEntryService{
 		uri = dateOfBirth != null && dateOfBirth.length()>0 ? uri + "dateOfBirth=" + dateOfBirth.replaceAll("-", "") + "&" : uri;
 		return uri;
 	}
+	
+	/**
+	 * @author Franz P. Cortez
+	 * @param ResponseEntity<DataEntryDTO>
+	 * Send Data Entry response (name, birthdate, customer code) to BAP web service
+	 * 
+	 */
 
 }

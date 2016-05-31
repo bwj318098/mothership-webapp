@@ -125,22 +125,23 @@ $(document).ready(function () {
 
 
 var $showReport = function(row){	
-	console.log(row.osaClaimed);
-	if(row.applicationStatus === "Approved" && (row.osaClaimed === "FALSE" || row.osaClaimed === null)){
+	if(row.applicationStatus === "Approved"){
 		
 		var str_judgementDate = new Date(row.judgementDate).toDateString("yyyy-MM-dd");
 		var str_dateToday = new Date().toDateString("yyyy-MM-dd");
 		
-		var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+		var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds = one day
 		
 		var judgementDate = new Date(str_judgementDate);
 		var dateToday  = new Date(str_dateToday);
 		
 		var diffDays = Math.round(Math.abs((judgementDate.getTime() - dateToday.getTime())/(oneDay)));
 		
+		console.log(dateToday);
+		console.log(str_judgementDate);
 		console.log(diffDays);
 		
-		if(diffDays>10){
+		if(diffDays>30){
 			return false;
 		}
 		
@@ -158,9 +159,9 @@ var $showReport = function(row){
 function getLon(value, row){
 	
 	var remarks = '';
-
+	console.log($showReport(row));
 	if(value === 'INSERT DOWNLOAD LINK HERE'){
-		remarks = 'LON IS ALREADY PRINTED OR EXPIRED';
+		remarks = 'LON IS ALREADY EXPIRED';
 	}else{
 		remarks = value;
 	}	
